@@ -1,0 +1,81 @@
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Papel extends CI_Controller {
+
+    function __construct() {
+        parent::__construct();
+        $this->load->model('Papel_m');
+    }
+
+    public function index() {
+        $data['papel'] = $this->Papel_m->listar();
+        $this->load->view('Papel/lista', $data);
+    }
+
+    public function form() {
+        $id = $this->uri->segment(3);
+
+        if (empty($id)) {
+            $data['acao'] = 'inserir';
+
+            $this->load->view('papel/form', $data);
+        } else {
+            $papel = $this->Papel_m->listar($id);
+
+            $data['papel'] = $papel[0];
+            $data['acao'] = 'editar';
+            $data['id'] = $id;
+
+            $this->load->view('papel/form', $data);
+        }
+    }
+
+    public function inserir() {
+        $papel = new Papel_m();
+        $papel->id = null;
+        $papel->nome = $this->input->post('nome');
+        $papel->gramatura = $this->input->post('gramatura');
+        $papel->altura = $this->input->post('altura');
+        $papel->largura = $this->input->post('largura');
+        $papel->descricao = $this->input->post('descricao');
+        $papel->valor = $this->input->post('valor');
+
+        $id = $this->Papel_m->inserir($papel);
+        if (!empty($id)) {
+            redirect(base_url('papel/?msgTipe=sucesso&msg=Papel inserido com sucesso'), 'location');
+        } else {
+            redirect(base_url('papel/?msgTipe=erro&msg=Erro ao inserir o papel'), 'location');
+        }
+    }
+
+    public function editar() {
+        $papel = new Papel_m();
+        $papel->id = $this->input->post('id');
+        ;
+        $papel->nome = $this->input->post('nome');
+        $papel->gramatura = $this->input->post('gramatura');
+        $papel->altura = $this->input->post('altura');
+        $papel->largura = $this->input->post('largura');
+        $papel->descricao = $this->input->post('descricao');
+        $papel->valor = $this->input->post('valor');
+
+        if ($this->Papel_m->editar($papel)) {
+            redirect(base_url('papel/?msgTipe=sucesso&msg=Papel alterado com sucesso'), 'location');
+        } else {
+            sredirect(base_url('papel/?msgTipe=erro&msg=Erro ao alterar o papel'), 'location');
+        }
+    }
+
+    public function deletar() {
+        print $id = $this->uri->segment(3);
+
+        if (!empty($this->Papel_m->deletar($id))) {
+            redirect(base_url('papel/?msgTipe=sucesso&msg=Papel apagado com sucesso'), 'location');
+        } else {
+            redirect(base_url('papel/?msgTipe=erro&msg=Erro ao apagar o papel'), 'location');
+        }
+    }
+
+}
