@@ -45,6 +45,7 @@ class Servico extends CI_Controller {
         redirect(base_url('servico'), 'location');
     }
 
+    
     public function editar_servico() {
         $servico_quantidade = $this->session->servico->quantidade = $_POST['quantidade'];
         $servico_desconto = $this->session->servico->desconto = $_POST['desconto'];

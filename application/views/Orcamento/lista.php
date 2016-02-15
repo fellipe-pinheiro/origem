@@ -47,6 +47,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title"><b>Novo Orçamento</b></h3>
             </div>
+
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-3">
@@ -55,9 +56,9 @@
                                 <h3 class="panel-title"><b>Cliente</b></h3>
                             </div>
                             <div class="panel-body">
-                                <!-- Modal Cliente -->
-                                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_cliente">
-                                    <span class="glyphicon glyphicon-plus"></span> Cliente
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_cliente">
+                                    <span class="glyphicon glyphicon-plus"></span> Clientes
                                 </button><br>
                                 <input type="hidden" name="cliente_id" id="cliente_id_panel">
 
@@ -218,68 +219,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="button" class="btn btn-primary" onclick="addCliente()">Salvar alterações</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><b>Itens</b></h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-condensed table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Item</th>
-                                                <th>Descrição</th>
-                                                <th>Qtd</th>
-                                                <th>Unitário</th>
-                                                <th>Sub-Total</th>
-                                                <th>Editar</th>
-                                                <th>Excluir</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Cartão de Visita</td>
-                                                <td>Laminado + Impressão Alto Relevo 1x0</td>
-                                                <td>100</td>
-                                                <td>R$ 1,40</td>
-                                                <td>R$ 140,00</td>
-                                                <td><button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
-                                                <td><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Cartão de Visita Duplo</td>
-                                                <td>Verniz + Impressão Alto Relevo 2x0</td>
-                                                <td>100</td>
-                                                <td>R$ 1,10</td>
-                                                <td>R$ 110,00</td>
-                                                <td><button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
-                                                <td><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
-                                            </tr>
-
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td><b>Total Parcial</b></td>
-                                                <td>R$ 250,00</td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -82,4 +82,10 @@ class Faca_m extends CI_Model {
         return $faca_lista;
     }
 
+    public function calcular_valor($alt, $lar) {
+        $altura = $alt / 10; //Recebo a altura em mm e transformo para cm
+        $largura = $lar / 10; //Recebo a largura em mm e transformo para cm
+        return ($altura + $largura) * $this->valor;
+    }
+
 }

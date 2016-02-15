@@ -35,7 +35,7 @@
                                     <?php foreach ($fotolito as $key => $value) { ?>
                                         <tr>
                                             <td><?= $value->id ?></td>
-                                            <td><?= $value->altura ?> x <?= $value->largura ?></td>
+                                            <td><?= $value->impressao_formato->altura ?> x <?= $value->impressao_formato->largura ?></td>
                                             <td><?= $value->descricao ?></td>
                                             <td><?= $value->valor ?></td>
                                             <td style="width: 46px;"><a class="btn btn-primary editar" href="<?= base_url("Fotolito/form/{$value->id}") ?>">Editar</a></td>

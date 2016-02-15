@@ -91,10 +91,6 @@ class Papel_m extends CI_Model {
 
     //restorna o valor do papel unitário
     public function calcula_valor_unitario($quantidade, $quantidade_pedido) {
-//        var_dump($this->valor);
-//        var_dump($quantidade);
-//        var_dump($quantidade_pedido);
-//        die();
         return ($this->valor * $quantidade) / $quantidade_pedido;
     }
 

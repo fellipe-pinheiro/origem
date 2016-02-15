@@ -9,6 +9,11 @@ class Servico_m extends CI_Model {
     var $unitario;
     var $sub_total;
     var $total;
+    var $papel;
+    var $impressao;
+    var $fotolito;
+    var $acabamento;
+    var $faca;
 
     function __construct() {
         parent::__construct();
