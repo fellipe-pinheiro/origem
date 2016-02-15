@@ -47,14 +47,6 @@
             <div class="panel-heading">
                 <h3 class="panel-title"><b>Novo Orçamento</b></h3>
             </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> 7f101686d78a5aea5c30925a9f0de816a54f49dc
-=======
-
->>>>>>> eric
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-3">
@@ -63,9 +55,9 @@
                                 <h3 class="panel-title"><b>Cliente</b></h3>
                             </div>
                             <div class="panel-body">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_cliente">
-                                    <span class="glyphicon glyphicon-plus"></span> Clientes
+                                <!-- Modal Cliente -->
+                                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_cliente">
+                                    <span class="glyphicon glyphicon-plus"></span> Cliente
                                 </button><br>
                                 <input type="hidden" name="cliente_id" id="cliente_id_panel">
 
@@ -75,19 +67,6 @@
                                 <br><span id="cliente_cnpj_cpf_panel"></span><br>
                                 <?= form_label('E-mail: ', '', array('class' => 'control-label')) ?>
                                 <br><span id="cliente_email_panel"></span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                                <button class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> Cliente</button>
-                                <br>
-                                <br>
-                                <p><b>Nome / Razão Social: </b>Cliente Fulano de Tal</p>
-                                <p><b>CPF / CNPJ: </b>57.167.443/0001-99</p>
-                                <p><b>I.E: </b>752.942.519.822</p>
-                                <p><b>E-mail: </b> cliente@cliente.com.br</p>
->>>>>>> 7f101686d78a5aea5c30925a9f0de816a54f49dc
-=======
->>>>>>> eric
                             </div>
                         </div>
                     </div>
@@ -240,10 +219,7 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="button" class="btn btn-primary" onclick="addCliente()">Salvar alterações</button>
                     </div>
-<<<<<<< HEAD
-=======
                 </div>
-<<<<<<< HEAD
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-info">
@@ -305,10 +281,7 @@
                             </div>
                         </div>
                     </div>
->>>>>>> 7f101686d78a5aea5c30925a9f0de816a54f49dc
                 </div>
-=======
->>>>>>> eric
             </div>
         </div>
     </body>

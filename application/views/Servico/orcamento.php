@@ -1,6 +1,5 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-$titulo = 'Convite';
 $titulo = 'Serviço';
 ?>
 <!DOCTYPE html>
@@ -16,10 +15,19 @@ $titulo = 'Serviço';
                             <h3 class="panel-title">Serviços</h3>
                         </div>
                         <div class="panel-body">
-                            <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#myModal_papel"><span class="glyphicon glyphicon-plus"></span> Papel</button>
-                            <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#myModal_impressao"><span class="glyphicon glyphicon-plus"></span> Impressão</button>
-                            <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#myModal_acabamento"><span class="glyphicon glyphicon-plus"></span> Acabamento</button>
-                            <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#myModal_faca"><span class="glyphicon glyphicon-plus"></span> Faca</button>
+                            <?php if (empty($this->session->servico->quantidade)) {
+                                ?>
+                                <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#myModal_servico"><span class="glyphicon glyphicon-plus"></span> Novo</button>
+                                <?php
+                            } else {
+                                ?>
+                                <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#myModal_papel"><span class="glyphicon glyphicon-plus"></span> Papel</button>
+                                <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#myModal_impressao"><span class="glyphicon glyphicon-plus"></span> Impressão</button>
+                                <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#myModal_acabamento"><span class="glyphicon glyphicon-plus"></span> Acabamento</button>
+                                <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#myModal_faca"><span class="glyphicon glyphicon-plus"></span> Faca</button>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -34,6 +42,11 @@ $titulo = 'Serviço';
                                     <h3 class="panel-title"></h3>
                                 </div>
                                 <div class="panel-body">
+                                    <?php
+                                    print '<pre>';
+                                    var_dump($this->session->servico);
+                                    print '</pre>';
+                                    ?>
                                     <form>
                                         <div class="form-group">
                                             <table class="table table-hover table-condensed">
@@ -49,18 +62,11 @@ $titulo = 'Serviço';
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>Convite</td>
-                                                        <td>100</td>
-                                                        <td>R$ 8,60</td>
-                                                        <td>R$ 860,00</td>
-                                                        <td><button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal_quantidade"><span class="glyphicon glyphicon-pencil"></span></button></td>
-                                                    </tr>
-                                                </tbody>
                                                         <td><?= $titulo ?></td>
                                                         <td><?= $this->session->servico->quantidade ?></td>
                                                         <td>R$ 8,60</td>
                                                         <td>R$ 860,00</td>
-                                                        <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal_servico"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                                                        <td><button onclick="open_servico_modal()" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
                                                         <td><?= anchor(base_url('Servico/excluir_todos_servicos'), '<span class="glyphicon glyphicon-trash"></span>', 'class="btn btn-danger btn-sm"') ?></td>
                                                     </tr>
                                                 </tbody>
@@ -124,9 +130,9 @@ $titulo = 'Serviço';
                                                             <tr>
                                                                 <td>Papel</td>
                                                                 <td><?= $value[0]->nome ?></td>
-                                                                <td><?= $quantidade ?></td>
-                                                                <td><?= $value[0]->valor ?></td>
-                                                                <td>R$ <?php echo $quantidade * $value[0]->valor; ?></td>
+                                                                <td><?= $this->session->servico->quantidade ?></td>
+                                                                <td>R$ <?= number_format($value[0]->valor_unitario, 3, ",", ".") ?></td>
+                                                                <td>R$ <?= number_format($value[0]->sub_total, 2, ",", ".") ?></td>
                                                                 <td><button onclick="open_papel_modal(<?= $key ?>, '<?= $value[0]->nome ?>')" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
                                                                 <td><a class="btn btn-danger btn-sm" href="<?= base_url("servico/papel_sessao_excluir/{$key}") ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
                                                             </tr>
@@ -135,35 +141,41 @@ $titulo = 'Serviço';
                                                     }
                                                     ?>
                                                     <?php
-                                                    $quantidade = 100;
                                                     if ($_SESSION['impressao']) {
                                                         foreach ($_SESSION['impressao'] as $key => $value) {
                                                             ?>
                                                             <tr>
                                                                 <td>Impressão</td>
                                                                 <td><?= $value[0]->nome ?> / <?= $value[0]->impressao_formato->nome ?>: <?= $value[0]->impressao_formato->altura ?>x<?= $value[0]->impressao_formato->largura ?></td>
-                                                                <td><?= $quantidade ?></td>
-                                                                <td><?= $value[0]->valor ?></td>
-                                                                <td>R$ <?php echo $quantidade * $value[0]->valor; ?></td>
+                                                                <td><?= $this->session->servico->quantidade ?></td>
+                                                                <td>R$ <?= number_format($value[0]->valor_unitario, 3, ",", ".") ?></td>
+                                                                <td>R$ <?= number_format($value[0]->sub_total, 2, ",", ".") ?></td>
                                                                 <td><button onclick="open_impressao_modal(<?= $key ?>, '<?= $value[0]->nome ?>')" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
                                                                 <td><a class="btn btn-danger btn-sm" href="<?= base_url("servico/impressao_sessao_excluir/{$key}") ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Fotolito</td>
+                                                                <td><?= $this->session->fotolito[$key][0]->impressao_formato->nome ?>: <?= $this->session->fotolito[$key][0]->impressao_formato->altura ?>x<?= $this->session->fotolito[$key][0]->impressao_formato->largura ?></td>
+                                                                <td><?= $this->session->fotolito[$key][0]->quantidade ?></td>
+                                                                <td>R$ <?= number_format($this->session->fotolito[$key][0]->valor_unitario, 2, ",", ".") ?></td>
+                                                                <td>R$ <?= number_format($this->session->fotolito[$key][0]->sub_total, 2, ",", ".") ?></td>
+                                                                <td></td>
+                                                                <td></td>
                                                             </tr>
                                                             <?php
                                                         }
                                                     }
                                                     ?>
                                                     <?php
-                                                    $quantidade = 100;
                                                     if ($_SESSION['acabamento']) {
                                                         foreach ($_SESSION['acabamento'] as $key => $value) {
                                                             ?>
                                                             <tr>
                                                                 <td>Acabamento</td>
-                                                                <td><?= $value[0]->nome?></td>
                                                                 <td><?= $value[0]->nome ?></td>
-                                                                <td><?= $quantidade ?></td>
-                                                                <td><?= $value[0]->valor ?></td>
-                                                                <td>R$ <?php echo $quantidade * $value[0]->valor; ?></td>
+                                                                <td><?= $value[0]->quantidade ?></td>
+                                                                <td>R$ <?= number_format($value[0]->valor_unitario, 2, ",", ".") ?></td>
+                                                                <td>R$ <?= number_format($value[0]->sub_total, 2, ",", ".") ?></td>
                                                                 <td><button onclick="open_acabamento_modal(<?= $key ?>, '<?= $value[0]->nome ?>')" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
                                                                 <td><a class="btn btn-danger btn-sm" href="<?= base_url("servico/acabamento_sessao_excluir/{$key}") ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
                                                             </tr>
@@ -172,16 +184,15 @@ $titulo = 'Serviço';
                                                     }
                                                     ?>
                                                     <?php
-                                                    $quantidade = 100;
                                                     if ($_SESSION['faca']) {
                                                         foreach ($_SESSION['faca'] as $key => $value) {
                                                             ?>
                                                             <tr>
                                                                 <td>Faca</td>
-                                                                <td><?= $value[0]->nome ?></td>
-                                                                <td><?= $quantidade ?></td>
-                                                                <td><?= $value[0]->valor ?></td>
-                                                                <td>R$ <?php echo $quantidade * $value[0]->valor; ?></td>
+                                                                <td><?= $value[0]->nome ?> : <?= $value[0]->altura ?> x <?= $value[0]->largura ?></td>
+                                                                <td><?= $value[0]->quantidade ?></td>
+                                                                <td><?= number_format($value[0]->valor_faca, 2, ",", ".") ?></td>
+                                                                <td>R$ <?= number_format($value[0]->sub_total, 2, ",", ".") ?></td>
                                                                 <td><button onclick="open_faca_modal(<?= $key ?>, '<?= $value[0]->nome ?>')" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
                                                                 <td><a class="btn btn-danger btn-sm" href="<?= base_url("servico/faca_sessao_excluir/{$key}") ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
                                                             </tr>
@@ -226,7 +237,7 @@ $titulo = 'Serviço';
                         </select>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button id="form_impressao_acao" type="submit" class="btn btn-success" >Adicionar</button>
                     </div>
                 </div>
@@ -261,7 +272,7 @@ $titulo = 'Serviço';
                         <input class="form-control" name="quantidade" value="" placeholder="Quantidade de papeis">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button id="form_papel_acao" type="submit" class="btn btn-success" >Adicionar</button>
                     </div>
                 </div>
@@ -279,19 +290,24 @@ $titulo = 'Serviço';
                         <h4 class="modal-title">Acabamento</h4>
                     </div>
                     <div class="modal-body">
-                        <select id="form_acabamento_select" class="form-control" name="acabamento">
-                            <option value="">Selecione</option>
-                            <?php
-                            foreach ($acabamento as $key => $value) {
-                                ?>
-                                <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                        <label class="control-label" for="acabamento"> Acabamento:</label>
+                        <div class="form-group">
+                            <select id="form_acabamento_select" class="form-control" name="acabamento">
+                                <option value="">Selecione</option>
                                 <?php
-                            }
-                            ?>
-                        </select>
+                                foreach ($acabamento as $key => $value) {
+                                    ?>
+                                    <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <label class="control-label" for="quantidade"> Quantidade:</label>
+                        <input class="form-control" name="quantidade" value="" placeholder="Quantidade de acabamento">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button id="form_acabamento_acao" type="submit" class="btn btn-success" >Adicionar</button>
                     </div>
                 </div>
@@ -309,19 +325,26 @@ $titulo = 'Serviço';
                         <h4 class="modal-title">Faca</h4>
                     </div>
                     <div class="modal-body">
-                        <select id="form_faca_select" class="form-control" name="faca">
-                            <option value="">Selecione</option>
-                            <?php
-                            foreach ($faca as $key => $value) {
-                                ?>
-                                <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                        <label class="control-label" for="acabamento"> Faca:</label>
+                        <div class="form-group">
+                            <select id="form_faca_select" class="form-control" name="faca">
+                                <option value="">Selecione</option>
                                 <?php
-                            }
-                            ?>
-                        </select>
+                                foreach ($faca as $key => $value) {
+                                    ?>
+                                    <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <label class="control-label" for="altura"> Altura:</label>
+                        <input class="form-control" name="altura" value="" placeholder="Insira a altura da Faca">
+                        <label class="control-label" for="largura"> Largura:</label>
+                        <input class="form-control" name="largura" value="" placeholder="Insira a largura da Faca">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button id="form_faca_acao" type="submit" class="btn btn-success" >Adicionar</button>
                     </div>
                 </div>
@@ -332,7 +355,7 @@ $titulo = 'Serviço';
     <div class="modal fade" id="myModal_servico" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
-            <form id="form_faca" action="Servico/editar_pedido" method="POST" role="form">
+            <form id="form_servico" action="Servico/criar_servico" method="POST" role="form">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -353,7 +376,7 @@ $titulo = 'Serviço';
                         ?>" placeholder="Valor do desconto para este serviço">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button id="form_faca_acao" type="submit" class="btn btn-success" >Adicionar</button>
                     </div>
                 </div>
@@ -376,6 +399,10 @@ $titulo = 'Serviço';
         function open_faca_modal(posicao, nome) {
             document.getElementById('form_faca').action = "servico/faca_sessao_editar/" + posicao;
             $('#myModal_faca').modal('show');
+        }
+        function open_servico_modal() {
+            document.getElementById('form_servico').action = "servico/editar_servico";
+            $('#myModal_servico').modal('show');
         }
     </script>
 </html>
