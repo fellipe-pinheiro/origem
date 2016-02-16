@@ -77,7 +77,8 @@
                                 <h3 class="panel-title"><b>Produto / Serviços</b></h3>
                             </div>
                             <div class="panel-body">
-                                <button class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> Serviço</button>
+                                <?= anchor(base_url('cartao'),'<span class="glyphicon glyphicon-plus"></span>  Cartão','class="btn btn-success btn-sm"') ?>
+                                <?= anchor(base_url('servico'),'<span class="glyphicon glyphicon-plus"></span>  Serviço','class="btn btn-success btn-sm"') ?>
                             </div>
                         </div>
                     </div>

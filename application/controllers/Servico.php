@@ -7,6 +7,7 @@ class Servico extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('Impressao_m');
+        $this->load->model('Impressao_sessao');
         $this->load->model('Impressao_formato_m');
         $this->load->model('Fotolito_m');
         $this->load->model('Acabamento_m');
@@ -61,7 +62,12 @@ class Servico extends CI_Controller {
 
     public function impressao_sessao_inserir() {
         $id = $_POST['impressao'];
-        $impressao = $this->Impressao_m->listar($id); //listo a impressao pelo ID
+        //$impressao = $this->Impressao_m->listar($id); //listo a impressao pelo ID
+        $impressao = $this->Impressao_sessao->listar($id); //listo a impressao pelo ID
+        print '<pre>';
+        var_dump($impressao);
+        print '</pre>';
+        die();
         $fotolito = $this->Fotolito_m->listar_formato($impressao[0]->impressao_formato->id); //listo o fotolito pela coluna da impressao_formato
         $quantidade_pedido = $this->session->servico->quantidade;
         $impressao[0]->valor_unitario = $impressao[0]->calcula_valor_unitario($quantidade_pedido);

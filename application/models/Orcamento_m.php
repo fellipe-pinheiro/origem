@@ -10,6 +10,8 @@ class Orcamento_m extends CI_Model {
     var $status;
     var $desconto;
     var $total;
+    
+    var $itens;
 
     function __construct() {
         parent::__construct();
