@@ -6,7 +6,18 @@
             <name>origem</name>
         </data>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>Acabamento</word>
+            <word>Adicionar</word>
+            <word>Colagem</word>
+            <word>Faca</word>
+            <word>Fechar</word>
+            <word>Impressão</word>
+            <word>Laminação</word>
+            <word>Novo</word>
+            <word>Papel</word>
             <word>php</word>
+            <word>Quantidade</word>
+            <word>Selecione</word>
         </spellchecker-wordlist>
     </configuration>
 </project>

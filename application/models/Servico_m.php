@@ -14,13 +14,15 @@ class Servico_m extends CI_Model {
     var $fotolito;
     var $acabamento;
     var $faca;
+    var $laminacao;
+    var $colagem;
 
     function __construct() {
         parent::__construct();
         $this->load->database();
     }
     
-    public function calcular() {
+    public function calcula_valor_servico() {
         var_dump($this->desconto);
         print '<pre>';
         var_dump($_SESSION);

@@ -82,4 +82,8 @@ class Laminacao_m extends CI_Model {
         return $laminacao_lista;
     }
 
+    public function calcula_valor_unitario($valor, $quantidade_pedido) {
+        return $valor / $quantidade_pedido;
+    }
+
 }
