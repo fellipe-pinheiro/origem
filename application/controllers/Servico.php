@@ -13,6 +13,7 @@ class Servico extends CI_Controller {
         $this->load->model('Faca_m');
         $this->load->model('Papel_m');
         $this->load->model('Laminacao_m');
+        $this->load->model('Colagem_m');
         $this->load->model('Servico_m');
         $this->load->library('session');
     }
@@ -23,6 +24,12 @@ class Servico extends CI_Controller {
         $data['acabamento'] = $this->Acabamento_m->listar();
         $data['papel'] = $this->Papel_m->listar();
         $data['faca'] = $this->Faca_m->listar();
+        if ($this->session->servico) {
+            $data['valor_total'] = $this->session->servico->calcula_total_servico();
+            $data['valor_unitario'] = $this->session->servico->calcula_unitario_servico($data['valor_total'], $this->session->servico->quantidade);
+            $data['total'] = $data['valor_total'] - $this->session->servico->desconto;
+        }
+
         $this->load->view('servico/orcamento', $data);
     }
 
@@ -41,10 +48,17 @@ class Servico extends CI_Controller {
     }
 
     public function editar_servico() {
+        if ($this->session->servico->quantidade == NULL) {
+            $this->session->set_flashdata('edicaofalse', 'Crie um novo serviço!');
+            redirect(base_url('servico'), 'location');
+        }
         $servico_quantidade = $this->session->servico->quantidade = $_POST['quantidade'];
         $servico_desconto = $this->session->servico->desconto = $_POST['desconto'];
         foreach ($this->session->laminacao as $key => $value) {
             $value[0]->valor_unitario = $value[0]->calcula_valor_unitario($value[0]->sub_total, $servico_quantidade);
+        }
+        foreach ($this->session->colagem as $key => $value) {
+            $value->valor_unitario = $value->calcula_valor_unitario($value->sub_total, $servico_quantidade);
         }
         foreach ($this->session->papel as $key => $value) {
             $value[0]->valor_unitario = $value[0]->calcula_valor_unitario($value[0]->quantidade, $servico_quantidade);
@@ -107,24 +121,41 @@ class Servico extends CI_Controller {
         redirect(base_url('servico'), 'location');
     }
 
-    //continuar daqui...
     public function colagem_sessao_inserir() {
-        if (empty($_POST['colagem'])) {
-            redirect(base_url('servico'), 'location');
-        }
-        $id = $_POST['colagem'];
+        $nome = $_POST['nome'];
         $quantidade = $_POST['quantidade'];
         $valor = $_POST['valor'];
+        $colagem = new Colagem_m();
         $quantidade_pedido = $this->session->servico->quantidade;
-        $colagem = $this->Colagem_m->listar($id);
-        //Cria os atributos: $quantidade e $valor_unitario
-        $colagem[0]->quantidade = $quantidade;
-        $colagem[0]->valor_unitario = $colagem[0]->calcula_valor_unitario($valor, $quantidade_pedido);
-        $colagem[0]->sub_total = $valor;
+        $colagem->nome = $nome;
+        $colagem->quantidade = $quantidade;
+        $colagem->valor_unitario = $colagem->calcula_valor_unitario($valor, $quantidade_pedido);
+        $colagem->sub_total = $valor;
         $_SESSION['colagem'][] = $colagem;
         $this->session->servico->colagem = $_SESSION['colagem'];
         redirect(base_url('servico'), 'location');
     }
+
+    public function colagem_sessao_editar() {
+        $posicao = $this->uri->segment(3);
+        $nome = $_POST['nome'];
+        $quantidade = $_POST['quantidade'];
+        $valor = $_POST['valor'];
+        $quantidade_pedido = $this->session->servico->quantidade;
+        $this->session->servico->colagem[$posicao]->nome = $nome;
+        $this->session->servico->colagem[$posicao]->quantidade = $quantidade;
+        $this->session->servico->colagem[$posicao]->valor_unitario = $this->session->servico->colagem[$posicao]->calcula_valor_unitario($valor, $quantidade_pedido);
+        $this->session->servico->colagem[$posicao]->sub_total = $valor;
+        redirect(base_url('servico'), 'location');
+    }
+
+    public function colagem_sessao_excluir() {
+        $posicao = $this->uri->segment(3);
+        unset($_SESSION['colagem'][$posicao]);
+        $this->session->servico->colagem = $_SESSION['colagem'];
+        redirect(base_url('servico'), 'location');
+    }
+
     public function laminacao_sessao_inserir() {
         if (empty($_POST['laminacao'])) {
             redirect(base_url('servico'), 'location');
