@@ -6,20 +6,64 @@ class Servico_m extends CI_Model {
 
     var $quantidade;
     var $desconto;
-    var $unitario;
+    var $valor_unitario;
     var $sub_total;
     var $total;
+    var $papel;
+    var $impressao;
+    var $fotolito;
+    var $acabamento;
+    var $faca;
+    var $laminacao;
+    var $colagem;
 
     function __construct() {
         parent::__construct();
         $this->load->database();
     }
-    
-    public function calcular() {
-        var_dump($this->desconto);
-        print '<pre>';
-        var_dump($_SESSION);
-        print '</pre>';
+
+    public function calcula_total_servico() {
+        $this->sub_total = 0;
+        if (!empty($this->papel)) {
+            foreach ($this->papel as $key => $value) {
+                $this->sub_total += $value[0]->sub_total;
+            }
+        }
+        if (!empty($this->impressao)) {
+            foreach ($this->impressao as $key => $value) {
+                $this->sub_total += $value[0]->sub_total;
+            }
+        }
+        if (!empty($this->fotolito)) {
+            foreach ($this->fotolito as $key => $value) {
+                $this->sub_total += $value[0]->sub_total;
+            }
+        }
+        if (!empty($this->acabamento)) {
+            foreach ($this->acabamento as $key => $value) {
+                $this->sub_total += $value[0]->sub_total;
+            }
+        }
+        if (!empty($this->faca)) {
+            foreach ($this->faca as $key => $value) {
+                $this->sub_total += $value[0]->sub_total;
+            }
+        }
+        if (!empty($this->laminacao)) {
+            foreach ($this->laminacao as $key => $value) {
+                $this->sub_total += $value[0]->sub_total;
+            }
+        }
+        if (!empty($this->colagem)) {
+            foreach ($this->colagem as $key => $value) {
+                $this->sub_total += $value->sub_total;
+            }
+        }
+        return $this->sub_total;
+    }
+
+    public function calcula_unitario_servico($valor_total, $quantiade) {
+        return $this->valor_unitario = $valor_total / $quantiade;
     }
 
 //    public function total_linhas() {
@@ -89,5 +133,4 @@ class Servico_m extends CI_Model {
 //
 //        return $nota_lista;
 //    }
-
 }

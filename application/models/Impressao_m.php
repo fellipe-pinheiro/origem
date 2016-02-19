@@ -6,9 +6,9 @@ class Impressao_m extends CI_Model {
 
     var $id;
     var $nome;
-    var $valor;
-    var $descricao;
     var $impressao_formato;
+    var $descricao;
+    var $valor;
 
     function __construct() {
         parent::__construct();
@@ -97,6 +97,15 @@ class Impressao_m extends CI_Model {
         }
 
         return $impressao_lista;
+    }
+
+    public function calcula_valor_unitario($quantidade_pedido) {
+        if ($quantidade_pedido < 100) {
+            $valor_unitario = $this->valor / $quantidade_pedido;
+        } else {
+            $valor_unitario = $this->valor / 100;
+        }
+        return $valor_unitario;
     }
 
 }

@@ -5,18 +5,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Fotolito_m extends CI_Model {
 
     var $id;
-    var $altura;
-    var $largura;
+    var $impressao_formato;
     var $descricao;
-    var $valor; 
+    var $valor;
 
     function __construct() {
         parent::__construct();
         $this->load->database();
+        $this->load->model('Impressao_formato_m');
     }
 
     public function total_linhas() {
         return $this->db->get('fotolito')->num_rows();
+    }
+
+    public function _listar($id = '') {
+
+        if (!empty($id)) {
+            $result = $this->db->get_where('fotolito', array('id' => $id));
+        } else {
+            $result = $this->db->get('fotolito');
+        }
+
+        return $result->result_array();
     }
 
     public function listar($id = '') {
@@ -26,8 +37,19 @@ class Fotolito_m extends CI_Model {
         } else {
             $result = $this->db->get('fotolito');
         }
-
-        return $this->Fotolito_m->_changeToObject($result->result_array());
+        $impressao_lista = $this->Fotolito_m->_changeToObject($result->result_array());
+        return $impressao_lista;
+    }
+    
+    //Busca pela impressao_formato na tabela Fotolito
+    public function listar_formato($impressao_formato = '') {
+        if (!empty($impressao_formato)) {
+            $result = $this->db->get_where('fotolito', array('impressao_formato' => $impressao_formato));
+        } else {
+            $result = $this->db->get('fotolito');
+        }
+        $fotolito_lista = $this->Fotolito_m->_changeToObject($result->result_array());
+        return $fotolito_lista;
     }
 
     public function inserir(Fotolito_m $fotolito) {
@@ -65,7 +87,7 @@ class Fotolito_m extends CI_Model {
             return false;
         }
     }
-    
+
     function _changeToObject($result_db = '') {
         $fotolito_lista = array();
 
@@ -73,10 +95,12 @@ class Fotolito_m extends CI_Model {
         foreach ($result_db as $key => $value) {
             $fotolito = new Fotolito_m();
             $fotolito->id = $value['id'];
-            $fotolito->altura = $value['altura'];
-            $fotolito->largura = $value['largura'];
             $fotolito->descricao = $value['descricao'];
             $fotolito->valor = $value['valor'];
+
+            foreach ($this->Impressao_formato_m->listar($value['impressao_formato']) as $key => $value) {
+                $fotolito->impressao_formato = $value;
+            }
 
             $fotolito_lista[] = $fotolito;
         }

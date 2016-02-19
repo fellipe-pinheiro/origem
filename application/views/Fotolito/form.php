@@ -4,6 +4,7 @@ if ($acao == 'inserir') {
     $titulo = 'Inserir Fotolito';
     $id = '';
     $fotolito = new Fotolito_m();
+    $fotolito->impressao_formato = new Impressao_formato_m();
 } elseif ($acao == 'editar') {
     $action = 'fotolito/editar';
     $titulo = 'Editar Fotolito';
@@ -24,19 +25,17 @@ if ($acao == 'inserir') {
                     <!--ID-->
                     <?= form_hidden('id', $fotolito->id) ?>
 
-                    <!--Altura-->
+                    <!--Impressao Formato-->
                     <div class="form-group">
-                        <?= form_label('Altura: ', 'altura', array('class' => 'control-label col-sm-2')) ?>
+                        <?= form_label('Impressao Formato: ', 'impressao_formato', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('altura', $fotolito->altura, ' id="altura" class="form-control" placeholder="Altura"') ?>
-                        </div>
-                    </div>
-                    
-                    <!--Largura-->
-                    <div class="form-group">
-                        <?= form_label('Largura: ', 'largura', array('class' => 'control-label col-sm-2')) ?>
-                        <div class="col-sm-5">
-                            <?= form_input('largura', $fotolito->largura, ' id="largura" class="form-control" placeholder="Largura"') ?>
+                            <?php
+                            $lista = array();
+                            foreach ($impressao_formato as $key => $value) {
+                                $lista[$value->id] = $value->altura . 'x' . $value->largura;
+                            }
+                            print form_dropdown('impressao_formato', $lista, $fotolito->impressao_formato->id, ' id="valor" class="form-control" placeholder="Valor"');
+                            ?>
                         </div>
                     </div>
 
@@ -47,7 +46,7 @@ if ($acao == 'inserir') {
                             <?= form_textarea('descricao', $fotolito->descricao, ' id="descricao" class="form-control" placeholder="Breve descrição se necessário"') ?>
                         </div>
                     </div>
-                    
+
                     <!--Valor-->
                     <div class="form-group">
                         <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>

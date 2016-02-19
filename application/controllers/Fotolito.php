@@ -7,6 +7,7 @@ class Fotolito extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('Fotolito_m');
+        $this->load->model('Impressao_formato_m');
     }
 
     public function index() {
@@ -18,25 +19,28 @@ class Fotolito extends CI_Controller {
         $id = $this->uri->segment(3);
 
         if (empty($id)) {
+            $impressao_formato_lista = $this->Impressao_formato_m->listar();
+            //die();
             $data['acao'] = 'inserir';
-
+            $data['impressao_formato'] = $impressao_formato_lista;
             $this->load->view('fotolito/form', $data);
         } else {
             $fotolito = $this->Fotolito_m->listar($id);
+            $impressao_formato_lista = $this->Impressao_formato_m->listar();
 
-            $data['fotolito'] = $fotolito[0]; 
+            $data['fotolito'] = $fotolito[0];
+            $data['impressao_formato'] = $impressao_formato_lista;
             $data['acao'] = 'editar';
             $data['id'] = $id;
 
             $this->load->view('fotolito/form', $data);
         }
     }
-    
+
     public function inserir() {
         $fotolito = new Fotolito_m();
         $fotolito->id = null;
-        $fotolito->altura = $this->input->post('altura');
-        $fotolito->largura = $this->input->post('largura');
+        $fotolito->impressao_formato = $this->input->post('impressao_formato');
         $fotolito->descricao = $this->input->post('descricao');
         $fotolito->valor = $this->input->post('valor');
 
@@ -47,12 +51,11 @@ class Fotolito extends CI_Controller {
             redirect(base_url('fotolito/?msgTipe=erro&msg=Erro ao inserir a fotolito'), 'location');
         }
     }
-    
+
     public function editar() {
         $fotolito = new Fotolito_m();
-        $fotolito->id = $this->input->post('id');;
-        $fotolito->altura = $this->input->post('altura');
-        $fotolito->largura = $this->input->post('largura');
+        $fotolito->id = $this->input->post('id');
+        $fotolito->impressao_formato = $this->input->post('impressao_formato');
         $fotolito->descricao = $this->input->post('descricao');
         $fotolito->valor = $this->input->post('valor');
 
@@ -62,7 +65,7 @@ class Fotolito extends CI_Controller {
             sredirect(base_url('fotolito/?msgTipe=erro&msg=Erro ao alterar a fotolito'), 'location');
         }
     }
-    
+
     public function deletar() {
         print $id = $this->uri->segment(3);
 
@@ -72,4 +75,5 @@ class Fotolito extends CI_Controller {
             redirect(base_url('fotolito/?msgTipe=erro&msg=Erro ao apagar a fotolito'), 'location');
         }
     }
+
 }

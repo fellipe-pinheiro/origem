@@ -51,7 +51,6 @@ if ($acao == 'inserir') {
                             foreach ($impressao_formato as $key => $value) {
                                 $lista[$value->id] = $value->altura.'x'.$value->largura;
                             }
-                            
                             print form_dropdown('impressao_formato', $lista, $impressao->impressao_formato->id,' id="valor" class="form-control" placeholder="Valor"');
                             ?>
                         </div>

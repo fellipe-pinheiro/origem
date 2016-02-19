@@ -21,14 +21,11 @@ class Impressao extends CI_Controller {
 
         if (empty($id)) {
             $impressao_formato_lista = $this->Impressao_formato_m->listar();
-
             $data['acao'] = 'inserir';
             $data['impressao_formato'] = $impressao_formato_lista;
-
             $this->load->view('impressao/form', $data);
         } else {
             $impressao = $this->Impressao_m->listar($id);
-
             $impressao_formato_lista = $this->Impressao_formato_m->listar();
 
             $data['impressao'] = $impressao[0];
