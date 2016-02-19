@@ -33,8 +33,33 @@
                         <li><a href="<?= base_url('nota') ?>">Nota</a></li>
                         <li><a href="<?= base_url('cliente') ?>">Cliente</a></li>
                         <li><a href="<?= base_url('corte_vinco') ?>">Corte e Vinco</a></li>
+                        <li><a href="<?= base_url('usuario') ?>">Usuario</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="<?= base_url('login') ?>">Login</a>
+                </li>
+                <?php if ($this->session->usuario == NULL) { ?>
+                    <li>
+                        <a href="#">
+                            <span  class="glyphicon glyphicon-user" style="color: red"></span>
+                        </a>
+                    </li>
+                <?php } else { ?>
+                    <li>
+                        <a href="#">
+                            <span  class="glyphicon glyphicon-user" style="color: greenyellow"></span>
+                            <?= $this->session->usuario['nome'] ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url('login/logout') ?>">
+                            <span  class="glyphicon glyphicon-log-out"></span>
+                            Logout
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     </div>

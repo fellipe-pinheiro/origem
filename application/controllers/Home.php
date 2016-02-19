@@ -12,9 +12,9 @@ class Home extends CI_Controller {
     {
         $this->load->view('Home/index');
     }
-    public function teste()
+    public function login()
     {
-        var_dump('Teste');
+        $this->load->view('Home/login');
     }
     
 }
