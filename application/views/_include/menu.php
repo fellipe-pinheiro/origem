@@ -16,7 +16,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="<?= base_url('orcamento') ?>">Orçamento</a></li>
                         <li><a href="<?= base_url('servico') ?>">Serviço</a></li>
-                        <li><a href="<?= base_url('cartao_visita') ?>">Cartão de Visita</a></li>
+                        <li><a href="<?= base_url('cartao') ?>">Cartão</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -24,17 +24,43 @@
                     <ul class="dropdown-menu">
                         <li><a href="<?= base_url('acabamento') ?>">Acabamento</a></li>
                         <li><a href="<?= base_url('faca') ?>">Faca</a></li>
+                        <li><a href="<?= base_url('faca_cartao') ?>">Faca p/ cartão</a></li>
                         <li><a href="<?= base_url('papel') ?>">Papel</a></li>
-                        <li><a href="<?= base_url('impressao') ?>">Impressão</a></li>
-                        <li><a href="<?= base_url('impressao_formato') ?>">Impressão Formato</a></li>
+                        <li><a href="<?= base_url('impressao') ?>">Impressão Serviço</a></li>
+                        <li><a href="<?= base_url('impressao_cartao') ?>">Impressão Cartão</a></li>
+                        <li><a href="<?= base_url('impressao_formato') ?>">Área Impressão</a></li>
                         <li><a href="<?= base_url('fotolito') ?>">Fotolito</a></li>
                         <li><a href="<?= base_url('laminacao') ?>">Laminação</a></li>
                         <li><a href="<?= base_url('frete') ?>">Frete</a></li>
                         <li><a href="<?= base_url('nota') ?>">Nota</a></li>
                         <li><a href="<?= base_url('cliente') ?>">Cliente</a></li>
-                        <li><a href="<?= base_url('corte_vinco') ?>">Corte e Vinco</a></li>
+                        <li><a href="<?= base_url('usuario') ?>">Usuario</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="<?= base_url('login') ?>">Login</a>
+                </li>
+                <?php /* if ($this->session->usuario == NULL) { ?>
+                    <li>
+                        <a href="#">
+                            <span  class="glyphicon glyphicon-user" style="color: red"></span>
+                        </a>
+                    </li>
+                <?php } else { ?>
+                    <li>
+                        <a href="#">
+                            <span  class="glyphicon glyphicon-user" style="color: greenyellow"></span>
+                            <?= $this->session->usuario['nome'] ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url('login/logout') ?>">
+                            <span  class="glyphicon glyphicon-log-out"></span>
+                            Logout
+                        </a>
+                    </li>
+                <?php } */?>
             </ul>
         </div>
     </div>

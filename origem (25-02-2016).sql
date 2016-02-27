@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 08-Fev-2016 às 21:54
+-- Generation Time: 25-Fev-2016 às 05:20
 -- Versão do servidor: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -51,21 +51,21 @@ INSERT INTO `acabamento` (`id`, `nome`, `descricao`, `valor`) VALUES
 CREATE TABLE IF NOT EXISTS `cliente` (
 `id` int(11) NOT NULL,
   `nome` varchar(50) NOT NULL,
-  `rua` varchar(50) NOT NULL,
-  `numero` int(5) NOT NULL,
-  `complemento` varchar(50) NOT NULL,
-  `bairro` varchar(50) NOT NULL,
-  `cidade` varchar(20) NOT NULL,
-  `estado` varchar(20) NOT NULL,
-  `cep` varchar(8) NOT NULL,
+  `rua` varchar(50) DEFAULT NULL,
+  `numero` int(5) DEFAULT NULL,
+  `complemento` varchar(50) DEFAULT NULL,
+  `bairro` varchar(50) DEFAULT NULL,
+  `cidade` varchar(20) DEFAULT NULL,
+  `estado` varchar(20) DEFAULT NULL,
+  `cep` varchar(8) DEFAULT NULL,
   `cnpj_cpf` varchar(20) NOT NULL,
-  `ie` varchar(20) NOT NULL,
-  `im` varchar(20) NOT NULL,
-  `pessoa_tipo` tinyint(1) NOT NULL,
+  `ie` varchar(20) DEFAULT NULL,
+  `im` varchar(20) DEFAULT NULL,
+  `pessoa_tipo` tinyint(1) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
-  `telefone` varchar(15) NOT NULL,
-  `celular` varchar(15) NOT NULL,
-  `observacao` text NOT NULL
+  `telefone` varchar(15) DEFAULT NULL,
+  `celular` varchar(15) DEFAULT NULL,
+  `observacao` text
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
@@ -106,17 +106,35 @@ CREATE TABLE IF NOT EXISTS `faca` (
   `nome` varchar(50) NOT NULL,
   `descricao` text NOT NULL,
   `valor` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `faca`
 --
 
 INSERT INTO `faca` (`id`, `nome`, `descricao`, `valor`) VALUES
-(1, 'Faca Comum', 'Faca comum p/ convites', '2.20'),
-(2, 'Faca 2 bocas', 'Faca com duas bocas para cartões de visita', '60.00'),
-(3, 'Faca 4 bocas', 'Faca com quatro bocas para cartão de visita', '120.00'),
-(4, 'Faca 6 bocas', 'Faca com seis bocas para cartão de visita', '180.00');
+(1, 'Faca', 'Encomenda de faca', '2.20');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `faca_cartao`
+--
+
+CREATE TABLE IF NOT EXISTS `faca_cartao` (
+`id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `descricao` text NOT NULL,
+  `valor` decimal(10,2) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `faca_cartao`
+--
+
+INSERT INTO `faca_cartao` (`id`, `nome`, `descricao`, `valor`) VALUES
+(5, '2 bocas', '', '10.64'),
+(6, '4 bocas', '', '20.50');
 
 -- --------------------------------------------------------
 
@@ -126,18 +144,18 @@ INSERT INTO `faca` (`id`, `nome`, `descricao`, `valor`) VALUES
 
 CREATE TABLE IF NOT EXISTS `fotolito` (
 `id` int(11) NOT NULL,
-  `altura` int(3) NOT NULL,
-  `largura` int(3) NOT NULL,
+  `impressao_formato` int(11) NOT NULL,
   `descricao` text NOT NULL,
   `valor` decimal(5,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `fotolito`
 --
 
-INSERT INTO `fotolito` (`id`, `altura`, `largura`, `descricao`, `valor`) VALUES
-(3, 123, 456, '789', '2.00');
+INSERT INTO `fotolito` (`id`, `impressao_formato`, `descricao`, `valor`) VALUES
+(3, 5, 'teste', '25.00'),
+(4, 6, 'qualquer', '20.00');
 
 -- --------------------------------------------------------
 
@@ -167,19 +185,43 @@ INSERT INTO `frete` (`id`, `nome`, `descricao`, `valor`) VALUES
 
 CREATE TABLE IF NOT EXISTS `impressao` (
 `id` int(11) NOT NULL,
-  `nome` varchar(20) NOT NULL,
+  `nome` varchar(50) NOT NULL,
   `descricao` text NOT NULL,
   `valor` decimal(10,2) NOT NULL,
   `impressao_formato` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `impressao`
 --
 
 INSERT INTO `impressao` (`id`, `nome`, `descricao`, `valor`, `impressao_formato`) VALUES
-(2, 'Alto Rel', 'des', '200.90', 0),
-(3, 'Baixo Relevo', 'Teste baixo', '150.00', 5);
+(2, 'Alto Rel', 'descrição', '200.00', 6),
+(3, 'Baixo Relevo', 'Teste baixo', '150.00', 5),
+(4, 'OFF', 'werqwr', '250.00', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `impressao_cartao`
+--
+
+CREATE TABLE IF NOT EXISTS `impressao_cartao` (
+`id` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `descricao` text NOT NULL,
+  `impressao_formato` int(11) NOT NULL,
+  `valor_100` decimal(10,2) NOT NULL,
+  `valor_500` decimal(10,2) NOT NULL,
+  `valor_1000` decimal(10,2) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `impressao_cartao`
+--
+
+INSERT INTO `impressao_cartao` (`id`, `nome`, `descricao`, `impressao_formato`, `valor_100`, `valor_500`, `valor_1000`) VALUES
+(3, 'Alto Relevo Cartão de visita', '100 cem', 5, '35.00', '30.00', '28.00');
 
 -- --------------------------------------------------------
 
@@ -202,6 +244,20 @@ CREATE TABLE IF NOT EXISTS `impressao_formato` (
 INSERT INTO `impressao_formato` (`id`, `nome`, `altura`, `largura`, `descricao`) VALUES
 (5, 'Formato A', 220, 480, 'Teste'),
 (6, 'Formato B', 320, 330, 'Formato b');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `itens_impressao`
+--
+
+CREATE TABLE IF NOT EXISTS `itens_impressao` (
+`id` int(11) NOT NULL,
+  `valor_unitario` decimal(10,2) NOT NULL,
+  `sub_total` decimal(10,2) NOT NULL,
+  `impressao_id` int(11) NOT NULL,
+  `servico_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -265,10 +321,10 @@ CREATE TABLE IF NOT EXISTS `papel` (
 --
 
 INSERT INTO `papel` (`id`, `nome`, `gramatura`, `altura`, `largura`, `descricao`, `valor`) VALUES
-(1, 'citrus yellow ', 240, 660, 960, 'descrição', '0.00'),
-(2, 'infra violet', 240, 660, 960, 'descrição', '0.00'),
-(3, 'lime tonic', 240, 660, 960, 'descrição', '0.00'),
-(4, 'cosmo pink', 240, 660, 960, 'descrição', '0.00'),
+(1, 'citrus yellow ', 240, 660, 960, 'descrição', '2.50'),
+(2, 'infra violet', 240, 660, 960, 'descrição', '1.80'),
+(3, 'lime tonic', 240, 660, 960, 'descrição', '3.20'),
+(4, 'cosmo pink', 240, 660, 960, 'descrição', '1.90'),
 (5, 'riviera blue', 240, 660, 960, 'descrição', '0.00'),
 (6, 'black', 240, 660, 960, 'descrição', '0.00'),
 (7, 'hot brown', 240, 660, 960, 'descrição', '0.00'),
@@ -382,9 +438,9 @@ INSERT INTO `papel` (`id`, `nome`, `gramatura`, `altura`, `largura`, `descricao`
 (115, 'los angeles microcotele', 240, 660, 960, 'descrição', '0.00'),
 (116, 'mar del plata', 240, 660, 960, 'descrição', '0.00'),
 (117, 'mar del plata linear', 240, 660, 960, 'descrição', '0.00'),
-(118, 'aspen', 240, 660, 960, 'descrição', '0.00'),
+(118, 'aspen', 240, 660, 960, 'descrição', '3.00'),
 (119, 'aspen linear', 240, 660, 960, 'descrição', '0.00'),
-(120, 'majorca', 240, 660, 960, 'descrição', '0.00'),
+(120, 'majorca', 240, 660, 960, 'descrição', '2.50'),
 (121, 'majorca linear', 240, 660, 960, 'descrição', '0.00'),
 (122, 'ibiza', 240, 660, 960, 'descrição', '0.00'),
 (123, 'fine face branco', 240, 660, 960, 'descrição', '0.00'),
@@ -458,7 +514,6 @@ INSERT INTO `papel` (`id`, `nome`, `gramatura`, `altura`, `largura`, `descricao`
 (191, 'tabaco', 240, 660, 960, 'descrição', '0.00'),
 (192, 'imbuia', 240, 660, 960, 'descrição', '0.00'),
 (193, 'natural', 240, 660, 960, 'descrição', '0.00'),
-(194, 'branco', 240, 660, 960, 'descrição', '0.00'),
 (195, 'preto', 240, 660, 960, 'descrição', '0.00'),
 (196, 'branco', 240, 660, 960, 'descrição', '0.00'),
 (197, 'perola branca', 240, 660, 960, 'descrição', '0.00'),
@@ -603,11 +658,31 @@ INSERT INTO `papel` (`id`, `nome`, `gramatura`, `altura`, `largura`, `descricao`
 (336, 'design natural white', 240, 660, 960, 'descrição', '0.00'),
 (337, 'linear bright white', 240, 660, 960, 'descrição', '0.00'),
 (338, 'tweed bright white', 240, 660, 960, 'descrição', '0.00'),
-(339, 'concetto bianco', 240, 660, 960, 'descrição', '0.00'),
 (340, 'finezza bianco', 240, 660, 960, 'descrição', '0.00'),
 (341, 'couche fosco', 240, 660, 960, 'descrição', '0.00'),
 (342, 'acetato', 240, 620, 1200, 'descrição', '0.00'),
 (343, 'kraft', 240, 660, 960, 'descrição', '0.00');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuario`
+--
+
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `login` varchar(20) NOT NULL,
+  `senha` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `nome`, `login`, `senha`) VALUES
+(1, 'fellipe pinheiro', 'fellipe', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220'),
+(2, 'teste nome', 'teste', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220');
 
 --
 -- Indexes for dumped tables
@@ -638,6 +713,12 @@ ALTER TABLE `faca`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `faca_cartao`
+--
+ALTER TABLE `faca_cartao`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `fotolito`
 --
 ALTER TABLE `fotolito`
@@ -656,9 +737,21 @@ ALTER TABLE `impressao`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `impressao_cartao`
+--
+ALTER TABLE `impressao_cartao`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `impressao_formato`
 --
 ALTER TABLE `impressao_formato`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `itens_impressao`
+--
+ALTER TABLE `itens_impressao`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -702,12 +795,17 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `faca`
 --
 ALTER TABLE `faca`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `faca_cartao`
+--
+ALTER TABLE `faca_cartao`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `fotolito`
 --
 ALTER TABLE `fotolito`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `frete`
 --
@@ -717,12 +815,22 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `impressao`
 --
 ALTER TABLE `impressao`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `impressao_cartao`
+--
+ALTER TABLE `impressao_cartao`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `impressao_formato`
 --
 ALTER TABLE `impressao_formato`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `itens_impressao`
+--
+ALTER TABLE `itens_impressao`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `laminacao`
 --

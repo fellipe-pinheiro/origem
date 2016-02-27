@@ -9,6 +9,10 @@ class Impressao_m extends CI_Model {
     var $impressao_formato;
     var $descricao;
     var $valor;
+    var $fotolito;
+    var $quantidade;
+    var $sub_total;
+    var $valor_unitario;
 
     function __construct() {
         parent::__construct();
@@ -18,17 +22,6 @@ class Impressao_m extends CI_Model {
 
     public function total_linhas() {
         return $this->db->get('impressao')->num_rows();
-    }
-
-    public function _listar($id = '') {
-
-        if (!empty($id)) {
-            $result = $this->db->get_where('impressao', array('id' => $id));
-        } else {
-            $result = $this->db->get('impressao');
-        }
-
-        return $result->result_array();
     }
 
     public function listar($id = '') {
@@ -44,7 +37,14 @@ class Impressao_m extends CI_Model {
 
     public function inserir(Impressao_m $impressao) {
         if (!empty($impressao)) {
-            if ($this->db->insert('impressao', $impressao)) {
+            $dados = array(
+                'id' => $impressao->id,
+                'nome' => $impressao->nome,
+                'impressao_formato' => $impressao->impressao_formato,
+                'descricao' => $impressao->descricao,
+                'valor' => str_replace(',', '.', $impressao->valor)
+            );
+            if ($this->db->insert('impressao', $dados)) {
                 return $this->db->insert_id();
             } else {
                 return false;
@@ -56,8 +56,15 @@ class Impressao_m extends CI_Model {
 
     public function editar(Impressao_m $impressao) {
         if (!empty($impressao->id)) {
+            $dados = array(
+                'id' => $impressao->id,
+                'nome' => $impressao->nome,
+                'impressao_formato' => $impressao->impressao_formato,
+                'descricao' => $impressao->descricao,
+                'valor' => str_replace(',', '.', $impressao->valor)
+            );
             $this->db->where('id', $impressao->id);
-            if ($this->db->update('impressao', $impressao)) {
+            if ($this->db->update('impressao', $dados)) {
                 return true;
             }
         } else {
@@ -86,7 +93,7 @@ class Impressao_m extends CI_Model {
             $impressao = new Impressao_m();
             $impressao->id = $value['id'];
             $impressao->nome = $value['nome'];
-            $impressao->valor = $value['valor'];
+            $impressao->valor = str_replace('.', ',', $value['valor']);
             $impressao->descricao = $value['descricao'];
 
             foreach ($this->Impressao_formato_m->listar($value['impressao_formato']) as $key => $value) {

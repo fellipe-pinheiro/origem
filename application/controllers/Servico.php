@@ -7,66 +7,192 @@ class Servico extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('Impressao_m');
+        $this->load->model('Impressao_cartao_m');
         $this->load->model('Impressao_formato_m');
         $this->load->model('Fotolito_m');
         $this->load->model('Acabamento_m');
         $this->load->model('Faca_m');
+        $this->load->model('Faca_cartao_m');
         $this->load->model('Papel_m');
-        $this->load->model('Laminacao_m');
+        $this->load->model('Empastamento_m');
         $this->load->model('Colagem_m');
+        $this->load->model('Laminacao_m');
         $this->load->model('Servico_m');
-        $this->load->library('session');
+        $this->load->model('Cliente_m');
+        session_start();
     }
 
     public function index() {
-        $data['laminacao'] = $this->Laminacao_m->listar();
-        $data['impressao'] = $this->Impressao_m->listar();
-        $data['acabamento'] = $this->Acabamento_m->listar();
-        $data['papel'] = $this->Papel_m->listar();
-        $data['faca'] = $this->Faca_m->listar();
-        if ($this->session->servico) {
-            $data['valor_total'] = $this->session->servico->calcula_total_servico();
-            $data['valor_unitario'] = $this->session->servico->calcula_unitario_servico($data['valor_total'], $this->session->servico->quantidade);
-            $data['total'] = $data['valor_total'] - $this->session->servico->desconto;
+        empty($_SESSION['orcamento']['servico']) ? $servico = $_SESSION['orcamento']['servico'] = new Servico_m() : '';
+        empty($_SESSION['orcamento']['cliente']) ? $servico = $_SESSION['orcamento']['cliente'] = new Cliente_m() : '';
+        
+        $data['valor_total'] = NULL;
+        $data['valor_unitario'] = NULL;
+        $data['total'] = NULL;
+
+        $data['laminacao_md'] = $this->Laminacao_m->listar();
+        $data['acabamento_md'] = $this->Acabamento_m->listar();
+        $data['papel_md'] = $this->Papel_m->listar();
+
+        if ($_SESSION['orcamento']['servico']->tipo == 'servico') {
+            $data['impressao_md'] = $this->Impressao_m->listar();
+            $data['faca_md'] = $this->Faca_m->listar();
+            $data['painel'] = 'Serviço';
+        } elseif ($_SESSION['orcamento']['servico']->tipo == 'cartao') {
+            $data['impressao_cartao_md'] = $this->Impressao_cartao_m->listar();
+            $data['faca_cartao_md'] = $this->Faca_cartao_m->listar();
+            $data['painel'] = 'Cartão';
         }
 
+        if (!empty($_SESSION['orcamento']['servico']->quantidade)) {
+            $data['valor_total'] = $_SESSION['orcamento']['servico']->calcula_total_servico();
+            $data['valor_unitario'] = $_SESSION['orcamento']['servico']->calcula_unitario_servico($data['valor_total'], $_SESSION['orcamento']['servico']->quantidade);
+            $data['total'] = $data['valor_total'] - $_SESSION['orcamento']['servico']->desconto;
+        }
+        
+        $data['cliente'] = $this->Cliente_m->listar();
+        
         $this->load->view('servico/orcamento', $data);
     }
+    
+    public function add_cliente_session() {
+        $id_cliente = $this->uri->segment(3);
+        $cliente = $this->Cliente_m->listar($id_cliente);
+        $cliente = $cliente[0];
+        $_SESSION['orcamento']['cliente'] = $cliente;
+        redirect(base_url('servico'), 'location');
+    }
+    public function criar_cliente_session() {
+        $cliente = new Cliente_m();
+        $cliente->id = null;
+        $cliente->nome = $this->input->post('nome');
+        $cliente->numero = $this->input->post('numero');
+        $cliente->complemento = $this->input->post('complemento');
+        $cliente->bairro = $this->input->post('bairro');
+        $cliente->cidade = $this->input->post('cidade');
+        $cliente->estado = $this->input->post('estado');
+        $cliente->cep = $this->input->post('cep');
+        $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
+        $cliente->ie = $this->input->post('ie');
+        $cliente->im = $this->input->post('im');
+        $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
+        $cliente->email = $this->input->post('email');
+        $cliente->telefone = $this->input->post('telefone');
+        $cliente->celular = $this->input->post('celular');
+        $cliente->observacao = $this->input->post('observacao');
 
+        $id = $this->Cliente_m->inserir($cliente);
+        
+        $_SESSION['orcamento']['cliente'] = $cliente;
+        redirect(base_url('servico'), 'location');
+    }
+    
     public function excluir_todos_servicos() {
-        unset(
-                $_SESSION['papel'], $_SESSION['impressao'], $_SESSION['acabamento'], $_SESSION['faca'], $_SESSION['servico'], $_SESSION['fotolito'], $_SESSION['laminacao'], $_SESSION['colagem']
-        );
+        unset($_SESSION['orcamento']['servico']);
         redirect(base_url('servico'), 'location');
     }
 
     public function criar_servico() {
-        $this->session->servico = $this->Servico_m;
-        $this->session->servico->quantidade = $_POST['quantidade'];
-        $this->session->servico->desconto = $_POST['desconto'];
+        $_SESSION['orcamento']['servico']->tipo = $_POST['tipo'];
+        $_SESSION['orcamento']['servico']->quantidade = $_POST['quantidade'];
+        $_SESSION['orcamento']['servico']->desconto = $_POST['desconto'];
         redirect(base_url('servico'), 'location');
     }
 
     public function editar_servico() {
-        if ($this->session->servico->quantidade == NULL) {
-            $this->session->set_flashdata('edicaofalse', 'Crie um novo serviço!');
+        if ($_SESSION['orcamento']['servico']->quantidade == NULL) {
             redirect(base_url('servico'), 'location');
         }
-        $servico_quantidade = $this->session->servico->quantidade = $_POST['quantidade'];
-        $servico_desconto = $this->session->servico->desconto = $_POST['desconto'];
-        foreach ($this->session->laminacao as $key => $value) {
+        if ($_SESSION['orcamento']['servico']->tipo != $_POST['tipo']) {
+            unset($_SESSION['orcamento']['servico']);
+            $_SESSION['orcamento']['servico'] = new Servico_m();
+        }
+        $_SESSION['orcamento']['servico']->tipo = $_POST['tipo'];
+        $servico_quantidade = $_SESSION['orcamento']['servico']->quantidade = $_POST['quantidade'];
+        $servico_desconto = $_SESSION['orcamento']['servico']->desconto = $_POST['desconto'];
+
+        //recalcula valores para os itens que dependem da quantidade
+        foreach ($_SESSION['orcamento']['servico']->laminacao as $key => $value) {
             $value[0]->valor_unitario = $value[0]->calcula_valor_unitario($value[0]->sub_total, $servico_quantidade);
         }
-        foreach ($this->session->colagem as $key => $value) {
+        foreach ($_SESSION['orcamento']['servico']->colagem as $key => $value) {
             $value->valor_unitario = $value->calcula_valor_unitario($value->sub_total, $servico_quantidade);
         }
-        foreach ($this->session->papel as $key => $value) {
+        foreach ($_SESSION['orcamento']['servico']->empastamento as $key => $value) {
+            $value->valor_unitario = $value->calcula_valor_unitario($value->sub_total, $servico_quantidade);
+        }
+        foreach ($_SESSION['orcamento']['servico']->papel as $key => $value) {
             $value[0]->valor_unitario = $value[0]->calcula_valor_unitario($value[0]->quantidade, $servico_quantidade);
         }
-        foreach ($this->session->impressao as $key => $value) {
+        foreach ($_SESSION['orcamento']['servico']->impressao as $key => $value) {
             $value[0]->valor_unitario = $value[0]->calcula_valor_unitario($servico_quantidade);
             $value[0]->sub_total = $servico_quantidade * $value[0]->valor_unitario;
         }
+        redirect(base_url('servico'), 'location');
+    }
+
+    public function impressao_cartao_sessao_inserir() {
+        if (empty($_POST['impressao_cartao'])) {
+            redirect(base_url('servico'), 'location');
+        }
+        $id = $_POST['impressao_cartao'];
+        $qtd_cor_frente = $this->input->post('qtd_cor_frente');
+        $qtd_cor_verso = $this->input->post('qtd_cor_verso');
+        $qtd_cor_frente == '' ? $qtd_cor_frente = 0 : '';
+        $qtd_cor_verso == '' ? $qtd_cor_verso = 0 : '';
+
+        $impressao = $this->Impressao_cartao_m->listar($id); //listo a impressao pelo ID
+        $impressao = $impressao[0];
+        $quantidade_pedido = $_SESSION['orcamento']['servico']->quantidade;
+        $impressao->qtd_cor_frente = $qtd_cor_frente;
+        $impressao->qtd_cor_verso = $qtd_cor_verso;
+        $impressao->valor_unitario = $impressao->calcula_valor_unitario($quantidade_pedido, $impressao);
+        $impressao->sub_total = $quantidade_pedido * $impressao->valor_unitario;
+
+        $fotolito = $this->Fotolito_m->listar_formato($impressao->impressao_formato->id); //listo o fotolito pela coluna da impressao_formato
+        $fotolito = $fotolito[0];
+        if ($_SESSION['orcamento']['servico']->tipo == 'cartao') {
+            $fotolito->quantidade = $impressao->qtd_cor_frente + $impressao->qtd_cor_verso;
+        } else {
+            $fotolito->quantidade = 1;
+        }
+        $fotolito->valor_unitario = $fotolito->valor;
+        $fotolito->sub_total = $fotolito->quantidade * $fotolito->valor_unitario;
+        $impressao->fotolito = $fotolito;
+        $_SESSION['orcamento']['servico']->impressao[] = $impressao;
+        redirect(base_url('servico'), 'location');
+    }
+
+    public function impressao_cartao_sessao_editar() {
+        if (empty($_POST['impressao_cartao'])) {
+            redirect(base_url('servico'), 'location');
+        }
+        $posicao = $this->uri->segment(3);
+        $id = $_POST['impressao_cartao'];
+        $qtd_cor_frente = $this->input->post('qtd_cor_frente');
+        $qtd_cor_verso = $this->input->post('qtd_cor_verso');
+        $qtd_cor_frente == '' ? $qtd_cor_frente = 0 : '';
+        $qtd_cor_verso == '' ? $qtd_cor_verso = 0 : '';
+
+        $impressao = $this->Impressao_cartao_m->listar($id); //listo a impressao pelo ID
+        $impressao = $impressao[0];
+        $quantidade_pedido = $_SESSION['orcamento']['servico']->quantidade;
+        $impressao->qtd_cor_frente = $qtd_cor_frente;
+        $impressao->qtd_cor_verso = $qtd_cor_verso;
+        $impressao->valor_unitario = $impressao->calcula_valor_unitario($quantidade_pedido, $impressao);
+        $impressao->sub_total = $quantidade_pedido * $impressao->valor_unitario;
+
+        $fotolito = $this->Fotolito_m->listar_formato($impressao->impressao_formato->id); //listo o fotolito pela coluna da impressao_formato
+        $fotolito = $fotolito[0];
+        if ($_SESSION['orcamento']['servico']->tipo == 'cartao') {
+            $fotolito->quantidade = $impressao->qtd_cor_frente + $impressao->qtd_cor_verso;
+        } else {
+            $fotolito->quantidade = 1;
+        }
+        $fotolito->valor_unitario = $fotolito->valor;
+        $fotolito->sub_total = $fotolito->quantidade * $fotolito->valor_unitario;
+        $impressao->fotolito = $fotolito;
+        $_SESSION['orcamento']['servico']->impressao[$posicao] = $impressao;
         redirect(base_url('servico'), 'location');
     }
 
@@ -76,17 +202,17 @@ class Servico extends CI_Controller {
         }
         $id = $_POST['impressao'];
         $impressao = $this->Impressao_m->listar($id); //listo a impressao pelo ID
-        $fotolito = $this->Fotolito_m->listar_formato($impressao[0]->impressao_formato->id); //listo o fotolito pela coluna da impressao_formato
-        $quantidade_pedido = $this->session->servico->quantidade;
-        $impressao[0]->valor_unitario = $impressao[0]->calcula_valor_unitario($quantidade_pedido);
-        $impressao[0]->sub_total = $quantidade_pedido * $impressao[0]->valor_unitario;
-        $fotolito[0]->quantidade = 1;
-        $fotolito[0]->valor_unitario = $fotolito[0]->valor;
-        $fotolito[0]->sub_total = $fotolito[0]->quantidade * $fotolito[0]->valor_unitario;
-        $_SESSION['impressao'][] = $impressao;
-        $_SESSION['fotolito'][] = $fotolito;
-        $this->session->servico->impressao = $_SESSION['impressao'];
-        $this->session->servico->fotolito = $_SESSION['fotolito'];
+        $impressao = $impressao[0];
+        $quantidade_pedido = $_SESSION['orcamento']['servico']->quantidade;
+        $impressao->valor_unitario = $impressao->calcula_valor_unitario($quantidade_pedido);
+        $impressao->sub_total = $quantidade_pedido * $impressao->valor_unitario;
+        $fotolito = $this->Fotolito_m->listar_formato($impressao->impressao_formato->id); //listo o fotolito pela coluna da impressao_formato
+        $fotolito = $fotolito[0];
+        $fotolito->quantidade = 1;
+        $fotolito->valor_unitario = $fotolito->valor;
+        $fotolito->sub_total = $fotolito->quantidade * $fotolito->valor_unitario;
+        $impressao->fotolito = $fotolito;
+        $_SESSION['orcamento']['servico']->impressao[] = $impressao;
         redirect(base_url('servico'), 'location');
     }
 
@@ -94,30 +220,26 @@ class Servico extends CI_Controller {
         if (empty($_POST['impressao'])) {
             redirect(base_url('servico'), 'location');
         }
-        $id = $_POST['impressao'];
         $posicao = $this->uri->segment(3);
-        $impressao = $this->Impressao_m->listar($id);
-        $fotolito = $this->Fotolito_m->listar_formato($impressao[0]->impressao_formato->id); //listo o fotolito pela coluna da impressao_formato
-        $quantidade_pedido = $this->session->servico->quantidade;
-        $impressao[0]->valor_unitario = $impressao[0]->calcula_valor_unitario($quantidade_pedido);
-        $impressao[0]->sub_total = $quantidade_pedido * $impressao[0]->valor_unitario;
-        $fotolito[0]->quantidade = 1;
-        $fotolito[0]->valor_unitario = $fotolito[0]->valor;
-        $fotolito[0]->sub_total = $fotolito[0]->quantidade * $fotolito[0]->valor_unitario;
-        $_SESSION['impressao'][$posicao] = $impressao;
-        $_SESSION['fotolito'][$posicao] = $fotolito;
-        $this->session->servico->impressao = $_SESSION['impressao'];
-        $this->session->servico->fotolito = $_SESSION['fotolito'];
-
+        $id = $_POST['impressao'];
+        $impressao = $this->Impressao_m->listar($id); //listo a impressao pelo ID
+        $impressao = $impressao[0];
+        $quantidade_pedido = $_SESSION['orcamento']['servico']->quantidade;
+        $impressao->valor_unitario = $impressao->calcula_valor_unitario($quantidade_pedido);
+        $impressao->sub_total = $quantidade_pedido * $impressao->valor_unitario;
+        $fotolito = $this->Fotolito_m->listar_formato($impressao->impressao_formato->id); //listo o fotolito pela coluna da impressao_formato
+        $fotolito = $fotolito[0];
+        $fotolito->quantidade = 1;
+        $fotolito->valor_unitario = $fotolito->valor;
+        $fotolito->sub_total = $fotolito->quantidade * $fotolito->valor_unitario;
+        $impressao->fotolito = $fotolito;
+        $_SESSION['orcamento']['servico']->impressao[$posicao] = $impressao;
         redirect(base_url('servico'), 'location');
     }
 
     public function impressao_sessao_excluir() {
         $posicao = $this->uri->segment(3);
-        unset($_SESSION['impressao'][$posicao]);
-        unset($_SESSION['fotolito'][$posicao]);
-        $this->session->servico->impressao = $_SESSION['impressao'];
-        $this->session->servico->fotolito = $_SESSION['fotolito'];
+        unset($_SESSION['orcamento']['servico']->impressao[$posicao]);
         redirect(base_url('servico'), 'location');
     }
 
@@ -126,13 +248,12 @@ class Servico extends CI_Controller {
         $quantidade = $_POST['quantidade'];
         $valor = $_POST['valor'];
         $colagem = new Colagem_m();
-        $quantidade_pedido = $this->session->servico->quantidade;
+        $quantidade_pedido = $_SESSION['orcamento']['servico']->quantidade;
         $colagem->nome = $nome;
         $colagem->quantidade = $quantidade;
         $colagem->valor_unitario = $colagem->calcula_valor_unitario($valor, $quantidade_pedido);
         $colagem->sub_total = $valor;
-        $_SESSION['colagem'][] = $colagem;
-        $this->session->servico->colagem = $_SESSION['colagem'];
+        $_SESSION['orcamento']['servico']->colagem[] = $colagem;
         redirect(base_url('servico'), 'location');
     }
 
@@ -141,18 +262,17 @@ class Servico extends CI_Controller {
         $nome = $_POST['nome'];
         $quantidade = $_POST['quantidade'];
         $valor = $_POST['valor'];
-        $quantidade_pedido = $this->session->servico->quantidade;
-        $this->session->servico->colagem[$posicao]->nome = $nome;
-        $this->session->servico->colagem[$posicao]->quantidade = $quantidade;
-        $this->session->servico->colagem[$posicao]->valor_unitario = $this->session->servico->colagem[$posicao]->calcula_valor_unitario($valor, $quantidade_pedido);
-        $this->session->servico->colagem[$posicao]->sub_total = $valor;
+        $quantidade_pedido = $_SESSION['orcamento']['servico']->quantidade;
+        $_SESSION['orcamento']['servico']->colagem[$posicao]->nome = $nome;
+        $_SESSION['orcamento']['servico']->colagem[$posicao]->quantidade = $quantidade;
+        $_SESSION['orcamento']['servico']->colagem[$posicao]->valor_unitario = $_SESSION['orcamento']['servico']->colagem[$posicao]->calcula_valor_unitario($valor, $quantidade_pedido);
+        $_SESSION['orcamento']['servico']->colagem[$posicao]->sub_total = $valor;
         redirect(base_url('servico'), 'location');
     }
 
     public function colagem_sessao_excluir() {
         $posicao = $this->uri->segment(3);
-        unset($_SESSION['colagem'][$posicao]);
-        $this->session->servico->colagem = $_SESSION['colagem'];
+        unset($_SESSION['orcamento']['servico']->colagem[$posicao]);
         redirect(base_url('servico'), 'location');
     }
 
@@ -163,14 +283,13 @@ class Servico extends CI_Controller {
         $id = $_POST['laminacao'];
         $quantidade = $_POST['quantidade'];
         $valor = $_POST['valor'];
-        $quantidade_pedido = $this->session->servico->quantidade;
+        $quantidade_pedido = $_SESSION['orcamento']['servico']->quantidade;
         $laminacao = $this->Laminacao_m->listar($id);
-        //Cria os atributos: $quantidade e $valor_unitario
-        $laminacao[0]->quantidade = $quantidade;
-        $laminacao[0]->valor_unitario = $laminacao[0]->calcula_valor_unitario($valor, $quantidade_pedido);
-        $laminacao[0]->sub_total = $valor;
-        $_SESSION['laminacao'][] = $laminacao;
-        $this->session->servico->laminacao = $_SESSION['laminacao'];
+        $laminacao = $laminacao[0];
+        $laminacao->quantidade = $quantidade;
+        $laminacao->valor_unitario = $laminacao->calcula_valor_unitario($valor, $quantidade_pedido);
+        $laminacao->sub_total = $valor;
+        $_SESSION['orcamento']['servico']->laminacao[] = $laminacao;
         redirect(base_url('servico'), 'location');
     }
 
@@ -182,21 +301,19 @@ class Servico extends CI_Controller {
         $id = $_POST['laminacao'];
         $quantidade = $_POST['quantidade'];
         $valor = $_POST['valor'];
-        $quantidade_pedido = $this->session->servico->quantidade;
+        $quantidade_pedido = $_SESSION['orcamento']['servico']->quantidade;
         $laminacao = $this->Laminacao_m->listar($id);
-        //Cria os atributos: $quantidade e $valor_unitario
-        $laminacao[0]->quantidade = $quantidade;
-        $laminacao[0]->valor_unitario = $laminacao[0]->calcula_valor_unitario($valor, $quantidade_pedido);
-        $laminacao[0]->sub_total = $valor;
-        $_SESSION['laminacao'][$posicao] = $laminacao;
-        $this->session->servico->laminacao = $_SESSION['laminacao'];
+        $laminacao = $laminacao[0];
+        $laminacao->quantidade = $quantidade;
+        $laminacao->valor_unitario = $laminacao->calcula_valor_unitario($valor, $quantidade_pedido);
+        $laminacao->sub_total = $valor;
+        $_SESSION['orcamento']['servico']->laminacao[$posicao] = $laminacao;
         redirect(base_url('servico'), 'location');
     }
 
     public function laminacao_sessao_excluir() {
         $posicao = $this->uri->segment(3);
-        unset($_SESSION['laminacao'][$posicao]);
-        $this->session->servico->laminacao = $_SESSION['laminacao'];
+        unset($_SESSION['orcamento']['servico']->laminacao[$posicao]);
         redirect(base_url('servico'), 'location');
     }
 
@@ -206,14 +323,26 @@ class Servico extends CI_Controller {
         }
         $id = $_POST['papel'];
         $quantidade = $_POST['quantidade'];
-        $quantidade_pedido = $this->session->servico->quantidade;
+        $quantidade_pedido = $_SESSION['orcamento']['servico']->quantidade;
         $papel = $this->Papel_m->listar($id);
-        //Cria os atributos: $quantidade e $valor_unitario
-        $papel[0]->quantidade = $quantidade;
-        $papel[0]->valor_unitario = $papel[0]->calcula_valor_unitario($quantidade, $quantidade_pedido);
-        $papel[0]->sub_total = $quantidade_pedido * $papel[0]->valor_unitario;
-        $_SESSION['papel'][] = $papel;
-        $this->session->servico->papel = $_SESSION['papel'];
+        $papel = $papel[0];
+        $papel->quantidade = $quantidade;
+        $papel->valor_unitario = $papel->calcula_valor_unitario($quantidade, $quantidade_pedido);
+        $papel->sub_total = $quantidade_pedido * $papel->valor_unitario;
+        $empastamento = new Empastamento_m();
+        if ($_POST['empastamento_status'] == 1) {
+            $empastamento->nome = $_POST['empastamento_nome'];
+            $empastamento->status = TRUE;
+            $empastamento->sub_total = $_POST['empastamento_valor'];
+            $empastamento->valor_unitario = $empastamento->calcula_valor_unitario($empastamento->sub_total, $quantidade_pedido);
+        } else {
+            $empastamento->nome = $_POST['empastamento_nome'];
+            $empastamento->status = FALSE;
+            $empastamento->sub_total = 0;
+            $empastamento->valor_unitario = 0;
+        }
+        $papel->empastamento = $empastamento;
+        $_SESSION['orcamento']['servico']->papel[] = $papel;
         redirect(base_url('servico'), 'location');
     }
 
@@ -223,22 +352,33 @@ class Servico extends CI_Controller {
         }
         $id = $_POST['papel'];
         $quantidade = $_POST['quantidade'];
-        $quantidade_pedido = $this->session->servico->quantidade;
+        $quantidade_pedido = $_SESSION['orcamento']['servico']->quantidade;
         $posicao = $this->uri->segment(3);
         $papel = $this->Papel_m->listar($id);
-        //Cria os atributos: $quantidade e $valor_unitario
-        $papel[0]->quantidade = $quantidade;
-        $papel[0]->valor_unitario = $papel[0]->calcula_valor_unitario($quantidade, $quantidade_pedido);
-        $papel[0]->sub_total = $quantidade_pedido * $papel[0]->valor_unitario;
-        $_SESSION['papel'][$posicao] = $papel;
-        $this->session->servico->papel = $_SESSION['papel'];
+        $papel = $papel[0];
+        $papel->quantidade = $quantidade;
+        $papel->valor_unitario = $papel->calcula_valor_unitario($quantidade, $quantidade_pedido);
+        $papel->sub_total = $quantidade_pedido * $papel->valor_unitario;
+        $empastamento = new Empastamento_m();
+        if ($_POST['empastamento_status'] == 1) {
+            $empastamento->nome = $_POST['empastamento_nome'];
+            $empastamento->status = TRUE;
+            $empastamento->sub_total = $_POST['empastamento_valor'];
+            $empastamento->valor_unitario = $empastamento->calcula_valor_unitario($empastamento->sub_total, $quantidade_pedido);
+        } else {
+            $empastamento->nome = $_POST['empastamento_nome'];
+            $empastamento->status = FALSE;
+            $empastamento->sub_total = 0;
+            $empastamento->valor_unitario = 0;
+        }
+        $papel->empastamento = $empastamento;
+        $_SESSION['orcamento']['servico']->papel[$posicao] = $papel;
         redirect(base_url('servico'), 'location');
     }
 
     public function papel_sessao_excluir() {
         $posicao = $this->uri->segment(3);
-        unset($_SESSION['papel'][$posicao]);
-        $this->session->servico->papel = $_SESSION['papel'];
+        unset($_SESSION['orcamento']['servico']->papel[$posicao]);
         redirect(base_url('servico'), 'location');
     }
 
@@ -249,11 +389,11 @@ class Servico extends CI_Controller {
         $id = $_POST['acabamento'];
         $quantidade = $_POST['quantidade'];
         $acabamento = $this->Acabamento_m->listar($id);
-        $acabamento[0]->quantidade = $quantidade;
-        $acabamento[0]->valor_unitario = $acabamento[0]->valor;
-        $acabamento[0]->sub_total = $quantidade * $acabamento[0]->valor_unitario;
-        $_SESSION['acabamento'][] = $acabamento;
-        $this->session->servico->acabamento = $_SESSION['acabamento'];
+        $acabamento = $acabamento[0];
+        $acabamento->quantidade = $quantidade;
+        $acabamento->valor_unitario = $acabamento->valor;
+        $acabamento->sub_total = $quantidade * $acabamento->valor_unitario;
+        $_SESSION['orcamento']['servico']->acabamento[] = $acabamento;
         redirect(base_url('servico'), 'location');
     }
 
@@ -265,18 +405,44 @@ class Servico extends CI_Controller {
         $quantidade = $_POST['quantidade'];
         $posicao = $this->uri->segment(3);
         $acabamento = $this->Acabamento_m->listar($id);
-        $acabamento[0]->quantidade = $quantidade;
-        $acabamento[0]->valor_unitario = $acabamento[0]->valor;
-        $acabamento[0]->sub_total = $quantidade * $acabamento[0]->valor_unitario;
-        $_SESSION['acabamento'][$posicao] = $acabamento;
-        $this->session->servico->acabamento = $_SESSION['acabamento'];
+        $acabamento = $acabamento[0];
+        $acabamento->quantidade = $quantidade;
+        $acabamento->valor_unitario = $acabamento->valor;
+        $acabamento->sub_total = $quantidade * $acabamento->valor_unitario;
+        $_SESSION['orcamento']['servico']->acabamento[$posicao] = $acabamento;
         redirect(base_url('servico'), 'location');
     }
 
     public function acabamento_sessao_excluir() {
         $posicao = $this->uri->segment(3);
-        unset($_SESSION['acabamento'][$posicao]);
-        $this->session->servico->acabamento = $_SESSION['acabamento'];
+        unset($_SESSION['orcamento']['servico']->acabamento[$posicao]);
+        redirect(base_url('servico'), 'location');
+    }
+
+    public function faca_cartao_sessao_inserir() {
+        if (empty($_POST['faca'])) {
+            redirect(base_url('servico'), 'location');
+        }
+        $id = $_POST['faca'];
+        $faca = $this->Faca_cartao_m->listar($id);
+        $faca = $faca[0];
+        $faca->quantidade = 1;
+        $faca->sub_total = $faca->valor;
+        $_SESSION['orcamento']['servico']->faca[] = $faca;
+        redirect(base_url('servico'), 'location');
+    }
+
+    public function faca_cartao_sessao_editar() {
+        if (empty($_POST['faca'])) {
+            redirect(base_url('servico'), 'location');
+        }
+        $posicao = $this->uri->segment(3);
+        $id = $_POST['faca'];
+        $faca = $this->Faca_cartao_m->listar($id);
+        $faca = $faca[0];
+        $faca->quantidade = 1;
+        $faca->sub_total = $faca->valor;
+        $_SESSION['orcamento']['servico']->faca[$posicao] = $faca;
         redirect(base_url('servico'), 'location');
     }
 
@@ -286,13 +452,14 @@ class Servico extends CI_Controller {
         }
         $id = $_POST['faca'];
         $faca = $this->Faca_m->listar($id);
-        $faca[0]->altura = $_POST['altura'];
-        $faca[0]->largura = $_POST['largura'];
-        $faca[0]->quantidade = 1;
-        $faca[0]->valor_faca = $faca[0]->calcular_valor($faca[0]->altura, $faca[0]->largura);
-        $faca[0]->sub_total = $faca[0]->quantidade * $faca[0]->valor_faca;
+        $faca = $faca[0];
+        $faca->altura = $_POST['altura'];
+        $faca->largura = $_POST['largura'];
+        $faca->quantidade = 1;
+        $faca->valor_faca = $faca->calcular_valor($faca->altura, $faca->largura);
+        $faca->sub_total = $faca->quantidade * $faca->valor_faca;
         $_SESSION['faca'][] = $faca;
-        $this->session->servico->faca = $_SESSION['faca'];
+        $_SESSION['orcamento']['servico']->faca = $_SESSION['faca'];
         redirect(base_url('servico'), 'location');
     }
 
@@ -303,20 +470,19 @@ class Servico extends CI_Controller {
         $id = $_POST['faca'];
         $posicao = $this->uri->segment(3);
         $faca = $this->Faca_m->listar($id);
-        $faca[0]->altura = $_POST['altura'];
-        $faca[0]->largura = $_POST['largura'];
-        $faca[0]->quantidade = 1;
-        $faca[0]->valor_faca = $faca[0]->calcular_valor($faca[0]->altura, $faca[0]->largura);
-        $faca[0]->sub_total = $faca[0]->quantidade * $faca[0]->valor_faca;
-        $_SESSION['faca'][$posicao] = $faca;
-        $this->session->servico->faca = $_SESSION['faca'];
+        $faca = $faca[0];
+        $faca->altura = $_POST['altura'];
+        $faca->largura = $_POST['largura'];
+        $faca->quantidade = 1;
+        $faca->valor_faca = $faca->calcular_valor($faca->altura, $faca->largura);
+        $faca->sub_total = $faca->quantidade * $faca->valor_faca;
+        $_SESSION['orcamento']['servico']->faca[$posicao] = $faca;
         redirect(base_url('servico'), 'location');
     }
 
     public function faca_sessao_excluir() {
         $posicao = $this->uri->segment(3);
-        unset($_SESSION['faca'][$posicao]);
-        $this->session->servico->faca = $_SESSION['faca'];
+        unset($_SESSION['orcamento']['servico']->faca[$posicao]);
         redirect(base_url('servico'), 'location');
     }
 

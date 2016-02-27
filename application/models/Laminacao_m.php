@@ -8,6 +8,9 @@ class Laminacao_m extends CI_Model {
     var $nome;
     var $descricao;
     var $valor;
+    var $quantidade;
+    var $sub_total;
+    var $valor_unitario;
 
     function __construct() {
         parent::__construct();
@@ -31,7 +34,13 @@ class Laminacao_m extends CI_Model {
 
     public function inserir(Laminacao_m $laminacao) {
         if (!empty($laminacao)) {
-            if ($this->db->insert('laminacao', $laminacao)) {
+            $data = array(
+                'id' => $laminacao->id,
+                'nome' => $laminacao->nome,
+                'descricao' => $laminacao->descricao,
+                'valor' => str_replace(',', '.', $laminacao->valor)
+            );
+            if ($this->db->insert('laminacao', $data)) {
                 return $this->db->insert_id();
             } else {
                 return false;
@@ -43,8 +52,14 @@ class Laminacao_m extends CI_Model {
 
     public function editar(Laminacao_m $laminacao) {
         if (!empty($laminacao->id)) {
+            $data = array(
+                'id' => $laminacao->id,
+                'nome' => $laminacao->nome,
+                'descricao' => $laminacao->descricao,
+                'valor' => str_replace(',', '.', $laminacao->valor)
+            );
             $this->db->where('id', $laminacao->id);
-            if ($this->db->update('laminacao', $laminacao)) {
+            if ($this->db->update('laminacao', $data)) {
                 return true;
             }
         } else {
@@ -74,7 +89,7 @@ class Laminacao_m extends CI_Model {
             $laminacao->id = $value['id'];
             $laminacao->nome = $value['nome'];
             $laminacao->descricao = $value['descricao'];
-            $laminacao->valor = $value['valor'];
+            $laminacao->valor = str_replace('.', ',', $value['valor']);
 
             $laminacao_lista[] = $laminacao;
         }

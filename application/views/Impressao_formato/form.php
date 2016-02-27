@@ -1,12 +1,12 @@
 <?php
 if ($acao == 'inserir') {
     $action = 'impressao_formato/inserir';
-    $titulo = 'Inserir Impressao Formato';
+    $titulo = 'Inserir Área de impressão';
     $id = '';
     $impressao_formato = new Impressao_formato_m();
 } elseif ($acao == 'editar') {
     $action = 'impressao_formato/editar';
-    $titulo = 'Editar Impressão Formato';
+    $titulo = 'Editar Área de impressão';
 }
 ?>
 <!DOCTYPE html>

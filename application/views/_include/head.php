@@ -29,9 +29,9 @@
     <style type="text/css">
         /* Posiciona o radape no fim da pagina */
         footer {
-/*            position:absolute;
-            bottom:0;
-            width:100%;*/
+            /*            position:absolute;
+                        bottom:0;
+                        width:100%;*/
         }
     </style>
 </head>

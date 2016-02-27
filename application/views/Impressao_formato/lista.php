@@ -7,7 +7,7 @@
         <div class="container">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Lista de Impressão Formato</h3>
+                    <h3 class="panel-title">Lista de Área de Impressões</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -15,7 +15,7 @@
                             <?= form_input('', '', ' id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
                         </div>
                         <div class="col-md-3">
-                            <a class="btn btn-primary inserir" href="<?= base_url('Impressao_formato/form') ?>">Nova Impressao formato</a>
+                            <a class="btn btn-primary inserir" href="<?= base_url('Impressao_formato/form') ?>">Nova Área de Impressão</a>
                         </div>
                     </div>
 
@@ -26,7 +26,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Nome</th>
-                                        <th>Formato</th>
+                                        <th>Área</th>
                                         <th>Descrição</th>
                                         <th colspan="2">Ações</th>
                                     </tr>

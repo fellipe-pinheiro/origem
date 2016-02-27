@@ -4,6 +4,7 @@
         // confirmar antes de apagar
         $(".deletar").click(function () {
             var id = $(".deletar").parent().parent().children("td:first").text();
+            //return false;
             return confirm("<?= $crud ?> ID:"+id+" sera apagado!");
         });
 

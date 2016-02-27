@@ -31,7 +31,13 @@ class Frete_m extends CI_Model {
 
     public function inserir(Frete_m $frete) {
         if (!empty($frete)) {
-            if ($this->db->insert('frete', $frete)) {
+            $dados = array(
+                'id' => $frete->id,
+                'nome' => $frete->nome,
+                'descricao' => $frete->descricao,
+                'valor' => str_replace(',', '.', $frete['valor'])
+            );
+            if ($this->db->insert('frete', $dados)) {
                 return $this->db->insert_id();
             } else {
                 return false;
@@ -43,8 +49,14 @@ class Frete_m extends CI_Model {
 
     public function editar(Frete_m $frete) {
         if (!empty($frete->id)) {
+            $dados = array(
+                'id' => $frete->id,
+                'nome' => $frete->nome,
+                'descricao' => $frete->descricao,
+                'valor' => str_replace(',', '.', $frete['valor'])
+            );
             $this->db->where('id', $frete->id);
-            if ($this->db->update('frete', $frete)) {
+            if ($this->db->update('frete', $dados)) {
                 return true;
             }
         } else {
@@ -64,6 +76,7 @@ class Frete_m extends CI_Model {
             return false;
         }
     }
+
     function _changeToObject($result_db = '') {
         $frete_lista = array();
 
@@ -73,11 +86,12 @@ class Frete_m extends CI_Model {
             $frete->id = $value['id'];
             $frete->nome = $value['nome'];
             $frete->descricao = $value['descricao'];
-            $frete->valor = $value['valor'];
+            $frete->valor = str_replace('.', ',', $value['valor']);
 
             $frete_lista[] = $frete;
         }
 
         return $frete_lista;
     }
+
 }

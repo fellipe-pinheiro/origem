@@ -9,18 +9,38 @@
             <word>Acabamento</word>
             <word>Adicionar</word>
             <word>Atenção</word>
+            <word>Ações</word>
+            <word>Cartão</word>
             <word>Colagem</word>
+            <word>Descontos</word>
+            <word>Descrição</word>
+            <word>Editar</word>
+            <word>Empastamento</word>
+            <word>Excluir</word>
             <word>Faca</word>
             <word>Fechar</word>
+            <word>Finalizar</word>
+            <word>Formato</word>
             <word>Fotolito</word>
             <word>Impressão</word>
+            <word>Impressões</word>
             <word>Laminação</word>
+            <word>Lista</word>
             <word>Novo</word>
+            <word>Não</word>
             <word>Papel</word>
             <word>php</word>
+            <word>Produto</word>
+            <word>Próximo</word>
+            <word>Qtd</word>
             <word>Quantidade</word>
             <word>Selecione</word>
+            <word>Sem</word>
             <word>Serviço</word>
+            <word>Sim</word>
+            <word>Unitário</word>
+            <word>vd</word>
+            <word>Área</word>
         </spellchecker-wordlist>
     </configuration>
 </project>

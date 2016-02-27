@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Servico_m extends CI_Model {
+class Cartao_m extends CI_Model {
 
     var $quantidade;
     var $desconto;
@@ -16,7 +16,6 @@ class Servico_m extends CI_Model {
     var $faca;
     var $laminacao;
     var $colagem;
-    var $tipo;
     var $empastamento;
 
     function __construct() {
@@ -24,33 +23,36 @@ class Servico_m extends CI_Model {
         $this->load->database();
     }
 
-    public function calcula_total_servico() {
+    public function calcula_total_cartao() {
         $this->sub_total = 0;
         if (!empty($this->papel)) {
             foreach ($this->papel as $key => $value) {
-                $this->sub_total += $value->sub_total;
-                $this->sub_total += $value->empastamento->sub_total;
+                $this->sub_total += $value[0]->sub_total;
             }
         }
         if (!empty($this->impressao)) {
             foreach ($this->impressao as $key => $value) {
-                $this->sub_total += $value->sub_total;
-                $this->sub_total += $value->fotolito->sub_total;
+                $this->sub_total += $value[0]->sub_total;
+            }
+        }
+        if (!empty($this->fotolito)) {
+            foreach ($this->fotolito as $key => $value) {
+                $this->sub_total += $value[0]->sub_total;
             }
         }
         if (!empty($this->acabamento)) {
             foreach ($this->acabamento as $key => $value) {
-                $this->sub_total += $value->sub_total;
+                $this->sub_total += $value[0]->sub_total;
             }
         }
         if (!empty($this->faca)) {
             foreach ($this->faca as $key => $value) {
-                $this->sub_total += str_replace(',', '.', $value->sub_total);
+                $this->sub_total += $value[0]->sub_total;
             }
         }
         if (!empty($this->laminacao)) {
             foreach ($this->laminacao as $key => $value) {
-                $this->sub_total += $value->sub_total;
+                $this->sub_total += $value[0]->sub_total;
             }
         }
         if (!empty($this->colagem)) {
@@ -58,15 +60,15 @@ class Servico_m extends CI_Model {
                 $this->sub_total += $value->sub_total;
             }
         }
-//        if (!empty($this->empastamento)) {
-//            foreach ($this->empastamento as $key => $value) {
-//                $this->sub_total += $value->sub_total;
-//            }
-//        }
+        if (!empty($this->empastamento)) {
+            foreach ($this->empastamento as $key => $value) {
+                $this->sub_total += $value->sub_total;
+            }
+        }
         return $this->sub_total;
     }
 
-    public function calcula_unitario_servico($valor_total, $quantiade) {
+    public function calcula_unitario_cartao($valor_total, $quantiade) {
         return $this->valor_unitario = $valor_total / $quantiade;
     }
 

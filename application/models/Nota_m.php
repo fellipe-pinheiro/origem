@@ -31,7 +31,13 @@ class Nota_m extends CI_Model {
 
     public function inserir(Nota_m $nota) {
         if (!empty($nota)) {
-            if ($this->db->insert('nota', $nota)) {
+            $dados = array(
+                'id' => $nota->id,
+                'nome' => $nota->nome,
+                'descricao' => $nota->descricao,
+                'valor' => str_replace(',', '.', $nota->valor)
+            );
+            if ($this->db->insert('nota', $dados)) {
                 return $this->db->insert_id();
             } else {
                 return false;
@@ -43,8 +49,14 @@ class Nota_m extends CI_Model {
 
     public function editar(Nota_m $nota) {
         if (!empty($nota->id)) {
+            $dados = array(
+                'id' => $nota->id,
+                'nome' => $nota->nome,
+                'descricao' => $nota->descricao,
+                'valor' => str_replace(',', '.', $nota->valor)
+            );
             $this->db->where('id', $nota->id);
-            if ($this->db->update('nota', $nota)) {
+            if ($this->db->update('nota', $dados)) {
                 return true;
             }
         } else {
@@ -64,8 +76,8 @@ class Nota_m extends CI_Model {
             return false;
         }
     }
-    
-     function _changeToObject($result_db = '') {
+
+    function _changeToObject($result_db = '') {
         $nota_lista = array();
 
 

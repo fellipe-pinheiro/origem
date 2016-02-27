@@ -8,6 +8,9 @@ class Acabamento_m extends CI_Model {
     var $nome;
     var $descricao;
     var $valor;
+    var $quantidade;
+    var $valor_unitario;
+    var $sub_total;
 
     function __construct() {
         parent::__construct();
@@ -31,7 +34,13 @@ class Acabamento_m extends CI_Model {
 
     public function inserir(Acabamento_m $acabamento) {
         if (!empty($acabamento)) {
-            if ($this->db->insert('acabamento', $acabamento)) {
+            $dados = array(
+                'id' => $acabamento->id,
+                'nome' => $acabamento->nome,
+                'descricao' => $acabamento->descricao,
+                'valor' => str_replace(',', '.', $acabamento->valor)
+            );
+            if ($this->db->insert('acabamento', $dados)) {
                 return $this->db->insert_id();
             } else {
                 return false;
@@ -43,8 +52,14 @@ class Acabamento_m extends CI_Model {
 
     public function editar(Acabamento_m $acabamento) {
         if (!empty($acabamento->id)) {
+            $dados = array(
+                'id' => $acabamento->id,
+                'nome' => $acabamento->nome,
+                'descricao' => $acabamento->descricao,
+                'valor' => str_replace(',', '.', $acabamento->valor)
+            );
             $this->db->where('id', $acabamento->id);
-            if ($this->db->update('acabamento', $acabamento)) {
+            if ($this->db->update('acabamento', $dados)) {
                 return true;
             }
         } else {
@@ -74,7 +89,7 @@ class Acabamento_m extends CI_Model {
             $acabamento->id = $value['id'];
             $acabamento->nome = $value['nome'];
             $acabamento->descricao = $value['descricao'];
-            $acabamento->valor = $value['valor'];
+            $acabamento->valor = str_replace('.', ',', $value['valor']);
 
             $acabamento_lista[] = $acabamento;
         }

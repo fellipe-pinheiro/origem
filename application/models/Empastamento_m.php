@@ -2,11 +2,10 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Colagem_m extends CI_Model {
+class Empastamento_m extends CI_Model {
 
-    var $id;
     var $nome;
-    var $quantidade;
+    var $status;
     var $sub_total;
     var $valor_unitario;
 

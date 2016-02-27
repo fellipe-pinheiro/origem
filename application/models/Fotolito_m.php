@@ -8,6 +8,9 @@ class Fotolito_m extends CI_Model {
     var $impressao_formato;
     var $descricao;
     var $valor;
+    var $quantidade;
+    var $sub_total;
+    var $valor_unitario;
 
     function __construct() {
         parent::__construct();
@@ -40,7 +43,7 @@ class Fotolito_m extends CI_Model {
         $impressao_lista = $this->Fotolito_m->_changeToObject($result->result_array());
         return $impressao_lista;
     }
-    
+
     //Busca pela impressao_formato na tabela Fotolito
     public function listar_formato($impressao_formato = '') {
         if (!empty($impressao_formato)) {
@@ -54,7 +57,13 @@ class Fotolito_m extends CI_Model {
 
     public function inserir(Fotolito_m $fotolito) {
         if (!empty($fotolito)) {
-            if ($this->db->insert('fotolito', $fotolito)) {
+            $dados = array(
+                'id' => $fotolito->id,
+                'nome' => $fotolito->nome,
+                'descricao' => $fotolito->descricao,
+                'valor' => str_replace(',', '.', $fotolito->valor)
+            );
+            if ($this->db->insert('fotolito', $dados)) {
                 return $this->db->insert_id();
             } else {
                 return false;
@@ -66,8 +75,14 @@ class Fotolito_m extends CI_Model {
 
     public function editar(Fotolito_m $fotolito) {
         if (!empty($fotolito->id)) {
+            $dados = array(
+                'id' => $fotolito->id,
+                'nome' => $fotolito->nome,
+                'descricao' => $fotolito->descricao,
+                'valor' => str_replace(',', '.', $fotolito->valor)
+            );
             $this->db->where('id', $fotolito->id);
-            if ($this->db->update('fotolito', $fotolito)) {
+            if ($this->db->update('fotolito', $dados)) {
                 return true;
             }
         } else {
@@ -96,7 +111,7 @@ class Fotolito_m extends CI_Model {
             $fotolito = new Fotolito_m();
             $fotolito->id = $value['id'];
             $fotolito->descricao = $value['descricao'];
-            $fotolito->valor = $value['valor'];
+            $fotolito->valor = str_replace('.', ',', $value['valor']);
 
             foreach ($this->Impressao_formato_m->listar($value['impressao_formato']) as $key => $value) {
                 $fotolito->impressao_formato = $value;

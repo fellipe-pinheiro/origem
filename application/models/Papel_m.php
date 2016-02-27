@@ -12,6 +12,7 @@ class Papel_m extends CI_Model {
     var $largura;
     var $descricao;
     var $valor;
+    var $empastamento;
 
     function __construct() {
         parent::__construct();
@@ -35,7 +36,16 @@ class Papel_m extends CI_Model {
 
     public function inserir(Papel_m $papel) {
         if (!empty($papel)) {
-            if ($this->db->insert('papel', $papel)) {
+            $data = array(
+                'id' => $papel->id,
+                'nome' => $papel->nome,
+                'gramatura' => $papel->gramatura,
+                'altura' => $papel->altura,
+                'largura' => $papel->largura,
+                'descricao' => $papel->descricao,
+                'valor' => $papel->valor
+            );
+            if ($this->db->insert('papel', $data)) {
                 return $this->db->insert_id();
             } else {
                 return false;
@@ -47,8 +57,17 @@ class Papel_m extends CI_Model {
 
     public function editar(Papel_m $papel) {
         if (!empty($papel->id)) {
+            $data = array(
+                'id' => $papel->id,
+                'nome' => $papel->nome,
+                'gramatura' => $papel->gramatura,
+                'altura' => $papel->altura,
+                'largura' => $papel->largura,
+                'descricao' => $papel->descricao,
+                'valor' => $papel->valor
+            );
             $this->db->where('id', $papel->id);
-            if ($this->db->update('papel', $papel)) {
+            if ($this->db->update('papel', $data)) {
                 return true;
             }
         } else {

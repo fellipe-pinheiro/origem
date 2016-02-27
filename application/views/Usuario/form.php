@@ -1,17 +1,22 @@
 <?php
 if ($acao == 'inserir') {
-    $action = 'laminacao/inserir';
-    $titulo = 'Inserir laminação';
+    $action = 'usuario/inserir';
+    $titulo = 'Inserir Usuario';
     $id = '';
-    $laminacao = new Laminacao_m();
+    $usuario = new Usuario_m();
 } elseif ($acao == 'editar') {
-    $action = 'laminacao/editar';
-    $titulo = 'Editar laminação';
+    $action = 'usuario/editar';
+    $titulo = 'Editar Usuario';
 }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <?php $this->load->view('_include/head', ['titulo' => $titulo]); ?>
+    <style type="text/css">
+        .erro{
+            color: red;
+        }
+    </style>
     <body>
         <?php $this->load->view('_include/menu'); ?>
         <div class="container">
@@ -22,30 +27,23 @@ if ($acao == 'inserir') {
                 <div class="panel-body">
                     <?= form_open($action, 'class="form-horizontal" role="form"') ?>
                     <!--ID-->
-                    <?= form_hidden('id', $laminacao->id) ?>
+                    <?= form_hidden('id', $usuario->id) ?>
 
                     <!--Nome-->
                     <div class="form-group">
                         <?= form_label('Nome: ', 'nome', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('nome', $laminacao->nome, ' id="nome" class="form-control" placeholder="Nome"') ?>
+                            <?= form_input('nome', $usuario->nome.set_value('nome'), ' id="nome" class="form-control" placeholder="Nome" autofocus') ?>
                         </div>
+                        <?= form_error('nome')?>
                     </div>
-                    
                     <!--Descricao-->
                     <div class="form-group">
-                        <?= form_label('Descrição: ', 'descricao', array('class' => 'control-label col-sm-2')) ?>
+                        <?= form_label('Login: ', 'login', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_textarea('descricao', $laminacao->descricao, ' id="descricao" class="form-control" placeholder="Descrição"') ?>
+                            <?= form_input('login', $usuario->login.set_value('nome'), ' id="login" class="form-control" placeholder="Login"') ?>
                         </div>
-                    </div>
-                    
-                    <!--Valor-->
-                    <div class="form-group">
-                        <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>
-                        <div class="col-sm-5">
-                            <?= form_input('valor', $laminacao->valor, ' id="valor" class="form-control" placeholder="Valor"') ?>
-                        </div>
+                        <?= form_error('login')?>
                     </div>
 
                     <!--Botoes-->

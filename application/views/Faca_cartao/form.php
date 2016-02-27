@@ -1,12 +1,12 @@
 <?php
 if ($acao == 'inserir') {
-    $action = 'laminacao/inserir';
-    $titulo = 'Inserir laminação';
+    $action = 'faca_cartao/inserir';
+    $titulo = 'Inserir faca p/ cartão';
     $id = '';
-    $laminacao = new Laminacao_m();
+    $faca_cartao = new Faca_cartao_m();
 } elseif ($acao == 'editar') {
-    $action = 'laminacao/editar';
-    $titulo = 'Editar laminação';
+    $action = 'faca_cartao/editar';
+    $titulo = 'Editar faca p/ cartão';
 }
 ?>
 <!DOCTYPE html>
@@ -22,29 +22,27 @@ if ($acao == 'inserir') {
                 <div class="panel-body">
                     <?= form_open($action, 'class="form-horizontal" role="form"') ?>
                     <!--ID-->
-                    <?= form_hidden('id', $laminacao->id) ?>
+                    <?= form_hidden('id', $faca_cartao->id) ?>
 
                     <!--Nome-->
                     <div class="form-group">
                         <?= form_label('Nome: ', 'nome', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('nome', $laminacao->nome, ' id="nome" class="form-control" placeholder="Nome"') ?>
+                            <?= form_input('nome', $faca_cartao->nome, ' id="nome" class="form-control" placeholder="Nome"') ?>
                         </div>
                     </div>
-                    
                     <!--Descricao-->
                     <div class="form-group">
                         <?= form_label('Descrição: ', 'descricao', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_textarea('descricao', $laminacao->descricao, ' id="descricao" class="form-control" placeholder="Descrição"') ?>
+                            <?= form_textarea('descricao', $faca_cartao->descricao, ' id="descricao" class="form-control" placeholder="Descrição"') ?>
                         </div>
                     </div>
-                    
                     <!--Valor-->
                     <div class="form-group">
                         <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor', $laminacao->valor, ' id="valor" class="form-control" placeholder="Valor"') ?>
+                            <?= form_input('valor', $faca_cartao->valor, ' id="valor" class="form-control" placeholder="Valor"') ?>
                         </div>
                     </div>
 

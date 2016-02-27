@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <?php $this->load->view('_include/head', ['titulo' => 'Orçamentos']); ?>
+    <?php
+    $this->load->view('_include/head', ['titulo' => 'Orçamentos']);
+//    error_reporting(E_ALL ^ E_NOTICE);
+    ?>
     <script type="text/javascript">
         $(document).ready(function () {
-
         });
         function addCliente() {
             var parametros = {
@@ -77,8 +79,17 @@
                                 <h3 class="panel-title"><b>Produto / Serviços</b></h3>
                             </div>
                             <div class="panel-body">
-                                <?= anchor(base_url('cartao'),'<span class="glyphicon glyphicon-plus"></span>  Cartão','class="btn btn-success btn-sm"') ?>
-                                <?= anchor(base_url('servico'),'<span class="glyphicon glyphicon-plus"></span>  Serviço','class="btn btn-success btn-sm"') ?>
+                                <?php $data_cartao = array(
+                                    'id' => 'btn_cartao',
+                                    'class' => 'btn btn-success btn-sm'
+                                );
+                                $data_servico = array(
+                                    'id' => 'btn_servico',
+                                    'class' => 'btn btn-success btn-sm'
+                                );
+                                ?>
+                                <?= anchor(base_url('servico?tipo=cartao'), '<span class="glyphicon glyphicon-plus"></span>  Cartão', $data_cartao) ?>
+                                <?= anchor(base_url('servico?tipo=servico'), '<span class="glyphicon glyphicon-plus"></span>  Serviço',$data_servico) ?>
                             </div>
                         </div>
                     </div>
@@ -139,25 +150,14 @@
                                         <tbody>
                                             <tr>
                                                 <td>1</td>
-                                                <td>Cartão de Visita</td>
-                                                <td>Laminado + Impressão Alto Relevo 1x0</td>
-                                                <td>100</td>
-                                                <td>R$ 1,40</td>
-                                                <td>R$ 140,00</td>
-                                                <td><button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
-                                                <td><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
+                                                <td><?= $titulo ?></td>
+                                                        <td></td>
+                                                        <td><?= $this->session->servico->quantidade ?></td>
+                                                        <td>R$ <?= number_format($valor_unitario, 2, ",", ".") ?></td>
+                                                        <td>R$ <?= number_format($valor_total, 2, ",", ".") ?></td>
+                                                        <td><?= anchor(base_url('Servico'), '<span class="glyphicon glyphicon-pencil"></span>', 'class="btn btn-primary btn-sm"') ?></td>
+                                                        <td><?= anchor(base_url('Orcamento/excluir_todos_servicos'), '<span class="glyphicon glyphicon-trash"></span>', 'class="btn btn-danger btn-sm"') ?></td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Cartão de Visita Duplo</td>
-                                                <td>Verniz + Impressão Alto Relevo 2x0</td>
-                                                <td>100</td>
-                                                <td>R$ 1,10</td>
-                                                <td>R$ 110,00</td>
-                                                <td><button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
-                                                <td><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
-                                            </tr>
-
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -165,8 +165,8 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td><b>Total Parcial</b></td>
-                                                <td>R$ 250,00</td>
+                                                <td><b>Total</b></td>
+                                                <td>R$ <?= number_format($total, 2, ",", ".") ?></td>
                                                 <td></td>
                                                 <td></td>
                                             </tr>
