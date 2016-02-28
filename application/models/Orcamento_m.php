@@ -11,7 +11,7 @@ class Orcamento_m extends CI_Model {
     var $desconto;
     var $total;
     var $itens;
-    var $servicos;
+    var $servico;
     var $frete;
     var $valor_frete;
     var $nota_fiscal;
@@ -102,8 +102,8 @@ class Orcamento_m extends CI_Model {
             $this->total += $this->valor_nota_fiscal;
         }
 
-        if (!empty($this->frete)) {
-            $this->total += $this->frete->valor;
+        if (!empty($this->valor_frete)) {
+            $this->total += $this->valor_frete;
         }
         
         if (!empty($this->servico)) {

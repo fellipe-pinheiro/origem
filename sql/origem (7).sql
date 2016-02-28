@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 28-Fev-2016 às 07:28
+-- Generation Time: 28-Fev-2016 às 22:16
 -- Versão do servidor: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `telefone` varchar(15) DEFAULT NULL,
   `celular` varchar(15) DEFAULT NULL,
   `observacao` text
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `cliente`
@@ -133,7 +133,12 @@ INSERT INTO `cliente` (`id`, `nome`, `rua`, `numero`, `complemento`, `bairro`, `
 (57, 'Eric', 'Durval JosÃ© de Barros', 8, 'Sem', 'Vila Gomes Cardim', 'São Pauo', 'SP', '03318900', '222.333.444-95', '194.041.737.173', '194.041.737.173', 0, 'teste@teste.com.br', '(11) 2233-7373', '(11) 99876-1234', 'L orem ipsum interdum lobortis venenatis'),
 (58, 'Eric', 'Durval JosÃ© de Barros', 8, 'Sem', 'Vila Gomes Cardim', 'São Pauo', 'SP', '03318900', '222.333.444-95', '194.041.737.173', '194.041.737.173', 0, 'teste@teste.com.br', '(11) 2233-7373', '(11) 99876-1234', 'L orem ipsum interdum lobortis venenatis'),
 (59, 'Eric', 'Durval JosÃ© de Barros', 8, 'Sem', 'Vila Gomes Cardim', 'São Pauo', 'SP', '03318900', '222.333.444-95', '194.041.737.173', '194.041.737.173', 0, 'teste@teste.com.br', '(11) 2233-7373', '(11) 99876-1234', 'L orem ipsum interdum lobortis venenatis'),
-(60, 'felllipe', NULL, 0, '', 'ipiranga', '', '', '', '222333444', '', '', 0, 'f@f', '', '', '');
+(60, 'felllipe', NULL, 0, '', 'ipiranga', '', '', '', '222333444', '', '', 0, 'f@f', '', '', ''),
+(61, '', NULL, 0, '', '', '', '', '', '', '', '', 0, '', '', '', ''),
+(62, '', NULL, 0, '', '', '', '', '', '', '', '', 0, '', '', '', ''),
+(63, 'Eric', NULL, 222, '', '', '', '', '', '222.333.444-90', '', '', 0, 'eric@eric.com.br', '', '', ''),
+(64, '', NULL, 0, '', '', '', '', '', '', '', '', 0, '', '', '', ''),
+(65, '', NULL, 0, '', '', '', '', '', '', '', '', 0, '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -361,6 +366,25 @@ INSERT INTO `nota` (`id`, `nome`, `descricao`, `valor`) VALUES
 (1, 'Sem Nota', 'Sem Nota fiscal', '0.00'),
 (2, 'Serviço', 'des', '11.84'),
 (3, 'Vendas', '', '7.14');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `orcamento`
+--
+
+CREATE TABLE IF NOT EXISTS `orcamento` (
+`id` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `data_orcamento` date NOT NULL,
+  `desconto` decimal(10,2) NOT NULL,
+  `total` decimal(10,2) NOT NULL,
+  `servico` int(11) NOT NULL,
+  `frete` int(11) NOT NULL,
+  `valor_frete` decimal(10,2) NOT NULL,
+  `nota_fiscal` int(11) NOT NULL,
+  `valor_nota_fiscal` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -728,6 +752,100 @@ INSERT INTO `papel` (`id`, `nome`, `gramatura`, `altura`, `largura`, `descricao`
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `serivico_papel`
+--
+
+CREATE TABLE IF NOT EXISTS `serivico_papel` (
+  `servico_id` int(11) NOT NULL,
+  `papel_id` int(11) NOT NULL,
+  `empastamento_valor` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `servico`
+--
+
+CREATE TABLE IF NOT EXISTS `servico` (
+  `id` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `desconto` decimal(10,2) NOT NULL,
+  `valor_unitario` decimal(10,2) NOT NULL,
+  `sub_total` decimal(10,2) NOT NULL,
+  `total` decimal(10,2) NOT NULL,
+  `tipo` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `servico_acabamento`
+--
+
+CREATE TABLE IF NOT EXISTS `servico_acabamento` (
+  `servico_id` int(11) NOT NULL,
+  `acabamento_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `servico_colagem`
+--
+
+CREATE TABLE IF NOT EXISTS `servico_colagem` (
+  `servico_id` int(11) NOT NULL,
+  `colagem_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `servico_faca`
+--
+
+CREATE TABLE IF NOT EXISTS `servico_faca` (
+  `servico_id` int(11) NOT NULL,
+  `faca_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `servico_fotolito`
+--
+
+CREATE TABLE IF NOT EXISTS `servico_fotolito` (
+  `servico_id` int(11) NOT NULL,
+  `fotolito_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `servico_impressao`
+--
+
+CREATE TABLE IF NOT EXISTS `servico_impressao` (
+  `servico_id` int(11) NOT NULL,
+  `impressao_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `servico_laminacao`
+--
+
+CREATE TABLE IF NOT EXISTS `servico_laminacao` (
+  `servico_id` int(11) NOT NULL,
+  `laminacao_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `usuario`
 --
 
@@ -829,10 +947,52 @@ ALTER TABLE `nota`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `orcamento`
+--
+ALTER TABLE `orcamento`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `papel`
 --
 ALTER TABLE `papel`
  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `serivico_papel`
+--
+ALTER TABLE `serivico_papel`
+ ADD PRIMARY KEY (`servico_id`,`papel_id`);
+
+--
+-- Indexes for table `servico_acabamento`
+--
+ALTER TABLE `servico_acabamento`
+ ADD PRIMARY KEY (`servico_id`,`acabamento_id`);
+
+--
+-- Indexes for table `servico_colagem`
+--
+ALTER TABLE `servico_colagem`
+ ADD PRIMARY KEY (`servico_id`,`colagem_id`);
+
+--
+-- Indexes for table `servico_faca`
+--
+ALTER TABLE `servico_faca`
+ ADD PRIMARY KEY (`servico_id`,`faca_id`);
+
+--
+-- Indexes for table `servico_fotolito`
+--
+ALTER TABLE `servico_fotolito`
+ ADD PRIMARY KEY (`servico_id`,`fotolito_id`);
+
+--
+-- Indexes for table `servico_laminacao`
+--
+ALTER TABLE `servico_laminacao`
+ ADD PRIMARY KEY (`servico_id`,`laminacao_id`);
 
 --
 -- Indexes for table `usuario`
@@ -853,7 +1013,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT for table `cliente`
 --
 ALTER TABLE `cliente`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=61;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=66;
 --
 -- AUTO_INCREMENT for table `corte_vinco`
 --
@@ -909,6 +1069,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 ALTER TABLE `nota`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `orcamento`
+--
+ALTER TABLE `orcamento`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `papel`
 --

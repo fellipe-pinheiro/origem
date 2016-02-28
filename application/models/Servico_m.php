@@ -4,11 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Servico_m extends CI_Model {
 
+    var $id;
     var $quantidade;
     var $desconto;
     var $valor_unitario;
-//    var $valor_nota_fiscal;
-//    var $valor_frete;
     var $sub_total;
     var $total;
     var $tipo;
@@ -20,8 +19,6 @@ class Servico_m extends CI_Model {
     var $laminacao;
     var $colagem;
     var $empastamento;
-//    var $frete;
-//    var $nota_fiscal;
 
     function __construct() {
         parent::__construct();

@@ -29,6 +29,9 @@ class Servico extends CI_Controller {
     public function index() {
         empty($_SESSION['orcamento']) ? $_SESSION['orcamento'] = new Orcamento_m() : '';
         empty($_SESSION['orcamento']->servico) ? $_SESSION['orcamento']->servico = new Servico_m() : '';
+//        var_dump($_SESSION);
+//        session_destroy();
+//        die();
         empty($_SESSION['orcamento']->cliente) ? $_SESSION['orcamento']->cliente = new Cliente_m() : '';
         
         $data['valor_total'] = NULL;
@@ -62,6 +65,14 @@ class Servico extends CI_Controller {
         $this->load->view('servico/orcamento', $data);
     }
 
+    public function frete_sessao_definir() {
+        $valor = $this->input->post('valor_frete');
+        
+        $_SESSION['orcamento']->valor_frete = str_replace(',', '.', $valor);
+        $_SESSION['orcamento']->frete= null;
+        redirect(base_url('servico'), 'location');
+    }
+    
     public function nota_fiscal_sessao() {
         $id = $this->input->get('id');
 
@@ -80,6 +91,7 @@ class Servico extends CI_Controller {
         $frete = $frete[0];
 
         $_SESSION['orcamento']->frete = $frete;
+        $_SESSION['orcamento']->valor_frete = $frete->valor;
         redirect(base_url('servico'), 'location');
     }
 
@@ -91,7 +103,7 @@ class Servico extends CI_Controller {
         redirect(base_url('servico'), 'location');
     }
     
-    public function cliente_session_editar() {
+    public function cliente_session_criar() {
         $cliente = new Cliente_m();
         $cliente->id = null;
         $cliente->nome = $this->input->post('nome');
