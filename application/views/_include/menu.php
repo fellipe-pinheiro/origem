@@ -14,9 +14,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orçamento <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?= base_url('orcamento') ?>">Orçamento</a></li>
                         <li><a href="<?= base_url('servico') ?>">Serviço</a></li>
-                        <li><a href="<?= base_url('cartao') ?>">Cartão</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -37,30 +35,22 @@
                         <li><a href="<?= base_url('usuario') ?>">Usuario</a></li>
                     </ul>
                 </li>
-
-                <li>
-                    <a href="<?= base_url('login') ?>">Login</a>
-                </li>
-                <?php /* if ($this->session->usuario == NULL) { ?>
-                    <li>
-                        <a href="#">
-                            <span  class="glyphicon glyphicon-user" style="color: red"></span>
-                        </a>
+                <?php if (usuario_logado()) { ?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span  class="glyphicon glyphicon-user" style="color: greenyellow"></span> <?= $_SESSION['usuario']->login ?><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="<?= base_url('login/logout') ?>">
+                                    <span  class="glyphicon glyphicon-log-out"></span> Logout
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 <?php } else { ?>
                     <li>
-                        <a href="#">
-                            <span  class="glyphicon glyphicon-user" style="color: greenyellow"></span>
-                            <?= $this->session->usuario['nome'] ?>
-                        </a>
+                        <a href="<?= base_url('login') ?>">Login</a>
                     </li>
-                    <li>
-                        <a href="<?= base_url('login/logout') ?>">
-                            <span  class="glyphicon glyphicon-log-out"></span>
-                            Logout
-                        </a>
-                    </li>
-                <?php } */?>
+                <?php } ?>
             </ul>
         </div>
     </div>

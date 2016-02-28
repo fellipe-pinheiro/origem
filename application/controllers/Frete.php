@@ -7,6 +7,8 @@ class Frete extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('Frete_m');
+        empty($_SESSION) ? session_start() : '';
+        login_necessario();
     }
 
     public function index() {

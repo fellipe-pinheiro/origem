@@ -86,7 +86,7 @@ class Frete_m extends CI_Model {
             $frete->id = $value['id'];
             $frete->nome = $value['nome'];
             $frete->descricao = $value['descricao'];
-            $frete->valor = str_replace('.', ',', $value['valor']);
+            $frete->valor = $value['valor'];
 
             $frete_lista[] = $frete;
         }

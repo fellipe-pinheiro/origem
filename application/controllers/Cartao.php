@@ -17,6 +17,8 @@ class Cartao extends CI_Controller {
         $this->load->model('Colagem_m');
         $this->load->model('Cartao_m');
         $this->load->library('session');
+        empty($_SESSION) ? session_start() : '';
+        login_necessario();
     }
 
     public function index() {

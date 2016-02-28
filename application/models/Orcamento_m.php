@@ -11,6 +11,11 @@ class Orcamento_m extends CI_Model {
     var $desconto;
     var $total;
     var $itens;
+    var $servicos;
+    var $frete;
+    var $valor_frete;
+    var $nota_fiscal;
+    var $valor_nota_fiscal;
 
     function __construct() {
         parent::__construct();
@@ -68,7 +73,7 @@ class Orcamento_m extends CI_Model {
             return false;
         }
     }
-    
+
     function _changeToObject($result_db = '') {
         $orcamento_lista = array();
 
@@ -88,11 +93,27 @@ class Orcamento_m extends CI_Model {
 //
 //        return $orcamento_lista;
     }
-    
-    public function push_item() {
+
+    public function calcula_total_orcamento() {
+        $this->total = 0;
+
+        if (!empty($this->nota_fiscal)) {
+            $this->valor_nota_fiscal = ($this->servico->total * ($this->nota_fiscal->valor / 100));
+            $this->total += $this->valor_nota_fiscal;
+        }
+
+        if (!empty($this->frete)) {
+            $this->total += $this->frete->valor;
+        }
         
-        
+        if (!empty($this->servico)) {
+            $this->total += $this->servico->total;
+        }
+
+        if (!empty($this->servico->desconto)) {
+            $this->total -= $this->servico->desconto;
+        }
         
     }
-    
+
 }

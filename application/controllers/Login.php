@@ -7,6 +7,7 @@ class Login extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('Usuario_m');
+        empty($_SESSION) ? session_start() : '';
     }
 
     public function index() {
@@ -50,13 +51,14 @@ class Login extends CI_Controller {
             $this->load->view('login/form');
         } else {
             $usuario = $this->Usuario_m->buscar_usuario(new Usuario_m(null, null, $this->input->post('login')));
-            $usuario = array(
-                'id' => $usuario[0]->id,
-                'nome' => $usuario[0]->nome,
-                'login' => $usuario[0]->login,
-                'senha' => $usuario[0]->senha,
-            );
-            $this->session->set_userdata('usuario', $usuario);
+            $usuario = $usuario[0];
+//            $usuario = array(
+//                'id' => $usuario[0]->id,
+//                'nome' => $usuario[0]->nome,
+//                'login' => $usuario[0]->login,
+//                'senha' => $usuario[0]->senha,
+//            );
+            $_SESSION['usuario'] = $usuario;
             redirect(base_url('home'), 'location');
         }
     }
@@ -92,9 +94,7 @@ class Login extends CI_Controller {
     }
 
     public function logout() {
-        print'tere';
         unset($_SESSION['usuario']);
-//        $this->session->unset_userdata('usuario');
         redirect(base_url('home'), 'location');
     }
 

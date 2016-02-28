@@ -89,7 +89,7 @@ class Acabamento_m extends CI_Model {
             $acabamento->id = $value['id'];
             $acabamento->nome = $value['nome'];
             $acabamento->descricao = $value['descricao'];
-            $acabamento->valor = str_replace('.', ',', $value['valor']);
+            $acabamento->valor = $value['valor'];
 
             $acabamento_lista[] = $acabamento;
         }

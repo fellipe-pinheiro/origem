@@ -8,6 +8,8 @@ class Impressao_cartao extends CI_Controller {
         parent::__construct();
         $this->load->model('Impressao_cartao_m');
         $this->load->model('Impressao_formato_m');
+        empty($_SESSION) ? session_start() : '';
+        login_necessario();
     }
 
     public function index() {

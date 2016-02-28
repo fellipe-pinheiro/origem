@@ -16,9 +16,8 @@ class Orcamento extends CI_Controller {
         $this->load->model('Laminacao_m');
         $this->load->model('Colagem_m');
         $this->load->model('Servico_m');
-//        $this->load->library('session');
-        
-        session_start();
+        empty($_SESSION) ? session_start() : '';
+        login_necessario();
     }
 
     public function index() {
@@ -42,8 +41,5 @@ class Orcamento extends CI_Controller {
         redirect(base_url('orcamento'), 'location');
     }
 
-    public function orcamento_sessao_inserir($param) {
-        
-    }
 
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -7,6 +7,8 @@ class Acabamento extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('Acabamento_m');
+        empty($_SESSION) ? session_start() : '';
+        login_necessario();
     }
 
     public function index() {
@@ -24,14 +26,14 @@ class Acabamento extends CI_Controller {
         } else {
             $acabamento = $this->Acabamento_m->listar($id);
 
-            $data['acabamento'] = $acabamento[0]; 
+            $data['acabamento'] = $acabamento[0];
             $data['acao'] = 'editar';
             $data['id'] = $id;
 
             $this->load->view('acabamento/form', $data);
         }
     }
-    
+
     public function inserir() {
         $acabamento = new Acabamento_m();
         $acabamento->id = null;
@@ -46,10 +48,11 @@ class Acabamento extends CI_Controller {
             redirect(base_url('acabamento/?msgTipe=erro&msg=Erro ao inserir o acabamento'), 'location');
         }
     }
-    
+
     public function editar() {
         $acabamento = new Acabamento_m();
-        $acabamento->id = $this->input->post('id');;
+        $acabamento->id = $this->input->post('id');
+        ;
         $acabamento->nome = $this->input->post('nome');
         $acabamento->descricao = $this->input->post('descricao');
         $acabamento->valor = $this->input->post('valor');
@@ -60,7 +63,7 @@ class Acabamento extends CI_Controller {
             sredirect(base_url('acabamento/?msgTipe=erro&msg=Erro ao alterar o acabamento'), 'location');
         }
     }
-    
+
     public function deletar() {
         print $id = $this->uri->segment(3);
 
@@ -70,4 +73,5 @@ class Acabamento extends CI_Controller {
             redirect(base_url('acabamento/?msgTipe=erro&msg=Erro ao apagar o acabamento'), 'location');
         }
     }
+
 }

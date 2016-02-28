@@ -14,10 +14,6 @@ class Nota_m extends CI_Model {
         $this->load->database();
     }
 
-    public function total_linhas() {
-        return $this->db->get('nota')->num_rows();
-    }
-
     public function listar($id = '') {
 
         if (!empty($id)) {
