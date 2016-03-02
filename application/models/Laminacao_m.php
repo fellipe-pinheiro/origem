@@ -8,7 +8,6 @@ class Laminacao_m extends CI_Model {
     var $nome;
     var $descricao;
     var $valor;
-    var $quantidade;
     var $sub_total;
     var $valor_unitario;
 

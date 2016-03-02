@@ -22,6 +22,8 @@ class Servico extends CI_Controller {
         $this->load->model('Nota_m');
         $this->load->model('Frete_m');
         $this->load->model('Orcamento_m');
+        $this->load->helper('date');
+        $this->load->database();
         empty($_SESSION) ? session_start() : '';
         login_necessario();
     }
@@ -29,11 +31,8 @@ class Servico extends CI_Controller {
     public function index() {
         empty($_SESSION['orcamento']) ? $_SESSION['orcamento'] = new Orcamento_m() : '';
         empty($_SESSION['orcamento']->servico) ? $_SESSION['orcamento']->servico = new Servico_m() : '';
-//        var_dump($_SESSION);
-//        session_destroy();
-//        die();
         empty($_SESSION['orcamento']->cliente) ? $_SESSION['orcamento']->cliente = new Cliente_m() : '';
-        
+
         $data['valor_total'] = NULL;
         $data['valor_unitario'] = NULL;
         $data['total'] = NULL;
@@ -65,14 +64,113 @@ class Servico extends CI_Controller {
         $this->load->view('servico/orcamento', $data);
     }
 
-    public function frete_sessao_definir() {
-        $valor = $this->input->post('valor_frete');
-        
-        $_SESSION['orcamento']->valor_frete = str_replace(',', '.', $valor);
-        $_SESSION['orcamento']->frete= null;
+    public function finalizar() {
+        $manter_cliente = $this->uri->segment(3);
+        $this->db->trans_start();
+        //Servico
+        $servico_id = $_SESSION['orcamento']->servico->inserir_servico($_SESSION['orcamento']->servico);
+        if ($servico_id != FALSE) {
+            $_SESSION['orcamento']->servico->id = $servico_id;
+            if (!empty($_SESSION['orcamento']->servico->papel)) {
+                foreach ($_SESSION['orcamento']->servico->papel as $key => $papel) {
+                    $verificador = $_SESSION['orcamento']->servico->inserir_servico_papel($servico_id, $papel);
+                    if ($verificador == FALSE) {
+                        $erro['papel'] = $verificador;
+                    }
+                }
+            }
+            if (!empty($_SESSION['orcamento']->servico->impressao)) {
+                if ($_SESSION['orcamento']->servico->tipo == 'servico') {
+                    foreach ($_SESSION['orcamento']->servico->impressao as $key => $impressao) {
+                        $verificador = $_SESSION['orcamento']->servico->inserir_servico_impressao($servico_id, $impressao);
+                        if ($verificador == FALSE) {
+                            $erro['impressao'] = $verificador;
+                        }
+                    }
+                } else {
+                    foreach ($_SESSION['orcamento']->servico->impressao as $key => $impressao) {
+                        $verificador = $_SESSION['orcamento']->servico->inserir_servico_impressao_cartao($servico_id, $impressao);
+                        if ($verificador == FALSE) {
+                            $erro['impressao'] = $verificador;
+                        }
+                    }
+                }
+            }
+            if (!empty($_SESSION['orcamento']->servico->acabamento)) {
+                foreach ($_SESSION['orcamento']->servico->acabamento as $key => $acabamento) {
+                    $verificador = $_SESSION['orcamento']->servico->inserir_servico_acabamento($servico_id, $acabamento);
+                    if ($verificador == FALSE) {
+                        $erro['acabamento'] = $verificador;
+                    }
+                }
+            }
+            if (!empty($_SESSION['orcamento']->servico->faca)) {
+                if ($_SESSION['orcamento']->servico->tipo == 'servico') {
+                    foreach ($_SESSION['orcamento']->servico->faca as $key => $faca) {
+                        $verificador = $_SESSION['orcamento']->servico->inserir_servico_faca($servico_id, $faca);
+                        if ($verificador == FALSE) {
+                            $erro['faca'] = $verificador;
+                        }
+                    }
+                } else {
+                    foreach ($_SESSION['orcamento']->servico->faca as $key => $faca) {
+                        $verificador = $_SESSION['orcamento']->servico->inserir_servico_faca_cartao($servico_id, $faca);
+                        if ($verificador == FALSE) {
+                            $erro['faca_cartao'] = $verificador;
+                        }
+                    }
+                }
+            }
+            if (!empty($_SESSION['orcamento']->servico->laminacao)) {
+                foreach ($_SESSION['orcamento']->servico->laminacao as $key => $laminacao) {
+                    $verificador = $_SESSION['orcamento']->servico->inserir_servico_laminacao($servico_id, $laminacao);
+                    if ($verificador == FALSE) {
+                        $erro['laminacao'] = $verificador;
+                    }
+                }
+            }
+            if (!empty($_SESSION['orcamento']->servico->colagem)) {
+                foreach ($_SESSION['orcamento']->servico->colagem as $key => $colagem) {
+                    $verificador = $_SESSION['orcamento']->servico->inserir_servico_colagem($servico_id, $colagem);
+                    if ($verificador == FALSE) {
+                        $erro['colagem'] = $verificador;
+                    }
+                }
+            }
+
+            //Orcamento
+            if (!empty($_SESSION['orcamento'])) {
+                date_default_timezone_set('America/Sao_Paulo');
+                $_SESSION['orcamento']->data_orcamento = date('Y-m-d H:i:s');
+                $orcamento_id = $_SESSION['orcamento']->inserir_orcamento($_SESSION['orcamento']);
+                $erro['orcamento'] = $orcamento_id;
+            }
+        }
+
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            redirect(base_url('servico?msg_tipo=erro&msg_texto=Erro ao inserir Orcamento no banco'), 'location');
+        }
+        $cliente_sessao = null;
+        if ($manter_cliente) {
+            $cliente_sessao = $_SESSION['orcamento']->cliente;
+        }
+
+        unset($_SESSION['orcamento']);
+        $_SESSION['orcamento'] = new Orcamento_m();
+        $_SESSION['orcamento']->cliente = $cliente_sessao;
+
         redirect(base_url('servico'), 'location');
     }
-    
+
+    public function frete_sessao_definir() {
+        $valor = $this->input->post('valor_frete');
+        $_SESSION['orcamento']->valor_frete = str_replace(',', '.', $valor);
+        $_SESSION['orcamento']->frete_personalizado = str_replace(',', '.', $valor);
+        $_SESSION['orcamento']->frete = null;
+        redirect(base_url('servico'), 'location');
+    }
+
     public function nota_fiscal_sessao() {
         $id = $this->input->get('id');
 
@@ -80,18 +178,24 @@ class Servico extends CI_Controller {
         $nota_fiscal = $nota_fiscal[0];
 
         $_SESSION['orcamento']->nota_fiscal = $nota_fiscal;
-        
+
         redirect(base_url('servico'), 'location');
     }
 
     public function frete_sessao() {
         $id = $this->input->get('id');
-
-        $frete = $this->Frete_m->listar($id);
-        $frete = $frete[0];
-
-        $_SESSION['orcamento']->frete = $frete;
-        $_SESSION['orcamento']->valor_frete = $frete->valor;
+        if ($id == -2) {
+            // opcao nao cobrar
+            unset($_SESSION['orcamento']->frete);
+            $_SESSION['orcamento']->valor_frete = null;
+        } else {
+            // opcao motoboy ou frete do banco
+            $frete = $this->Frete_m->listar($id);
+            $frete = $frete[0];
+            $_SESSION['orcamento']->valor_frete = 0;
+            $_SESSION['orcamento']->frete = $frete;
+            $_SESSION['orcamento']->valor_frete = $frete->valor;
+        }
         redirect(base_url('servico'), 'location');
     }
 
@@ -102,7 +206,7 @@ class Servico extends CI_Controller {
         $_SESSION['orcamento']->cliente = $cliente;
         redirect(base_url('servico'), 'location');
     }
-    
+
     public function cliente_session_criar() {
         $cliente = new Cliente_m();
         $cliente->id = null;
@@ -152,7 +256,7 @@ class Servico extends CI_Controller {
         $servico_quantidade = $_SESSION['orcamento']->servico->quantidade = $_POST['quantidade'];
         $servico_desconto = $_SESSION['orcamento']->servico->desconto = str_replace(',', '.', $_POST['desconto']);
 
-        //recalcula valores para os itens que dependem da quantidade
+//recalcula valores para os itens que dependem da quantidade
         foreach ($_SESSION['orcamento']->servico->laminacao as $key => $value) {
             $value[0]->valor_unitario = $value[0]->calcula_valor_unitario($value[0]->sub_total, $servico_quantidade);
         }
@@ -286,12 +390,10 @@ class Servico extends CI_Controller {
 
     public function colagem_sessao_inserir() {
         $nome = $_POST['nome'];
-        $quantidade = $_POST['quantidade'];
-        $valor = $_POST['valor'];
+        $valor = str_replace(",", ".", $_POST['valor']);
         $colagem = new Colagem_m();
         $quantidade_pedido = $_SESSION['orcamento']->servico->quantidade;
         $colagem->nome = $nome;
-        $colagem->quantidade = $quantidade;
         $colagem->valor_unitario = $colagem->calcula_valor_unitario($valor, $quantidade_pedido);
         $colagem->sub_total = $valor;
         $_SESSION['orcamento']->servico->colagem[] = $colagem;
@@ -301,11 +403,9 @@ class Servico extends CI_Controller {
     public function colagem_sessao_editar() {
         $posicao = $this->uri->segment(3);
         $nome = $_POST['nome'];
-        $quantidade = $_POST['quantidade'];
         $valor = $_POST['valor'];
         $quantidade_pedido = $_SESSION['orcamento']->servico->quantidade;
         $_SESSION['orcamento']->servico->colagem[$posicao]->nome = $nome;
-        $_SESSION['orcamento']->servico->colagem[$posicao]->quantidade = $quantidade;
         $_SESSION['orcamento']->servico->colagem[$posicao]->valor_unitario = $_SESSION['orcamento']->servico->colagem[$posicao]->calcula_valor_unitario($valor, $quantidade_pedido);
         $_SESSION['orcamento']->servico->colagem[$posicao]->sub_total = $valor;
         redirect(base_url('servico'), 'location');
@@ -322,12 +422,10 @@ class Servico extends CI_Controller {
             redirect(base_url('servico'), 'location');
         }
         $id = $_POST['laminacao'];
-        $quantidade = $_POST['quantidade'];
-        $valor = $_POST['valor'];
+        $valor = str_replace(',', '.', $_POST['valor']);
         $quantidade_pedido = $_SESSION['orcamento']->servico->quantidade;
         $laminacao = $this->Laminacao_m->listar($id);
         $laminacao = $laminacao[0];
-        $laminacao->quantidade = $quantidade;
         $laminacao->valor_unitario = $laminacao->calcula_valor_unitario($valor, $quantidade_pedido);
         $laminacao->sub_total = $valor;
         $_SESSION['orcamento']->servico->laminacao[] = $laminacao;
@@ -340,12 +438,10 @@ class Servico extends CI_Controller {
         }
         $posicao = $this->uri->segment(3);
         $id = $_POST['laminacao'];
-        $quantidade = $_POST['quantidade'];
-        $valor = $_POST['valor'];
+        $valor = str_replace(',', '.', $_POST['valor']);
         $quantidade_pedido = $_SESSION['orcamento']->servico->quantidade;
         $laminacao = $this->Laminacao_m->listar($id);
         $laminacao = $laminacao[0];
-        $laminacao->quantidade = $quantidade;
         $laminacao->valor_unitario = $laminacao->calcula_valor_unitario($valor, $quantidade_pedido);
         $laminacao->sub_total = $valor;
         $_SESSION['orcamento']->servico->laminacao[$posicao] = $laminacao;

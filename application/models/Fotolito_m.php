@@ -59,7 +59,7 @@ class Fotolito_m extends CI_Model {
         if (!empty($fotolito)) {
             $dados = array(
                 'id' => $fotolito->id,
-                'nome' => $fotolito->nome,
+                'impressao_formato' => $fotolito->impressao_formato,
                 'descricao' => $fotolito->descricao,
                 'valor' => str_replace(',', '.', $fotolito->valor)
             );
@@ -77,7 +77,7 @@ class Fotolito_m extends CI_Model {
         if (!empty($fotolito->id)) {
             $dados = array(
                 'id' => $fotolito->id,
-                'nome' => $fotolito->nome,
+                'impressao_formato' => $fotolito->impressao_formato,
                 'descricao' => $fotolito->descricao,
                 'valor' => str_replace(',', '.', $fotolito->valor)
             );

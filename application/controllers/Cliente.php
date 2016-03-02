@@ -38,26 +38,27 @@ class Cliente extends CI_Controller {
         $cliente = new Cliente_m();
         $cliente->id = null;
         $cliente->nome = $this->input->post('nome');
+        $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
+        $cliente->email = $this->input->post('email');
+        $cliente->celular = $this->input->post('celular');
+        $cliente->telefone = $this->input->post('telefone');
+        $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
+        $cliente->ie = $this->input->post('ie');
+        $cliente->im = $this->input->post('im');
+        $cliente->rua = $this->input->post('rua');
         $cliente->numero = $this->input->post('numero');
         $cliente->complemento = $this->input->post('complemento');
         $cliente->bairro = $this->input->post('bairro');
         $cliente->cidade = $this->input->post('cidade');
         $cliente->estado = $this->input->post('estado');
         $cliente->cep = $this->input->post('cep');
-        $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
-        $cliente->ie = $this->input->post('ie');
-        $cliente->im = $this->input->post('im');
-        $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
-        $cliente->email = $this->input->post('email');
-        $cliente->telefone = $this->input->post('telefone');
-        $cliente->celular = $this->input->post('celular');
         $cliente->observacao = $this->input->post('observacao');
 
         $id = $this->Cliente_m->inserir($cliente);
         if (!empty($id)) {
-                redirect(base_url('cliente/?msgTipe=sucesso&msg=cliente inserido com sucesso'), 'location');
+            redirect(base_url('cliente/?msgTipe=sucesso&msg=cliente inserido com sucesso'), 'location');
         } else {
-                redirect(base_url('cliente/?msgTipe=erro&msg=Erro ao inserir a cliente'), 'location');
+            redirect(base_url('cliente/?msgTipe=erro&msg=Erro ao inserir a cliente'), 'location');
         }
     }
 
@@ -65,25 +66,26 @@ class Cliente extends CI_Controller {
         $cliente = new Cliente_m();
         $cliente->id = $this->input->post('id');
         $cliente->nome = $this->input->post('nome');
+        $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
+        $cliente->email = $this->input->post('email');
+        $cliente->celular = $this->input->post('celular');
+        $cliente->telefone = $this->input->post('telefone');
+        $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
+        $cliente->ie = $this->input->post('ie');
+        $cliente->im = $this->input->post('im');
+        $cliente->rua = $this->input->post('rua');
         $cliente->numero = $this->input->post('numero');
         $cliente->complemento = $this->input->post('complemento');
         $cliente->bairro = $this->input->post('bairro');
         $cliente->cidade = $this->input->post('cidade');
         $cliente->estado = $this->input->post('estado');
         $cliente->cep = $this->input->post('cep');
-        $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
-        $cliente->ie = $this->input->post('ie');
-        $cliente->im = $this->input->post('im');
-        $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
-        $cliente->email = $this->input->post('email');
-        $cliente->telefone = $this->input->post('telefone');
-        $cliente->celular = $this->input->post('celular');
         $cliente->observacao = $this->input->post('observacao');
 
         if ($this->Cliente_m->editar($cliente)) {
-                redirect(base_url('cliente/?msgTipe=sucesso&msg=cliente alterado com sucesso'), 'location');
+            redirect(base_url('cliente/?msgTipe=sucesso&msg=cliente alterado com sucesso'), 'location');
         } else {
-                redirect(base_url('cliente/?msgTipe=erro&msg=Erro ao alterar o cliente'), 'location');
+            redirect(base_url('cliente/?msgTipe=erro&msg=Erro ao alterar o cliente'), 'location');
         }
     }
 
@@ -96,30 +98,31 @@ class Cliente extends CI_Controller {
             redirect(base_url('cliente/?msgTipe=erro&msg=Erro ao apagar o cliente'), 'location');
         }
     }
-    
-     public function inserir_modal() {
+
+    public function inserir_modal() {
         $cliente = new Cliente_m();
         $cliente->id = null;
         $cliente->nome = $this->input->post('nome');
+        $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
+        $cliente->email = $this->input->post('email');
+        $cliente->celular = $this->input->post('celular');
+        $cliente->telefone = $this->input->post('telefone');
+        $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
+        $cliente->ie = $this->input->post('ie');
+        $cliente->im = $this->input->post('im');
+        $cliente->rua = $this->input->post('rua');
         $cliente->numero = $this->input->post('numero');
         $cliente->complemento = $this->input->post('complemento');
         $cliente->bairro = $this->input->post('bairro');
         $cliente->cidade = $this->input->post('cidade');
         $cliente->estado = $this->input->post('estado');
         $cliente->cep = $this->input->post('cep');
-        $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
-        $cliente->ie = $this->input->post('ie');
-        $cliente->im = $this->input->post('im');
-        $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
-        $cliente->email = $this->input->post('email');
-        $cliente->telefone = $this->input->post('telefone');
-        $cliente->celular = $this->input->post('celular');
         $cliente->observacao = $this->input->post('observacao');
         $id = $this->Cliente_m->inserir($cliente);
         if (!empty($id)) {
-                print $id;
+            print $id;
         } else {
-                print FALSE;
+            print FALSE;
         }
     }
 
@@ -127,21 +130,21 @@ class Cliente extends CI_Controller {
         $cliente = new Cliente_m();
         $cliente->id = $this->input->post('id');
         $cliente->nome = $this->input->post('nome');
+        $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
+        $cliente->email = $this->input->post('email');
+        $cliente->celular = $this->input->post('celular');
+        $cliente->telefone = $this->input->post('telefone');
+        $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
+        $cliente->ie = $this->input->post('ie');
+        $cliente->im = $this->input->post('im');
+        $cliente->rua = $this->input->post('rua');
         $cliente->numero = $this->input->post('numero');
         $cliente->complemento = $this->input->post('complemento');
         $cliente->bairro = $this->input->post('bairro');
         $cliente->cidade = $this->input->post('cidade');
         $cliente->estado = $this->input->post('estado');
         $cliente->cep = $this->input->post('cep');
-        $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
-        $cliente->ie = $this->input->post('ie');
-        $cliente->im = $this->input->post('im');
-        $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
-        $cliente->email = $this->input->post('email');
-        $cliente->telefone = $this->input->post('telefone');
-        $cliente->celular = $this->input->post('celular');
         $cliente->observacao = $this->input->post('observacao');
-
         if ($this->Cliente_m->editar($cliente)) {
             print $cliente->id;
         } else {

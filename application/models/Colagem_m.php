@@ -6,7 +6,6 @@ class Colagem_m extends CI_Model {
 
     var $id;
     var $nome;
-    var $quantidade;
     var $sub_total;
     var $valor_unitario;
 

@@ -10,7 +10,6 @@ class Impressao_m extends CI_Model {
     var $descricao;
     var $valor;
     var $fotolito;
-    var $quantidade;
     var $sub_total;
     var $valor_unitario;
 

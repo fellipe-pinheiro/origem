@@ -66,13 +66,15 @@ $titulo = 'Serviço';
             });
 
 //            Selecionar os valores de frete
-<?php if (!empty($_SESSION['orcamento']->frete)) { ?>
+<?php if (!empty($_SESSION['orcamento']->frete->id)) { ?>
                 $('#frete option[value="<?= $_SESSION['orcamento']->frete->id ?>"]').attr('selected', 'selected');
-<?php } else { ?>
+<?php } elseif(!empty($_SESSION['orcamento']->frete_personalizado)) { ?>
                 $('#frete option[value="0"]').attr('selected', 'selected');
+<?php }else{ ?>
+                $('#frete option[value="-1"]').attr('selected', 'selected');
 <?php } ?>
-
-//              Selecionar os valores da nota fiscal
+    
+//Selecionar os valores da nota fiscal
 <?php if (!empty($_SESSION['orcamento']->nota_fiscal)) { ?>
                 $('#nota_fiscal option[value="<?= $_SESSION['orcamento']->nota_fiscal->id ?>"]').attr('selected', 'selected');
 <?php } ?>
@@ -131,9 +133,8 @@ $titulo = 'Serviço';
             document.getElementById('form_colagem').action = "servico/colagem_sessao_editar/" + posicao;
             $('#myModal_colagem').modal('show');
         }
-        function open_laminacao_modal(posicao, id, qtd, valor) {
+        function open_laminacao_modal(posicao, id, valor) {
             $('#md_laminacao_select_laminacao option[value=' + id + ']').attr('selected', 'selected');
-            $('#md_laminacao_select_qtd option[value=' + qtd + ']').attr('selected', 'selected');
             $('#md_laminacao_valor').val(valor);
             document.getElementById('form_laminacao').action = "servico/laminacao_sessao_editar/" + posicao;
             $('#myModal_laminacao').modal('show');
@@ -195,7 +196,7 @@ $titulo = 'Serviço';
                                             <span class="glyphicon glyphicon-plus"></span> Novo
                                         </a>
                                     <?php } else { ?>
-                                        <a class="btn btn-success btn-block btn-sm" >
+                                        <a href="#" id="btn_finalizar" class="btn btn-success btn-block btn-sm" data-toggle="modal" data-target="#modal_finalizar">
                                             <span class="glyphicon glyphicon-ok"></span> Finalizar
                                         </a>
                                         <a href="<?= base_url('Servico/excluir_todos_servicos') ?>" class="btn btn-danger btn-block btn-sm">
@@ -220,7 +221,8 @@ $titulo = 'Serviço';
                                         <div class="col-md-12">
                                             <label for="frete">Tipo de frete:</label>
                                             <select name="frete" id="frete" class="form-control">
-                                                <option selected disabled >Selecione</option>
+                                                <option value="-1" selected>Selecione</option>
+                                                <option value="-2" >Não cobrar</option>
                                                 <option value="0" >Definir</option>
                                                 <?php foreach ($frete as $value) { ?>
                                                     <option value="<?= $value->id ?>"><?= $value->nome ?></option>
@@ -369,7 +371,7 @@ $titulo = 'Serviço';
                                             </div>
                                         <?php } else { ?>
                                             <div class="col-md-2">
-                                                <button id="md_btn_impressao" class = "btn btn-default btn-block col-md-2 btn_m" data-toggle = "modal" data-target = "#modal_impressao_servico">
+                                                <button id="md_btn_impressao" class = "btn btn-default btn-block col-md-2 btn_m" data-toggle = "modal" data-target = "#myModal_impressao">
                                                     <span class = "glyphicon glyphicon-plus"></span> Impressão
                                                 </button>
                                             </div>
@@ -450,7 +452,7 @@ $titulo = 'Serviço';
                                                         <td>Fotolito</td>
                                                         <td><?= $impressao->impressao_formato->nome ?>: <?= $impressao->impressao_formato->altura ?>x<?= $impressao->impressao_formato->largura ?></td>
                                                         <td><?= $impressao->fotolito->quantidade ?></td>
-                                                        <td>R$ <?= number_format($impressao->fotolito->valor_unitario, 2, ",", ".") ?></td>
+                                                        <td>R$ <?= $impressao->fotolito->valor_unitario ?></td>
                                                         <td>R$ <?= number_format($impressao->fotolito->sub_total, 2, ",", ".") ?></td>
                                                         <td></td>
                                                         <td></td>
@@ -491,11 +493,11 @@ $titulo = 'Serviço';
 
                                                         <td><?= $faca->quantidade ?></td>
                                                         <?php if ($_SESSION['orcamento']->servico->tipo == 'servico') { ?>
-                                                            <td>R$ <?= $faca->valor_faca ?></td>
+                                                            <td>R$ <?= number_format($faca->valor_faca, 2, ",", ".") ?></td>
                                                         <?php } else { ?>
                                                             <td>R$ <?= $faca->valor ?></td>
                                                         <?php } ?>
-                                                        <td>R$ <?= $faca->sub_total ?></td>
+                                                        <td>R$ <?= number_format($faca->sub_total, 2, ",", ".") ?></td>
                                                         <td><button onclick="open_faca_modal(<?= $key ?>, <?= $faca->id ?>)" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
                                                         <td><a class="btn btn-danger btn-sm" href="<?= base_url("servico/faca_sessao_excluir/{$key}") ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
                                                     </tr>
@@ -513,7 +515,7 @@ $titulo = 'Serviço';
                                                         <td><?= $_SESSION['orcamento']->servico->quantidade ?></td>
                                                         <td>R$ <?= number_format($laminacao->valor_unitario, 3, ",", ".") ?></td>
                                                         <td>R$ <?= number_format($laminacao->sub_total, 2, ",", ".") ?></td>
-                                                        <td><button onclick="open_laminacao_modal(<?= $key ?>, <?= $laminacao->id ?>,<?= $laminacao->quantidade ?>,<?= $laminacao->sub_total ?>)" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                                                        <td><button onclick="open_laminacao_modal(<?= $key ?>, <?= $laminacao->id ?>,<?= $laminacao->sub_total ?>)" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
                                                         <td><a class="btn btn-danger btn-sm" href="<?= base_url("servico/laminacao_sessao_excluir/{$key}") ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
                                                     </tr>
                                                     <?php
@@ -545,9 +547,103 @@ $titulo = 'Serviço';
                     </div>
                 </div>
             </div>
+            <?php $this->load->view('_include/footer'); ?>
         </div>
-        <?php $this->load->view('_include/footer'); ?>
 
+        <!-- Modal Finalizar -->
+        <div class="modal fade" id="modal_finalizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Finalizar Orcamento</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Deseja realizar mais um orçamento para este cliente?</h3>
+                        <a href="<?= base_url('Servico/finalizar/0') ?>" class="btn btn-default  btn-lg" >
+                            <span class="glyphicon glyphicon-ok"></span> Não
+                        </a>
+                        <a href="<?= base_url('Servico/finalizar/1') ?>" class="btn btn-success btn-lg" >
+                            <span class="glyphicon glyphicon-ok"></span> Sim
+                        </a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Impressão cartao -->
+        <div class="modal fade" id="myModal_impressao_cartao" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <form id="form_impressao_cartao" action="<?= base_url('Servico/impressao_cartao_sessao_inserir') ?>" method="POST" class="form-horizontal" role="form">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Impressão</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label for="impressao_cartao">Impressão:</label>
+                            <select id="impressao_cartao_select" class="form-control" name="impressao_cartao">
+                                <option value="">Selecione</option>
+                                <?php
+                                foreach ($impressao_cartao_md as $key => $value) {
+                                    ?>
+                                    <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                            <!--Quantidade Cor frente-->
+                            <?= form_label('Qtd cores frente: ', 'qtd_cor_frente', array('class' => ' control-label')) ?>
+                            <?= form_input('qtd_cor_frente', '', ' id="impressao_cartao_qtd_cor_frente" class="form-control" placeholder="Quantidade cores frente"') ?>
+
+                            <!--Quantidade Cor verso-->
+                            <?= form_label('Qtd cores verso: ', 'qtd_cor_verso', array('class' => ' control-label')) ?>
+                            <?= form_input('qtd_cor_verso', '', ' id="impressao_cartao_qtd_cor_verso" class="form-control" placeholder="Quantidade cores verso"') ?>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            <button id="impressao_cartao_btn_submit" type="submit" class="btn btn-success" >Adicionar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal Impressao-->
+        <div class="modal fade" id="myModal_impressao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Impressão</h4>
+                        </div>
+                        <form id="form_impressao" action="<?= base_url('Servico/impressao_sessao_inserir') ?>" method="POST" role="form">
+                            <div class="modal-body">
+                                <select id="form_impressao_select" class="form-control" name="impressao" required>
+                                    <option value="" disabled="">Selecione</option>
+                                    <?php
+                                    foreach ($impressao_md as $key => $value) {
+                                        ?>
+                                        <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                <button id="form_impressao_acao" type="submit" class="btn btn-success" >Adicionar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Modal Frete valor -->
         <div class="modal fade" id="modal_frete_valor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-lg" role="document">
@@ -588,85 +684,106 @@ $titulo = 'Serviço';
                                 <div class="col-sm-5">
                                     <?= form_input('nome', '', ' id="nome" class="form-control" placeholder="Nome"') ?>
                                 </div>
-                            </div>    <!--Numero-->
-                            <div class="form-group">
-                                <?= form_label('Numero: ', 'numero', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('numero', '', ' id="numero" class="form-control" placeholder="Numero"') ?>
-                                </div>
-                            </div>    <!--Complemento-->
-                            <div class="form-group">
-                                <?= form_label('Complemento: ', 'complemento', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('complemento', '', ' id="complemento" class="form-control" placeholder="Complemento"') ?>
-                                </div>
-                            </div>    <!--Bairro-->
-                            <div class="form-group">
-                                <?= form_label('Bairro: ', 'bairro', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('bairro', '', ' id="bairro" class="form-control" placeholder="Bairro"') ?>
-                                </div>
-                            </div>    <!--Cidade-->
-                            <div class="form-group">
-                                <?= form_label('Cidade: ', 'cidade', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('cidade', '', ' id="cidade" class="form-control" placeholder="Cidade"') ?>
-                                </div>
-                            </div>    <!--Estado-->
-                            <div class="form-group">
-                                <?= form_label('Estado: ', 'estado', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('estado', '', ' id="estado" class="form-control" placeholder="Estado"') ?>
-                                </div>
-                            </div>    <!--Cep-->
-                            <div class="form-group">
-                                <?= form_label('Cep: ', 'cep', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('cep', '', ' id="cep" class="form-control" placeholder="Cep"') ?>
-                                </div>
-                            </div>    <!--Cnpj_cpf-->
+                            </div>    
+                            <!--Cnpj_cpf-->
                             <div class="form-group">
                                 <?= form_label('Cnpj_cpf: ', 'cnpj_cpf', array('class' => 'control-label col-sm-2')) ?>
                                 <div class="col-sm-5">
                                     <?= form_input('cnpj_cpf', '', ' id="cnpj_cpf" class="form-control" placeholder="Cnpj_cpf"') ?>
                                 </div>
-                            </div>    <!--Ie-->
-                            <div class="form-group">
-                                <?= form_label('Ie: ', 'ie', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('ie', '', ' id="ie" class="form-control" placeholder="Ie"') ?>
-                                </div>
-                            </div>    <!--Im-->
-                            <div class="form-group">
-                                <?= form_label('Im: ', 'im', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('im', '', ' id="im" class="form-control" placeholder="Im"') ?>
-                                </div>
-                            </div>    <!--Pessoa_tipo-->
+                            </div>
+                            <!--Pessoa_tipo-->
                             <div class="form-group">
                                 <?= form_label('Pessoa_tipo: ', 'pessoa_tipo', array('class' => 'control-label col-sm-2')) ?>
                                 <div class="col-sm-5">
                                     <?= form_input('pessoa_tipo', '', ' id="pessoa_tipo" class="form-control" placeholder="Pessoa_tipo"') ?>
                                 </div>
-                            </div>    <!--Email-->
+                            </div>    
+                            <!--Email-->
                             <div class="form-group">
                                 <?= form_label('Email: ', 'email', array('class' => 'control-label col-sm-2')) ?>
                                 <div class="col-sm-5">
                                     <?= form_input('email', '', ' id="email" class="form-control" placeholder="Email"') ?>
                                 </div>
-                            </div>    <!--Telefone-->
+                            </div>    
+                            <!--Telefone-->
                             <div class="form-group">
                                 <?= form_label('Telefone: ', 'telefone', array('class' => 'control-label col-sm-2')) ?>
                                 <div class="col-sm-5">
                                     <?= form_input('telefone', '', ' id="telefone" class="form-control" placeholder="Telefone"') ?>
                                 </div>
-                            </div>    <!--Celular-->
+                            </div>    
+                            <!--Celular-->
                             <div class="form-group">
                                 <?= form_label('Celular: ', 'celular', array('class' => 'control-label col-sm-2')) ?>
                                 <div class="col-sm-5">
                                     <?= form_input('celular', '', ' id="celular" class="form-control" placeholder="Celular"') ?>
                                 </div>
-                            </div>    <!--Observacao-->
+                            </div>
+                            <!--Rua-->
+                            <div class="form-group">
+                                <?= form_label('Rua: ', 'rua', array('class' => 'control-label col-sm-2')) ?>
+                                <div class="col-sm-5">
+                                    <?= form_input('rua', '', ' id="rua" class="form-control" placeholder="Rua"') ?>
+                                </div>
+                            </div>
+                            <!--Numero-->
+                            <div class="form-group">
+                                <?= form_label('Numero: ', 'numero', array('class' => 'control-label col-sm-2')) ?>
+                                <div class="col-sm-5">
+                                    <?= form_input('numero', '', ' id="numero" class="form-control" placeholder="Numero"') ?>
+                                </div>
+                            </div>    
+                            <!--Complemento-->
+                            <div class="form-group">
+                                <?= form_label('Complemento: ', 'complemento', array('class' => 'control-label col-sm-2')) ?>
+                                <div class="col-sm-5">
+                                    <?= form_input('complemento', '', ' id="complemento" class="form-control" placeholder="Complemento"') ?>
+                                </div>
+                            </div>    
+                            <!--Bairro-->
+                            <div class="form-group">
+                                <?= form_label('Bairro: ', 'bairro', array('class' => 'control-label col-sm-2')) ?>
+                                <div class="col-sm-5">
+                                    <?= form_input('bairro', '', ' id="bairro" class="form-control" placeholder="Bairro"') ?>
+                                </div>
+                            </div>    
+                            <!--Cidade-->
+                            <div class="form-group">
+                                <?= form_label('Cidade: ', 'cidade', array('class' => 'control-label col-sm-2')) ?>
+                                <div class="col-sm-5">
+                                    <?= form_input('cidade', '', ' id="cidade" class="form-control" placeholder="Cidade"') ?>
+                                </div>
+                            </div>    
+                            <!--Estado-->
+                            <div class="form-group">
+                                <?= form_label('Estado: ', 'estado', array('class' => 'control-label col-sm-2')) ?>
+                                <div class="col-sm-5">
+                                    <?= form_input('estado', '', ' id="estado" class="form-control" placeholder="Estado"') ?>
+                                </div>
+                            </div>    
+                            <!--Cep-->
+                            <div class="form-group">
+                                <?= form_label('Cep: ', 'cep', array('class' => 'control-label col-sm-2')) ?>
+                                <div class="col-sm-5">
+                                    <?= form_input('cep', '', ' id="cep" class="form-control" placeholder="Cep"') ?>
+                                </div>
+                            </div>        
+                            <!--Ie-->
+                            <div class="form-group">
+                                <?= form_label('Ie: ', 'ie', array('class' => 'control-label col-sm-2')) ?>
+                                <div class="col-sm-5">
+                                    <?= form_input('ie', '', ' id="ie" class="form-control" placeholder="Ie"') ?>
+                                </div>
+                            </div>    
+                            <!--Im-->
+                            <div class="form-group">
+                                <?= form_label('Im: ', 'im', array('class' => 'control-label col-sm-2')) ?>
+                                <div class="col-sm-5">
+                                    <?= form_input('im', '', ' id="im" class="form-control" placeholder="Im"') ?>
+                                </div>
+                            </div>    
+                            <!--Observacao-->
                             <div class="form-group">
                                 <?= form_label('Observacao: ', 'observacao', array('class' => 'control-label col-sm-2')) ?>
                                 <div class="col-sm-5">
@@ -729,65 +846,10 @@ $titulo = 'Serviço';
                 </div>
             </div>
         </div>
-        <!-- Modal Impressão -->
-        <div class="modal fade" id="modal_impressao_servico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                    <form action="#" method="post">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                          ...
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </form>
-              </div>
-            </div>
-          </div>
-        <!-- Modal Impressão cartao -->
-        <div class="modal fade" id="myModal_impressao_cartao" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <form id="form_impressao_cartao" action="<?= base_url('Servico/impressao_cartao_sessao_inserir') ?>" method="POST" class="form-horizontal" role="form">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Impressão</h4>
-                        </div>
-                        <div class="modal-body">
-                            <label for="impressao_cartao">Impressão:</label>
-                            <select id="impressao_cartao_select" class="form-control" name="impressao_cartao">
-                                <option value="">Selecione</option>
-                                <?php
-                                foreach ($impressao_cartao_md as $key => $value) {
-                                    ?>
-                                    <option value="<?= $value->id ?>"><?= $value->nome ?></option>
-                                    <?php
-                                }
-                                ?>
-                            </select>
-                            <!--Quantidade Cor frente-->
-                            <?= form_label('Qtd cores frente: ', 'qtd_cor_frente', array('class' => ' control-label')) ?>
-                            <?= form_input('qtd_cor_frente', '', ' id="impressao_cartao_qtd_cor_frente" class="form-control" placeholder="Quantidade cores frente"') ?>
+        <!--Erro form-->
+        <form action="#" method="POST">
 
-                            <!--Quantidade Cor verso-->
-                            <?= form_label('Qtd cores verso: ', 'qtd_cor_verso', array('class' => ' control-label')) ?>
-                            <?= form_input('qtd_cor_verso', '', ' id="impressao_cartao_qtd_cor_verso" class="form-control" placeholder="Quantidade cores verso"') ?>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            <button id="impressao_cartao_btn_submit" type="submit" class="btn btn-success" >Adicionar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+        </form>
         <!-- Modal Papel -->
         <div class="modal fade" id="myModal_papel" role="dialog">
             <div class="modal-dialog">
@@ -954,14 +1016,6 @@ $titulo = 'Serviço';
                                     <?php } ?>
                                 </select>
                             </div>
-                            <label class="control-label" for="quantidade"> Quantidade:</label>
-                            <select id="md_laminacao_select_qtd" name="quantidade" class="form-control" required>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
                             <label class="control-label" for="valor"> Valor:</label>
                             <input id="md_laminacao_valor" class="form-control" name="valor" required placeholder="Insira o valor total do serviço de laminação">
                         </div>

@@ -16,24 +16,26 @@ class Orcamento extends CI_Controller {
         $this->load->model('Laminacao_m');
         $this->load->model('Colagem_m');
         $this->load->model('Servico_m');
+        $this->load->model('Orcamento_m');
         empty($_SESSION) ? session_start() : '';
         login_necessario();
     }
 
     public function index() {
-//        print "<pre>";
-//        $_SESSION['laminacao'] = $this->Laminacao_m->listar();
-//        var_dump($_SESSION);
-//        die();
-        $data = '';
-//        if (!empty($_SESSION['servico'])) {
-//            $data['valor_total'] = $this->session->servico->calcula_total_servico();
-//            $data['valor_unitario'] = $this->session->servico->calcula_unitario_servico($data['valor_total'], $this->session->servico->quantidade);
-//            $data['total'] = $data['valor_total'] - $this->session->servico->desconto;
-//        }
+        $data['lista_orcamento'] = $this->Orcamento_m->listar_view();
         $this->load->view('Orcamento/lista', $data);
     }
-
+    
+    public function editar() {
+        $id = $this->uri->segment(3);
+        $data['orcamento'] = $this->Orcamento_m->listar_para_sessao($id);
+        redirect(base_url('servico'), 'location');
+    }
+    
+    public function gerar_pdf() {
+        print "Gerar o PDF";
+    }
+    
     public function excluir_todos_servicos() {
         unset(
                 $_SESSION['papel'], $_SESSION['empastamento'], $_SESSION['impressao'], $_SESSION['acabamento'], $_SESSION['faca'], $_SESSION['servico'], $_SESSION['fotolito'], $_SESSION['laminacao'], $_SESSION['colagem']

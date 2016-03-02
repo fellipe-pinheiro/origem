@@ -94,7 +94,8 @@ class Login extends CI_Controller {
     }
 
     public function logout() {
-        unset($_SESSION['usuario']);
+        //unset($_SESSION['usuario']);
+        session_destroy();
         redirect(base_url('home'), 'location');
     }
 

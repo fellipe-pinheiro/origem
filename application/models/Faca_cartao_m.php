@@ -51,7 +51,7 @@ class Faca_cartao_m extends CI_Model {
                 'id' => $faca->id,
                 'nome' => $faca->nome,
                 'descricao' => $faca->descricao,
-                'valor' => str_replace(',', '.', $faca->valor)
+                'valor' => $faca->valor
             );
             $this->db->where('id', $faca->id);
             if ($this->db->update('faca_cartao', $data)) {
@@ -84,7 +84,7 @@ class Faca_cartao_m extends CI_Model {
             $faca_cartao->id = $value['id'];
             $faca_cartao->nome = $value['nome'];
             $faca_cartao->descricao = $value['descricao'];
-            $faca_cartao->valor = str_replace('.', ',', $value['valor']);
+            $faca_cartao->valor = $value['valor'];
 
             $faca_cartao_lista[] = $faca_cartao;
         }
