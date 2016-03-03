@@ -6,7 +6,9 @@ class Fotolito extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->load->library('form_validation');
         $this->load->model('Fotolito_m');
+        $this->load->model('Impressao_formato_m');
         $this->load->model('Impressao_formato_m');
         empty($_SESSION) ? session_start() : '';
         login_necessario();
@@ -55,14 +57,20 @@ class Fotolito extends CI_Controller {
     }
 
     public function editar() {
-        $fotolito = new Fotolito_m();
-        $fotolito->id = $this->input->post('id');
-        $fotolito->impressao_formato = $this->input->post('impressao_formato');
-        $fotolito->descricao = $this->input->post('descricao');
-        $fotolito->valor = $this->input->post('valor');
-
-        if ($this->Fotolito_m->editar($fotolito)) {
-            redirect(base_url('fotolito/?msgTipe=sucesso&msg=fotolito alterado com sucesso'), 'location');
+        $this->form_validation->set_message('is_unique', 'Este %s já está cadastrado no sistema');
+        $this->form_validation->set_rules('impressao_formato', 'impressao_formato', 'required|is_unique[fotolito.impressao_formato]');
+//        TODO: FLASHDATA
+        if ($this->form_validation->run() == TRUE) {
+            $fotolito = new Fotolito_m();
+            $fotolito->id = $this->input->post('id');
+            $fotolito->impressao_formato = $this->input->post('impressao_formato');
+            $fotolito->descricao = $this->input->post('descricao');
+            $fotolito->valor = $this->input->post('valor');
+            if ($this->Fotolito_m->editar($fotolito)) {
+                redirect(base_url('fotolito/?msgTipe=sucesso&msg=fotolito alterado com sucesso'), 'location');
+            } else {
+                sredirect(base_url('fotolito/?msgTipe=erro&msg=Erro ao alterar a fotolito'), 'location');
+            }
         } else {
             sredirect(base_url('fotolito/?msgTipe=erro&msg=Erro ao alterar a fotolito'), 'location');
         }

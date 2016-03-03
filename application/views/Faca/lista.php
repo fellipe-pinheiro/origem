@@ -12,7 +12,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <?= form_input('', '', ' id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
+                            <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
                         </div>
                         <div class="col-md-3">
                             <a class="btn btn-primary inserir" href="<?= base_url('faca/form') ?>">Nova faca</a>

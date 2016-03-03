@@ -28,7 +28,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Nome: ', 'nome', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('nome', $frete->nome, ' id="nome" class="form-control" placeholder="Nome"') ?>
+                            <?= form_input('nome', $frete->nome, 'autofocus required id="nome" class="form-control" placeholder="Nome"') ?>
                         </div>
                     </div>
                     
@@ -44,7 +44,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor', $frete->valor, ' id="valor" class="form-control" placeholder="Valor"') ?>
+                            <?= form_input('valor', $frete->valor, 'required min="0" step="0.01" type="number" id="valor" class="form-control" placeholder="Valor"') ?>
                         </div>
                     </div>
 

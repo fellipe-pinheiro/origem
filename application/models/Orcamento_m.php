@@ -25,8 +25,8 @@ class Orcamento_m extends CI_Model {
         $this->load->model('Nota_m');
     }
 
-    public function listar_para_sessao($id = '') {
-        $_SESSION['orcamento'] = new Orcamento_m();
+    public function get_orcamento($id = '') {
+        $orcamento = new Orcamento_m();
         //busca no banco orcamento
         $this->db->select('*');
         $this->db->from('orcamento as orc');
@@ -47,12 +47,12 @@ class Orcamento_m extends CI_Model {
         if (!empty($result_orc['frete_id'])) {
             $frete = $this->Frete_m->listar($result_orc['frete_id']);
             $frete = $frete[0];
-            $_SESSION['orcamento']->valor_frete = $result_orc['valor_frete'];
+            $orcamento->valor_frete = $result_orc['valor_frete'];
         }
         $frete_personalizado = null;
         if (!empty($result_orc['frete_personalizado'])) {
             $frete_personalizado = $result_orc['frete_personalizado'];
-            $_SESSION['orcamento']->valor_frete = $result_orc['valor_frete'];
+            $orcamento->valor_frete = $result_orc['valor_frete'];
         }
         
         // nota_fiscal
@@ -61,25 +61,24 @@ class Orcamento_m extends CI_Model {
             $nota_fiscal = $nota_fiscal[0];
         }
 
-        $_SESSION['orcamento']->id = $result_orc['id'];
-        $_SESSION['orcamento']->data_orcamento = $result_orc['data_orcamento'];
-        $_SESSION['orcamento']->total = $result_orc['total'];
-        $_SESSION['orcamento']->frete = $frete;
-//        $_SESSION['orcamento']->valor_frete = $result_orc['valor_frete'];
-        $_SESSION['orcamento']->frete_personalizado = $frete_personalizado;
-        $_SESSION['orcamento']->nota_fiscal = $nota_fiscal;
-        $_SESSION['orcamento']->valor_nota_fiscal = $result_orc['valor_nota_fiscal'];
-        $_SESSION['orcamento']->servico = $servico;
-        $_SESSION['orcamento']->cliente = $cliente;
+        $orcamento->id = $result_orc['id'];
+        $orcamento->data_orcamento = $result_orc['data_orcamento'];
+        $orcamento->total = $result_orc['total'];
+        $orcamento->frete = $frete;
+        $orcamento->frete_personalizado = $frete_personalizado;
+        $orcamento->nota_fiscal = $nota_fiscal;
+        $orcamento->valor_nota_fiscal = $result_orc['valor_nota_fiscal'];
+        $orcamento->servico = $servico;
+        $orcamento->cliente = $cliente;
         
-        $_SESSION['orcamento']->edicao = $result_orc['id'];
+        $orcamento->edicao = $result_orc['id'];
         
-        return TRUE;
+        return $orcamento;
     }
 
     public function Listar_view() {
 
-        $result = $this->db->query("SELECT o.id,o.data_orcamento,o.total,c.nome,c.cnpj_cpf,c.email,o.total FROM orcamento as o inner join cliente as c on o.cliente_id = c.id where ativo = 1");
+        $result = $this->db->query("SELECT o.id,date_format(o.data_orcamento,'%d/%m/%Y') as data_orcamento,o.total,c.nome,c.cnpj_cpf,c.email,o.total FROM orcamento as o inner join cliente as c on o.cliente_id = c.id where ativo = 1 ORDER BY o.id DESC");
 
         $result_array = $result->result_array();
 
@@ -120,8 +119,6 @@ class Orcamento_m extends CI_Model {
                 $dados['frete_personalizado'] = null;
             }
             
-            var_dump($_SESSION['orcamento']->id);
-            var_dump($_SESSION['orcamento']->edicao);
             if ($this->db->insert('orcamento', $dados)) {
                 if (!empty($_SESSION['orcamento']->edicao)) {
                     $this->db->set('ativo', 0);

@@ -40,25 +40,39 @@ class Usuario extends CI_Controller {
         $usuario->nome = $this->input->post('nome');
         $usuario->login = $this->input->post('login');
 
+        $dados = array(
+            'id' => $usuario->id,
+            'nome' => $usuario->nome,
+            'login' => $usuario->login
+        );
+
         $this->form_validation->set_rules('nome', 'Nome', 'trim|required');
         $this->form_validation->set_rules('login', 'Login', 'trim|required');
         $this->form_validation->set_error_delimiters('<div class="erro">', '</div>');
 
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == TRUE) {
+            if ($this->Usuario_m->inserir($dados)) {
+                redirect(base_url('usuario/?msgTipe=sucesso&msg=Usuario inserido com sucesso'), 'location');
+            } else {
+                redirect(base_url('usuario/?msgTipe=erro&msg=Erro ao inserir o Usuario'), 'location');
+            }
+        } else {
             $data['acao'] = 'inserir';
             $this->load->view('usuario/form', $data);
-        } else {
-            print 'sucesso';
         }
     }
 
     public function editar() {
-        $usuario = new Usuario();
+        $usuario = new Usuario_m();
         $usuario->id = $this->input->post('id');
         $usuario->nome = $this->input->post('nome');
         $usuario->login = $this->input->post('login');
 
-        if ($this->Usuario_m->editar($usuario)) {
+        $this->form_validation->set_rules('nome', 'Nome', 'trim|required');
+        $this->form_validation->set_rules('login', 'Login', 'trim|required');
+
+        if ($this->form_validation->run() == TRUE) {
+            $this->Usuario_m->editar($usuario);
             redirect(base_url('usuario/?msgTipe=sucesso&msg=Usuario alterado com sucesso'), 'location');
         } else {
             redirect(base_url('usuario/?msgTipe=erro&msg=Erro ao alterar Usuario'), 'location');
@@ -74,5 +88,5 @@ class Usuario extends CI_Controller {
             redirect(base_url('usuario/?msgTipe=erro&msg=Erro ao apagar o Usuario'), 'location');
         }
     }
-    
+
 }

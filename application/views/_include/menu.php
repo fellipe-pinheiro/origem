@@ -15,7 +15,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orçamento <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?= base_url('servico') ?>">Serviço</a></li>
-                        <li><a href="#">-----</a></li>
+                        <li role="separator" class="divider"></li>
                         <li><a href="<?= base_url('orcamento') ?>">Lista de Orçamento</a></li>
                     </ul>
                 </li>

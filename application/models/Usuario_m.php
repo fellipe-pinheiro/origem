@@ -30,7 +30,7 @@ class Usuario_m extends CI_Model {
 
     public function inserir(Usuario_m $usuario) {
         if (!empty($usuario)) {
-            if ($this->db->insert('Usuario', $usuario)) {
+            if ($this->db->insert('usuario', $usuario)) {
                 return $this->db->insert_id();
             } else {
                 return false;

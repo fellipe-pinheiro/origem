@@ -1,5 +1,4 @@
 <?php
-//error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 $titulo = 'Serviço';
 ?>
 <!DOCTYPE html>
@@ -22,7 +21,7 @@ $titulo = 'Serviço';
     <!--JavaScript-->
     <script>
         $(document).ready(function () {
-            // Filtrar Tabela
+            // Filtrar Tabela cliente
             $("#txtPesquisar").keyup(function () {
                 var rows = $("#fbody").find("tr").hide();
                 var data = this.value.split(" ");
@@ -31,30 +30,28 @@ $titulo = 'Serviço';
                 });
             });
 
-//            Mostrar modal do cliente
-            $("#btn_criar_cliente").click(function () {
-                $('#modal_cliente').modal('toggle');
-                $('#modal_cliente_form').modal('toggle');
+            // Mostrar modal do cliente
+            $("#md_btn_criar_cliente").click(function () {
+                $("#modal_cliente").modal('toggle');
+                $("#modal_cliente_form").modal('toggle');
             });
 
-//            Habilitar empastamento ao selecionar
-            $('input[type=radio]').change(function () {
-                var x = document.getElementById("empastamento_valor").disabled;
-                if (x == true) {
-                    document.getElementById("empastamento_valor").disabled = false;
-                }
-                else {
-                    document.getElementById("empastamento_valor").disabled = true;
+            //Habilitar empastamento ao selecionar radio empastamento
+            $("input[type=radio][name=empastamento_status]").change(function () {
+                if ($("#form_papel_empastamento_valor").prop("disabled")) {
+                    $("#form_papel_empastamento_valor").prop("disabled",false);
+                } else {
+                    $("#form_papel_empastamento_valor").prop("disabled",true);
                 }
             });
 
-//            Envia nota fiscal para sessao
+            //Envia nota fiscal para sessao
             $("#nota_fiscal").change(function () {
                 var id = $("#nota_fiscal option:selected").val();
                 window.location.href = "<?= base_url('Servico/nota_fiscal_sessao') ?>?id=" + id;
             });
 
-//            Mostrar modal do frete para definir
+            // Mostrar modal do frete para definir
             $("#frete").change(function () {
                 var id = $("#frete option:selected").val();
 
@@ -65,82 +62,133 @@ $titulo = 'Serviço';
                 }
             });
 
-//            Selecionar os valores de frete
-<?php if (!empty($_SESSION['orcamento']->frete->id)) { ?>
-                $('#frete option[value="<?= $_SESSION['orcamento']->frete->id ?>"]').attr('selected', 'selected');
-<?php } elseif(!empty($_SESSION['orcamento']->frete_personalizado)) { ?>
-                $('#frete option[value="0"]').attr('selected', 'selected');
-<?php }else{ ?>
-                $('#frete option[value="-1"]').attr('selected', 'selected');
-<?php } ?>
-    
-//Selecionar os valores da nota fiscal
-<?php if (!empty($_SESSION['orcamento']->nota_fiscal)) { ?>
-                $('#nota_fiscal option[value="<?= $_SESSION['orcamento']->nota_fiscal->id ?>"]').attr('selected', 'selected');
-<?php } ?>
+            //Selecionar os valores de frete
+            <?php if (!empty($_SESSION['orcamento']->frete->id)) {
+                print "$(\"#frete option[value='{$_SESSION['orcamento']->frete->id}']\").attr('selected', 'selected');";
+            } elseif (!empty($_SESSION['orcamento']->frete_personalizado)){
+                print "$(\"#frete option[value=0]\").attr('selected', 'selected');";
+            }else{
+                print "$(\"#frete option[value='-1']\").attr('selected', 'selected');";
+            } ?>
 
+            //Selecionar os valores da nota fiscal
+            <?php if (!empty($_SESSION['orcamento']->nota_fiscal)) { 
+                print "$(\"#nota_fiscal option[value='{$_SESSION['orcamento']->nota_fiscal->id}']\").attr('selected', 'selected');";
+            } ?>
+
+            // Limpa os modais ao adicionar um item
             $("#md_btn_acabamento").click(function () {
                 $('#md_acabamento_select option[value=""]').attr('selected', 'selected');
                 $('#md_acabamento_qtd').val('');
             });
             $("#md_btn_laminacao").click(function () {
                 $('#md_laminacao_select_laminacao option[value=""]').attr('selected', 'selected');
-                $('#md_laminacao_select_qtd option[value=1]').attr('selected', 'selected');
                 $('#md_laminacao_valor').val('');
+            });
+            $("#md_btn_impressao").click(function () {
+                $('#md_impressao_select option[value=""]').attr('selected', 'selected');
+            });
+            $("#md_btn_faca").click(function () {
+                $('#md_faca_select option[value=""]').attr('selected', 'selected').focus();
+                $('#md_faca_altura').val('');
+                $('#md_faca_largura').val('');
+            });
+            $("#md_btn_faca_cartao").click(function () {
+                $('#md_faca_cartao_select option[value=""]').attr('selected', 'selected').focus();
             });
             $("#md_btn_colagem").click(function () {
                 $('#md_colagem_valor').val('');
             });
+            $("#md_btn_papel").click(function () {
+                $("#form_papel_select option[value='']").prop('selected', true);
+                $("#form_papel_quantidade").val('');
+                $("input[type=radio][name=empastamento_status][value=0]").prop("checked", true);
+                $("#form_papel_empastamento_valor").prop("disabled", true);
+                $("#form_papel_empastamento_valor").val('');
+            });
+            $("#md_btn_impressao_cartao").click(function () {
+                $("#form_impressao_cartao").prop("action","servico/impressao_cartao_sessao_inserir")
+                $("#impressao_cartao_select option[value='']").prop("selected", true);
+                $("#impressao_cartao_qtd_cor_frente").val('');
+                $("#impressao_cartao_qtd_cor_verso").val('');
+            });
+
+            // verifca se cliente esta preenchido ao finalizar o servico
+            $("#btn_finalizar").click(function () {
+                if ($("#cliente_inp_nome").val().length < 1) {
+                    $("#modal_cliente").modal();
+                }else {
+                    if($("#nota_fiscal").val()==null){
+                        $("#msg_nota_fiscal").prop("open",true);
+                        
+                        $("#nota_fiscal").focus();
+                    }else{
+                        $("#modal_finalizar").modal();
+                    }
+                }
+            });
         });
+        
         function open_impressao_modal(posicao, idImpressao, qtd_cor_frente, qtd_cor_verso) {
-<?php if ($_SESSION['orcamento']->servico->tipo == 'cartao') { ?>
-                document.getElementById('form_impressao_cartao').action = ("servico/impressao_cartao_sessao_editar/" + posicao);
-                //alert(posicao + " - " + idImpressao + " - " + qtd_cor_frente + " - " + qtd_cor_verso);
-                $("#impressao_cartao_select option[value=" + idImpressao + "]").prop('selected', true);
-                $('#impressao_cartao_qtd_cor_frente').val(qtd_cor_frente);
-                $('#impressao_cartao_qtd_cor_verso').val(qtd_cor_verso);
-                $('#impressao_cartao_btn_submit').text("Salvar");
-                $('#myModal_impressao_cartao').modal('show');
-<?php } elseif ($_SESSION['orcamento']->servico->tipo == 'servico') { ?>
-                document.getElementById('form_impressao').action = "servico/impressao_sessao_editar/" + posicao;
-                $('#myModal_impressao').modal('show');
-<?php } ?>
+            if("<?=$_SESSION['orcamento']->servico->tipo?>" == "cartao"){
+                 $("#form_impressao_cartao").prop("action","servico/impressao_cartao_sessao_editar/" + posicao);
+                 $("#impressao_cartao_select option[value=" + idImpressao + "]").prop("selected", true);
+                 $("#impressao_cartao_qtd_cor_frente").val(qtd_cor_frente);
+                 $("#impressao_cartao_qtd_cor_verso").val(qtd_cor_verso);
+                 $("#myModal_impressao_cartao").modal();
+             }
+            if("<?=$_SESSION['orcamento']->servico->tipo?>" == "servico"){
+                $("#md_impressao_select option[value=" + idImpressao + "]").prop("selected", true);
+                $("#form_impressao").prop("action","servico/impressao_sessao_editar/" + posicao);
+                $("#myModal_impressao").modal();
+            }
         }
-        function open_papel_modal(posicao) {
-            document.getElementById('form_papel').action = "servico/papel_sessao_editar/" + posicao;
-            $('#myModal_papel').modal('show');
+        function open_papel_modal(posicao, idPapel, quantidade, empastamento_status, empastamento_valor) {
+            $("#form_papel_select option[value=" + idPapel + "]").prop("selected", true);
+            $("#form_papel_quantidade").val(quantidade);
+            if (empastamento_status == '1') {
+                $("input[type=radio][name=empastamento_status][value=1]").prop("checked", true);
+                $("#form_papel_empastamento_valor").prop("disabled", false);
+                $("#form_papel_empastamento_valor").val(empastamento_valor);
+            } else {
+                $("input[type=radio][name=empastamento_status][value=0]").prop("checked", true);
+            }
+            $("#form_papel").prop("action","servico/papel_sessao_editar/" + posicao);
+            $("#myModal_papel").modal();
         }
         function open_acabamento_modal(posicao, qtd, id) {
-            $('#md_acabamento_select option[value=' + id + ']').attr('selected', 'selected');
-            $('#md_acabamento_qtd').val(qtd);
-            document.getElementById('form_acabamento').action = "servico/acabamento_sessao_editar/" + posicao;
-            $('#myModal_acabamento').modal('show');
+            $("#md_acabamento_select option[value=" + id + "]").attr("selected", "selected");
+            $("#md_acabamento_qtd").val(qtd);
+            $("#form_acabamento").prop("action","servico/acabamento_sessao_editar/" + posicao);
+            $("#myModal_acabamento").modal();
         }
-        function open_faca_modal(posicao, idFaca) {
-<?php if ($_SESSION['orcamento']->servico->tipo == 'cartao') { ?>
-                document.getElementById('faca_cartao_form').action = "servico/faca_cartao_sessao_editar/" + posicao;
-                $("#faca_cartao_select option[value=" + idFaca + "]").prop('selected', true);
-                $('#impressao_cartao_btn_submit').text("Salvar");
-                $('#myModal_faca_cartao').modal('show');
-<?php } elseif ($_SESSION['orcamento']->servico->tipo == 'servico') { ?>
-                document.getElementById('form_faca').action = "servico/faca_cartao_sessao_editar/" + posicao;
-                $('#myModal_faca').modal('show');
-<?php } ?>
-
+        function open_faca_modal(posicao, id, altura, largura) {
+            if("<?=$_SESSION['orcamento']->servico->tipo?>" == "cartao"){
+                $("#faca_cartao_form").prop("action","servico/faca_cartao_sessao_editar/" + posicao);
+                $("#md_faca_cartao_select option[value=" + id + "]").prop("selected", true);
+                $("#myModal_faca_cartao").modal();
+            }
+            if("<?=$_SESSION['orcamento']->servico->tipo?>" == "servico"){
+                $("#form_faca").prop("action","servico/faca_cartao_sessao_editar/" + posicao);
+                $("#md_faca_select option[value=" + id + "]").prop("selected", true);
+                $("#md_faca_altura").val(altura);
+                $("#md_faca_largura").val(largura);
+                $("#myModal_faca").modal();
+            }
         }
         function open_colagem_modal(posicao, valor) {
-            $('#md_colagem_valor').val(valor);
-            document.getElementById('form_colagem').action = "servico/colagem_sessao_editar/" + posicao;
-            $('#myModal_colagem').modal('show');
+            $("#md_colagem_valor").val(valor);
+            $("#form_colagem").prop("action", "servico/colagem_sessao_editar/" + posicao);
+            $("#myModal_colagem").modal();
         }
         function open_laminacao_modal(posicao, id, valor) {
-            $('#md_laminacao_select_laminacao option[value=' + id + ']').attr('selected', 'selected');
-            $('#md_laminacao_valor').val(valor);
-            document.getElementById('form_laminacao').action = "servico/laminacao_sessao_editar/" + posicao;
-            $('#myModal_laminacao').modal('show');
+            $("#md_laminacao_select_laminacao option[value=" + id + "]").attr("selected", "selected");
+            $("#md_laminacao_valor").val(valor);
+            $("#form_laminacao").prop("action","servico/laminacao_sessao_editar/" + posicao);
+            $("#myModal_laminacao").modal();
         }
         function open_servico_modal() {
-            document.getElementById('form_servico').action = "servico/editar_servico";
+            $("#form_servico").prop("action", "servico/editar_servico");
             $('#myModal_produto').modal('show');
         }
     </script>
@@ -167,15 +215,15 @@ $titulo = 'Serviço';
                                 </div>
                                 <div class="col-md-3">
                                     <?= form_label('Nome: ', '', array('class' => 'control-label')) ?>
-                                    <?= form_input('', $_SESSION['orcamento']->cliente->nome, 'disabled class="form-control input-sm"') ?>
+                                    <?= form_input('', $_SESSION['orcamento']->cliente->nome, 'id="cliente_inp_nome" readonly class="form-control input-sm"') ?>
                                 </div>
                                 <div class="col-md-3">
                                     <?= form_label('CPF / CNPJ:', '', array('class' => 'control-label')) ?>
-                                    <?= form_input('', $_SESSION['orcamento']->cliente->cnpj_cpf, 'disabled class="form-control input-sm"') ?>
+                                    <?= form_input('', $_SESSION['orcamento']->cliente->cnpj_cpf, 'readonly class="form-control input-sm"') ?>
                                 </div>
                                 <div class="col-md-3">
                                     <?= form_label('E-mail:', '', array('class' => 'control-label')) ?>
-                                    <?= form_input('', $_SESSION['orcamento']->cliente->email, 'disabled class="form-control input-sm"') ?>
+                                    <?= form_input('', $_SESSION['orcamento']->cliente->email, 'readonly class="form-control input-sm"') ?>
                                 </div>
                             </div>
                         </div>
@@ -196,7 +244,7 @@ $titulo = 'Serviço';
                                             <span class="glyphicon glyphicon-plus"></span> Novo
                                         </a>
                                     <?php } else { ?>
-                                        <a href="#" id="btn_finalizar" class="btn btn-success btn-block btn-sm" data-toggle="modal" data-target="#modal_finalizar">
+                                        <a href="#" id="btn_finalizar" class="btn btn-success btn-block btn-sm">
                                             <span class="glyphicon glyphicon-ok"></span> Finalizar
                                         </a>
                                         <a href="<?= base_url('Servico/excluir_todos_servicos') ?>" class="btn btn-danger btn-block btn-sm">
@@ -221,8 +269,7 @@ $titulo = 'Serviço';
                                         <div class="col-md-12">
                                             <label for="frete">Tipo de frete:</label>
                                             <select name="frete" id="frete" class="form-control">
-                                                <option value="-1" selected>Selecione</option>
-                                                <option value="-2" >Não cobrar</option>
+                                                <option value="-1" selected disabled>Selecione</option>
                                                 <option value="0" >Definir</option>
                                                 <?php foreach ($frete as $value) { ?>
                                                     <option value="<?= $value->id ?>"><?= $value->nome ?></option>
@@ -237,6 +284,7 @@ $titulo = 'Serviço';
                                                     <option value="<?= $value->id ?>"><?= $value->nome ?></option>
                                                 <?php } ?>
                                             </select>
+                                            <dialog id="msg_nota_fiscal" style="width: 200px;">Selecione uma nota fiscal</dialog>
                                         </div>
                                     </div>
                                 </div>
@@ -332,7 +380,7 @@ $titulo = 'Serviço';
                     <div class="col-md-12">
                         <div class="panel panel-default  pnl">
                             <div class="panel-heading">
-                                <h3 class="panel-title"></h3>
+                                <h3 class="panel-title">Detalhes</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="col-md-12">
@@ -341,21 +389,6 @@ $titulo = 'Serviço';
                                         <div class="col-md-2">
                                             <button id="md_btn_papel" class="btn btn-default btn-block btn_m" data-toggle="modal" data-target="#myModal_papel">
                                                 <span class="glyphicon glyphicon-plus"></span> Papel
-                                            </button>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button id="md_btn_acabamento" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_acabamento">
-                                                <span class="glyphicon glyphicon-plus"></span> Acabamento
-                                            </button>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button id="md_btn_laminacao" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_laminacao">
-                                                <span class="glyphicon glyphicon-plus"></span> Laminação
-                                            </button>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button  id="md_btn_colagem" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_colagem">
-                                                <span class="glyphicon glyphicon-plus"></span> Colagem
                                             </button>
                                         </div>
                                         <?php if ($_SESSION['orcamento']->servico->tipo == 'cartao') { ?>
@@ -380,16 +413,29 @@ $titulo = 'Serviço';
                                                     <span class = "glyphicon glyphicon-plus"></span> Faca
                                                 </button>
                                             </div>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
+                                        <?php } ?>
+                                        <div class="col-md-2">
+                                            <button id="md_btn_acabamento" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_acabamento">
+                                                <span class="glyphicon glyphicon-plus"></span> Acabamento
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button id="md_btn_laminacao" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_laminacao">
+                                                <span class="glyphicon glyphicon-plus"></span> Laminação
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button  id="md_btn_colagem" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_colagem">
+                                                <span class="glyphicon glyphicon-plus"></span> Colagem
+                                            </button>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                                 <div class="form-group">
                                     <table class="table table-hover table-condensed">
                                         <thead>
                                             <tr>
-                                                <th>Serviço / Material</th>    
+                                                <th>Material</th>    
                                                 <th>Descrição</th>    
                                                 <th>Qtd</th>    
                                                 <th>Valor Unitário</th>    
@@ -405,11 +451,11 @@ $titulo = 'Serviço';
                                                     ?>
                                                     <tr>
                                                         <td>Papel</td>
-                                                        <td><?= $papel->nome ?> =><?= $papel->quantidade ?> fls</td>
+                                                        <td><?= $papel->nome ?> (<?= $papel->quantidade ?> fls)</td>
                                                         <td><?= $_SESSION['orcamento']->servico->quantidade ?></td>
                                                         <td>R$ <?= number_format($papel->valor_unitario, 3, ",", ".") ?></td>
                                                         <td>R$ <?= number_format($papel->sub_total, 2, ",", ".") ?></td>
-                                                        <td><button onclick="open_papel_modal(<?= $key ?>, '<?= $papel->nome ?>')" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                                                        <td><button onclick="open_papel_modal(<?= $key ?>, '<?= $papel->id ?>', '<?= $papel->quantidade ?>', '<?= $papel->empastamento->status ?>', '<?= $papel->empastamento->sub_total ?>')" id="" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
                                                         <td><a class="btn btn-danger btn-sm" href="<?= base_url("servico/papel_sessao_excluir/{$key}") ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
                                                     </tr>
                                                     <?php
@@ -435,7 +481,7 @@ $titulo = 'Serviço';
                                                     ?>
                                                     <tr>
                                                         <td>Impressão</td>
-                                                        <td><?= $impressao->nome ?> / <?= $impressao->impressao_formato->nome ?>: <?= $impressao->impressao_formato->altura ?>x<?= $impressao->impressao_formato->largura ?>
+                                                        <td><?= $impressao->nome ?> (<?= $impressao->impressao_formato->altura ?>x<?= $impressao->impressao_formato->largura ?>)
                                                             <?= ($_SESSION['orcamento']->servico->tipo == 'cartao') ? "Cor: " . $impressao->qtd_cor_frente . 'x' . $impressao->qtd_cor_verso : ''; ?>
                                                         </td>
                                                         <td><?= $_SESSION['orcamento']->servico->quantidade ?></td>
@@ -450,7 +496,7 @@ $titulo = 'Serviço';
                                                     </tr>
                                                     <tr>
                                                         <td>Fotolito</td>
-                                                        <td><?= $impressao->impressao_formato->nome ?>: <?= $impressao->impressao_formato->altura ?>x<?= $impressao->impressao_formato->largura ?></td>
+                                                        <td><?= $impressao->impressao_formato->nome ?> (<?= $impressao->impressao_formato->altura ?>x<?= $impressao->impressao_formato->largura ?>)</td>
                                                         <td><?= $impressao->fotolito->quantidade ?></td>
                                                         <td>R$ <?= $impressao->fotolito->valor_unitario ?></td>
                                                         <td>R$ <?= number_format($impressao->fotolito->sub_total, 2, ",", ".") ?></td>
@@ -498,7 +544,11 @@ $titulo = 'Serviço';
                                                             <td>R$ <?= $faca->valor ?></td>
                                                         <?php } ?>
                                                         <td>R$ <?= number_format($faca->sub_total, 2, ",", ".") ?></td>
-                                                        <td><button onclick="open_faca_modal(<?= $key ?>, <?= $faca->id ?>)" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                                                        <?php if ($_SESSION['orcamento']->servico->tipo == 'servico') { ?>
+                                                            <td><button onclick="open_faca_modal(<?= $key ?>, <?= $faca->id ?>, <?= $faca->altura ?>, <?= $faca->largura ?>)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                                                        <?php } else { ?>
+                                                            <td><button onclick="open_faca_modal(<?= $key ?>, <?= $faca->id ?>)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                                                        <?php } ?>
                                                         <td><a class="btn btn-danger btn-sm" href="<?= base_url("servico/faca_sessao_excluir/{$key}") ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
                                                     </tr>
                                                     <?php
@@ -573,7 +623,6 @@ $titulo = 'Serviço';
                 </div>
             </div>
         </div>
-
         <!-- Modal Impressão cartao -->
         <div class="modal fade" id="myModal_impressao_cartao" role="dialog">
             <div class="modal-dialog">
@@ -586,23 +635,23 @@ $titulo = 'Serviço';
                         </div>
                         <div class="modal-body">
                             <label for="impressao_cartao">Impressão:</label>
-                            <select id="impressao_cartao_select" class="form-control" name="impressao_cartao">
+                            <select required autofocus id="impressao_cartao_select" class="form-control" name="impressao_cartao">
                                 <option value="">Selecione</option>
                                 <?php
                                 foreach ($impressao_cartao_md as $key => $value) {
                                     ?>
-                                    <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                    <option value="<?= $value->id ?>"><?= $value->nome ?>  (<?= $value->impressao_formato->altura ?> x <?= $value->impressao_formato->largura ?>)</option>
                                     <?php
                                 }
                                 ?>
                             </select>
                             <!--Quantidade Cor frente-->
                             <?= form_label('Qtd cores frente: ', 'qtd_cor_frente', array('class' => ' control-label')) ?>
-                            <?= form_input('qtd_cor_frente', '', ' id="impressao_cartao_qtd_cor_frente" class="form-control" placeholder="Quantidade cores frente"') ?>
+                            <?= form_input('qtd_cor_frente', '', 'required step="0" min="0" type="number" id="impressao_cartao_qtd_cor_frente" class="form-control" placeholder="Quantidade cores frente"') ?>
 
                             <!--Quantidade Cor verso-->
                             <?= form_label('Qtd cores verso: ', 'qtd_cor_verso', array('class' => ' control-label')) ?>
-                            <?= form_input('qtd_cor_verso', '', ' id="impressao_cartao_qtd_cor_verso" class="form-control" placeholder="Quantidade cores verso"') ?>
+                            <?= form_input('qtd_cor_verso','', ' step="0" min="0" type="number" id="impressao_cartao_qtd_cor_verso" class="form-control" placeholder="Quantidade cores verso"') ?>
 
                         </div>
                         <div class="modal-footer">
@@ -624,12 +673,12 @@ $titulo = 'Serviço';
                         </div>
                         <form id="form_impressao" action="<?= base_url('Servico/impressao_sessao_inserir') ?>" method="POST" role="form">
                             <div class="modal-body">
-                                <select id="form_impressao_select" class="form-control" name="impressao" required>
-                                    <option value="" disabled="">Selecione</option>
+                                <select required autofocus id="md_impressao_select" class="form-control" name="impressao">
+                                    <option value="" disabled selected="">Selecione</option>
                                     <?php
                                     foreach ($impressao_md as $key => $value) {
                                         ?>
-                                        <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                        <option value="<?= $value->id ?>"><?= $value->nome ?> (<?= $value->impressao_formato->altura ?> x <?= $value->impressao_formato->largura ?>) : R$ <?= $value->valor ?></option>
                                         <?php
                                     }
                                     ?>
@@ -637,7 +686,7 @@ $titulo = 'Serviço';
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                <button id="form_impressao_acao" type="submit" class="btn btn-success" >Adicionar</button>
+                                <button id="impressao_btn_submit" type="submit" class="btn btn-success" >Adicionar</button>
                             </div>
                         </form>
                     </div>
@@ -813,7 +862,7 @@ $titulo = 'Serviço';
                             <!--filtro-->
                             <div class="col-md-3">
                                 <?= form_input('', '', ' id="txtPesquisar" class="" placeholder="Pesquisar"') ?>
-                                <button id="btn_criar_cliente" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Novo</button>
+                                <button id="md_btn_criar_cliente" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Novo</button>
                             </div>
                             <!--lista clientes-->
                             <table class="table table-hover">
@@ -863,24 +912,24 @@ $titulo = 'Serviço';
                         <div class="modal-body">
                             <label class="control-label" for="papel"> Papel:</label>
                             <div class="form-group">
-                                <select id="form_papel_select" class="form-control" name="papel">
+                                <select id="form_papel_select" autofocus class="form-control" name="papel" required>
                                     <option value="">Selecione</option>
                                     <?php
                                     foreach ($papel_md as $key => $value) {
                                         ?>
-                                        <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                        <option value="<?= $value->id ?>"><?= $value->nome ?> (<?= $value->gramatura ?>g) : R$ <?= $value->valor ?></option>
                                         <?php
                                     }
                                     ?>
                                 </select>
                             </div>
                             <label class="control-label" for="quantidade"> Quantidade:</label>
-                            <input class="form-control" name="quantidade" value="" placeholder="Quantidade de papeis"><br>
+                            <input required min="1" type="number" step="0" id="form_papel_quantidade" class="form-control" name="quantidade" value="" placeholder="Quantidade de papeis"><br>
                             <label class="control-label" for="empastamento"> Empastamento:</label>
-                            <label class="checkbox-inline"><input id="empastamento" name="empastamento_status" type="radio" value="0" checked> NÃO</label>
-                            <label class="checkbox-inline"><input id="empastamento" name="empastamento_status" type="radio" value="1"> SIM</label><br><br>
+                            <label class="checkbox-inline"><input name="empastamento_status" type="radio" value="0" checked> NÃO</label>
+                            <label class="checkbox-inline"><input name="empastamento_status" type="radio" value="1"> SIM</label><br><br>
                             <label class="control-label" for="empastamento_valor"> Valor:</label>
-                            <input class="form-control" id="empastamento_valor" name="empastamento_valor" type="text" value="" disabled="true" placeholder="Insira o valor do empastamento">
+                            <input required step="0.01" type="number" min="0" class="form-control" id="form_papel_empastamento_valor" name="empastamento_valor" type="text" value="" disabled="true" placeholder="Insira o valor do empastamento">
                             <input type="hidden" name="empastamento_nome" value="Empastamento">
                         </div>
                         <div class="modal-footer">
@@ -904,19 +953,19 @@ $titulo = 'Serviço';
                         <div class="modal-body">
                             <label class="control-label" for="acabamento"> Acabamento:</label>
                             <div class="form-group">
-                                <select id="md_acabamento_select" class="form-control" name="acabamento">
+                                <select id="md_acabamento_select" autofocus class="form-control" name="acabamento" required>
                                     <option value="" disabled selected>Selecione</option>
                                     <?php
                                     foreach ($acabamento_md as $key => $value) {
                                         ?>
-                                        <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                        <option value="<?= $value->id ?>"><?= $value->nome ?> : R$ <?= $value->valor ?></option>
                                         <?php
                                     }
                                     ?>
                                 </select>
                             </div>
                             <label class="control-label" for="quantidade"> Quantidade:</label>
-                            <input class="form-control" id="md_acabamento_qtd" name="quantidade" value="" placeholder="Quantidade de acabamento">
+                            <input required min="1" step="0" type="number" class="form-control" id="md_acabamento_qtd" name="quantidade" value="" placeholder="Quantidade de acabamento">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -937,10 +986,10 @@ $titulo = 'Serviço';
                             <h4 class="modal-title">Faca</h4>
                         </div>
                         <div class="modal-body">
-                            <label class="control-label" for="acabamento"> Faca:</label>
+                            <label class="control-label" for="faca_select"> Faca:</label>
                             <div class="form-group">
-                                <select id="form_faca_select" class="form-control" name="faca">
-                                    <option value="">Selecione</option>
+                                <select id="md_faca_select" autofocus class="form-control" name="faca" required>
+                                    <option value="" selected>Selecione</option>
                                     <?php
                                     foreach ($faca_md as $key => $value) {
                                         ?>
@@ -950,14 +999,14 @@ $titulo = 'Serviço';
                                     ?>
                                 </select>
                             </div>
-                            <label class="control-label" for="altura"> Altura:</label>
-                            <input class="form-control" name="altura" value="" placeholder="Insira a altura da Faca">
-                            <label class="control-label" for="largura"> Largura:</label>
-                            <input class="form-control" name="largura" value="" placeholder="Insira a largura da Faca">
+                            <label class="control-label" for="altura"> Altura (mm):</label>
+                            <input required step="0" type="number" min="1" class="form-control" id="md_faca_altura" name="altura" value="" placeholder="Insira a altura da Faca em milimetros">
+                            <label class="control-label" for="largura"> Largura (mm):</label>
+                            <input required step="0" type="number" min="1" class="form-control" id="md_faca_largura" name="largura" value="" placeholder="Insira a largura da Faca em milimetros">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            <button id="form_faca_acao" type="submit" class="btn btn-success" >Adicionar</button>
+                            <button id="faca_btn_submit" type="submit" class="btn btn-success" >Adicionar</button>
                         </div>
                     </div>
                 </form>
@@ -976,12 +1025,12 @@ $titulo = 'Serviço';
                         <div class="modal-body">
                             <label class="control-label" for="acabamento"> Faca:</label>
                             <div class="form-group">
-                                <select id="faca_cartao_select" class="form-control" name="faca">
+                                <select required autofocus id="md_faca_cartao_select" class="form-control" name="faca">
                                     <option value="">Selecione</option>
                                     <?php
                                     foreach ($faca_cartao_md as $key => $value) {
                                         ?>
-                                        <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                        <option value="<?= $value->id ?>"><?= $value->nome ?> : R$ <?= $value->valor ?></option>
                                         <?php
                                     }
                                     ?>
@@ -1009,7 +1058,7 @@ $titulo = 'Serviço';
                         <div class="modal-body">
                             <div class="form-group">
                                 <label class="control-label" for="Laminacao">Laminação:</label>
-                                <select id="md_laminacao_select_laminacao" class="form-control" name="laminacao" required>
+                                <select required autofocus id="md_laminacao_select_laminacao" class="form-control" name="laminacao">
                                     <option value="" disabled selected>Selecione</option>
                                     <?php foreach ($laminacao_md as $key => $value) { ?>
                                         <option value="<?= $value->id ?>"><?= $value->nome ?></option>
@@ -1017,7 +1066,7 @@ $titulo = 'Serviço';
                                 </select>
                             </div>
                             <label class="control-label" for="valor"> Valor:</label>
-                            <input id="md_laminacao_valor" class="form-control" name="valor" required placeholder="Insira o valor total do serviço de laminação">
+                            <input required min="1" step="0.01" type="number" id="md_laminacao_valor" class="form-control" name="valor" placeholder="Insira o valor total do serviço de laminação">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -1040,7 +1089,7 @@ $titulo = 'Serviço';
                         <div class="modal-body">
                             <input type="hidden" name="nome" value="Colagem">
                             <label class="control-label" for="valor"> Valor:</label>
-                            <input id="md_colagem_valor" class="form-control" name="valor" placeholder="Insira o valor total do serviço de Colagem">
+                            <input required type="number" step="0.01" min="1" id="md_colagem_valor" class="form-control" name="valor" placeholder="Insira o valor total do serviço de Colagem">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -1063,7 +1112,7 @@ $titulo = 'Serviço';
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <select name="tipo" class="form-control">
+                                    <select required autofocus id="select_tipo_servico" name="tipo" class="form-control">
                                         <option value="" disabled selected>Selecione uma opção</option>
                                         <option value="cartao" <?= ($_SESSION['orcamento']->servico->tipo == 'cartao') ? 'selected' : ''; ?>>
                                             Cartão
@@ -1075,13 +1124,13 @@ $titulo = 'Serviço';
                                 </div>
                                 <div class="col-md-6">
                                     <label class="control-label" for="quantidade"> Quantidade:</label>
-                                    <input class="form-control" name="quantidade" value="<?php
+                                    <input required type="number"  step="0" min="1" class="form-control" name="quantidade" value="<?php
                                     if (!empty($_SESSION['orcamento']->servico->quantidade)) {
                                         print $_SESSION['orcamento']->servico->quantidade;
                                     }
                                     ?>" placeholder="Quantidade do pedido"></div>
                                 <div class="col-md-6"><label class="control-label" for="desconto"> Desconto:</label>
-                                    <input class="form-control" name="desconto" value="<?php
+                                    <input type="number" step="0.01" min="0" class="form-control" name="desconto" value="<?php
                                     if (!empty($_SESSION['orcamento']->servico->desconto)) {
                                         print $_SESSION['orcamento']->servico->desconto;
                                     }
@@ -1090,7 +1139,7 @@ $titulo = 'Serviço';
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            <button id="form_faca_acao" type="submit" class="btn btn-success" >Adicionar</button>
+                            <button id="btn_criar_pedido" type="submit" class="btn btn-success" >Adicionar</button>
                         </div>
                     </div>
                 </form>

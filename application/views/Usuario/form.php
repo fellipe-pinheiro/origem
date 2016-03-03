@@ -33,19 +33,19 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Nome: ', 'nome', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('nome', $usuario->nome.set_value('nome'), ' id="nome" class="form-control" placeholder="Nome" autofocus') ?>
+                            <?= form_input('nome', $usuario->nome.set_value('nome'), 'autofocus required id="nome" class="form-control" placeholder="Nome" autofocus') ?>
                         </div>
                         <?= form_error('nome')?>
                     </div>
-                    <!--Descricao-->
+                    <!--Login-->
                     <div class="form-group">
                         <?= form_label('Login: ', 'login', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('login', $usuario->login.set_value('nome'), ' id="login" class="form-control" placeholder="Login"') ?>
+                            <?= form_input('login', $usuario->login.set_value('nome'), 'required id="login" class="form-control" placeholder="Login"') ?>
                         </div>
                         <?= form_error('login')?>
                     </div>
-
+                    
                     <!--Botoes-->
                     <div class="form-group">        
                         <div class="col-sm-offset-2 col-sm-5">

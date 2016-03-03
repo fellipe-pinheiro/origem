@@ -28,12 +28,14 @@ class Orcamento extends CI_Controller {
     
     public function editar() {
         $id = $this->uri->segment(3);
-        $data['orcamento'] = $this->Orcamento_m->listar_para_sessao($id);
+        $_SESSION['orcamento'] = $this->Orcamento_m->get_orcamento($id);
         redirect(base_url('servico'), 'location');
     }
     
-    public function gerar_pdf() {
-        print "Gerar o PDF";
+    public function pdf() {
+        $id = $this->uri->segment(3);
+        $data['orcamento'] = $this->Orcamento_m->get_orcamento($id);
+        $this->load->view('Orcamento/pdf', $data);
     }
     
     public function excluir_todos_servicos() {

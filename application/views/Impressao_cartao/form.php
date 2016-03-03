@@ -29,7 +29,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Nome: ', 'nome', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('nome', $impressao_cartao->nome, ' id="nome" class="form-control" placeholder="Nome"') ?>
+                            <?= form_input('nome', $impressao_cartao->nome, 'autofocus required id="nome" class="form-control" placeholder="Nome"') ?>
                         </div>
                     </div>
 
@@ -37,7 +37,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor 100: ', 'valor_100', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor_100', $impressao_cartao->valor_100, ' id="valor_100" class="form-control" placeholder="valor para 100 impressões"') ?>
+                            <?= form_input('valor_100', $impressao_cartao->valor_100, 'required id="valor_100" class="form-control" placeholder="valor para 100 impressões"') ?>
                         </div>
                     </div>
 
@@ -45,7 +45,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor 500: ', 'valor_500', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor_500', $impressao_cartao->valor_500, ' id="valor_500" class="form-control" placeholder="valor para 500 impressões"') ?>
+                            <?= form_input('valor_500', $impressao_cartao->valor_500, 'required id="valor_500" class="form-control" placeholder="valor para 500 impressões"') ?>
                         </div>
                     </div>
 
@@ -53,7 +53,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor 1000: ', 'valor_1000', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor_1000', $impressao_cartao->valor_1000, ' id="valor_1000" class="form-control" placeholder="valor para 1000 impressões"') ?>
+                            <?= form_input('valor_1000', $impressao_cartao->valor_1000, 'required id="valor_1000" class="form-control" placeholder="valor para 1000 impressões"') ?>
                         </div>
                     </div>
 
@@ -66,7 +66,7 @@ if ($acao == 'inserir') {
                             foreach ($impressao_formato as $key => $value) {
                                 $lista[$value->id] = $value->altura . 'x' . $value->largura;
                             }
-                            print form_dropdown('impressao_formato', $lista, $impressao_cartao->impressao_formato->id, ' id="valor" class="form-control" placeholder="Valor"');
+                            print form_dropdown('impressao_formato', $lista, $impressao_cartao->impressao_formato->id, 'required id="valor" class="form-control" placeholder="Valor"');
                             ?>
                         </div>
                     </div>

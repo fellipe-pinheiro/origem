@@ -27,15 +27,14 @@ if ($acao == 'inserir') {
 
                     <!--Impressao Formato-->
                     <div class="form-group">
-                        <?= form_label('Impressao Formato: ', 'impressao_formato', array('class' => 'control-label col-sm-2')) ?>
+                        <?= form_label('Área Impressão: ', 'impressao_formato', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?php
-                            $lista = array();
-                            foreach ($impressao_formato as $key => $value) {
-                                $lista[$value->id] = $value->altura . 'x' . $value->largura;
-                            }
-                            print form_dropdown('impressao_formato', $lista, $fotolito->impressao_formato->id, ' id="valor" class="form-control" placeholder="Valor"');
-                            ?>
+                            <select autofocus name="impressao_formato" id="impressao_formato" class="form-control" >
+                                <option disabled selected>Selecione</option>
+                                <?php foreach ($impressao_formato as $key => $value) {?>
+                                <option value="<?=$value->id?>"><?=$value->altura . ' x ' . $value->largura?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                     </div>
 
@@ -51,7 +50,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor', $fotolito->valor, ' id="valor" class="form-control" placeholder="Valor"') ?>
+                            <?= form_input('valor', $fotolito->valor, 'required min="0" step="0.01" id="valor" class="form-control" placeholder="Valor"') ?>
                         </div>
                     </div>
 

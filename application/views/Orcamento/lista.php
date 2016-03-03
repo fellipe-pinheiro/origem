@@ -2,7 +2,7 @@
 <html lang="pt-br">
     <?php
     $this->load->view('_include/head', ['titulo' => 'Orçamentos']);
-     $this->load->view('_include/js-lista', ['crud' => 'Orçamento']);
+    $this->load->view('_include/js-lista', ['crud' => 'Orçamento']);
     ?>
     <body>
         <?php $this->load->view('_include/menu'); ?>
@@ -14,7 +14,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <?= form_input('', '', ' id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
+                            <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
                         </div>
                     </div>
 
@@ -36,13 +36,13 @@
                                     <?php foreach ($lista_orcamento as $key => $value) { ?>
                                         <tr>
                                             <td><?= $value['id'] ?></td>
-                                            <td><?= $value['cliente_nome']?></td>
+                                            <td><?= $value['cliente_nome'] ?></td>
                                             <td><?= $value['cnpj_cpf'] ?></td>
                                             <td><?= $value['email'] ?></td>
                                             <td><?= $value['data'] ?></td>
-                                            <td><?= $value['valor'] ?></td>
+                                            <td>R$ <?= $value['valor'] ?></td>
                                             <td style="width: 46px;"><a class="btn btn-primary editar" href="<?= base_url("Orcamento/editar/{$value['id']}") ?>">Editar</a></td>
-                                            <td style="width: 46px;"><a class="btn btn-danger deletar" href="<?= base_url("Orcamento/gerar_pdf/{$value['id']}") ?>">PDF</a></td>
+                                            <td style="width: 46px;"><a class="btn btn-danger" target="_blank" href="<?= base_url("Orcamento/pdf/{$value['id']}") ?>">PDF</a></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </div>
+            <?php $this->load->view('_include/footer'); ?>
         </div>
-        <?php $this->load->view('_include/footer'); ?>
     </body>
 </html>

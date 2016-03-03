@@ -35,13 +35,13 @@ class Impressao_formato extends CI_Controller {
     }
     
     public function inserir() {
-        $impressao_formato = new Impressao_formato();
+        
+        $impressao_formato = new Impressao_formato_m();
         $impressao_formato->id = null;
         $impressao_formato->nome = $this->input->post('nome');
         $impressao_formato->altura = $this->input->post('altura');
         $impressao_formato->largura = $this->input->post('largura');
         $impressao_formato->descricao = $this->input->post('descricao');
-
         $id = $this->Impressao_formato_m->inserir($impressao_formato);
         if (!empty($id)) {
             redirect(base_url('impressao_formato/?msgTipe=sucesso&msg=Impressao Formato inserido com sucesso'), 'location');
@@ -51,7 +51,7 @@ class Impressao_formato extends CI_Controller {
     }
     
     public function editar() {
-        $impressao_formato = new Impressao_formato();
+        $impressao_formato = new Impressao_formato_m();
         $impressao_formato->id = $this->input->post('id');;
         $impressao_formato->nome = $this->input->post('nome');
         $impressao_formato->altura = $this->input->post('altura');

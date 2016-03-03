@@ -22,6 +22,7 @@ class Servico extends CI_Controller {
         $this->load->model('Nota_m');
         $this->load->model('Frete_m');
         $this->load->model('Orcamento_m');
+        $this->load->model('Usuario_m');
         $this->load->helper('date');
         $this->load->database();
         empty($_SESSION) ? session_start() : '';
@@ -170,18 +171,7 @@ class Servico extends CI_Controller {
         $_SESSION['orcamento']->frete = null;
         redirect(base_url('servico'), 'location');
     }
-
-    public function nota_fiscal_sessao() {
-        $id = $this->input->get('id');
-
-        $nota_fiscal = $this->Nota_m->listar($id);
-        $nota_fiscal = $nota_fiscal[0];
-
-        $_SESSION['orcamento']->nota_fiscal = $nota_fiscal;
-
-        redirect(base_url('servico'), 'location');
-    }
-
+    
     public function frete_sessao() {
         $id = $this->input->get('id');
         if ($id == -2) {
@@ -196,6 +186,17 @@ class Servico extends CI_Controller {
             $_SESSION['orcamento']->frete = $frete;
             $_SESSION['orcamento']->valor_frete = $frete->valor;
         }
+        redirect(base_url('servico'), 'location');
+    }
+
+    public function nota_fiscal_sessao() {
+        $id = $this->input->get('id');
+
+        $nota_fiscal = $this->Nota_m->listar($id);
+        $nota_fiscal = $nota_fiscal[0];
+
+        $_SESSION['orcamento']->nota_fiscal = $nota_fiscal;
+
         redirect(base_url('servico'), 'location');
     }
 
@@ -234,12 +235,14 @@ class Servico extends CI_Controller {
 
     public function excluir_todos_servicos() {
         unset($_SESSION['orcamento']);
+        
         redirect(base_url('servico'), 'location');
     }
 
     public function criar_servico() {
+        $this->form_validation->set_rules('tipo', 'TIPO', 'required');
         $_SESSION['orcamento']->servico->tipo = $_POST['tipo'];
-        $_SESSION['orcamento']->servico->quantidade = $_POST['quantidade'];
+        $_SESSION['orcamento']->servico->quantidade = intval($_POST['quantidade']);
         $_SESSION['orcamento']->servico->desconto = $_POST['desconto'];
         redirect(base_url('servico'), 'location');
     }
@@ -256,22 +259,39 @@ class Servico extends CI_Controller {
         $servico_quantidade = $_SESSION['orcamento']->servico->quantidade = $_POST['quantidade'];
         $servico_desconto = $_SESSION['orcamento']->servico->desconto = str_replace(',', '.', $_POST['desconto']);
 
-//recalcula valores para os itens que dependem da quantidade
-        foreach ($_SESSION['orcamento']->servico->laminacao as $key => $value) {
-            $value[0]->valor_unitario = $value[0]->calcula_valor_unitario($value[0]->sub_total, $servico_quantidade);
+        //recalcula valores para os itens que dependem da quantidade
+        if (!empty($_SESSION['orcamento']->servico->laminacao)) {
+            foreach ($_SESSION['orcamento']->servico->laminacao as $key => $value) {
+                $value->valor_unitario = $value->calcula_valor_unitario($value->sub_total, $servico_quantidade);
+            }
         }
-        foreach ($_SESSION['orcamento']->servico->colagem as $key => $value) {
-            $value->valor_unitario = $value->calcula_valor_unitario($value->sub_total, $servico_quantidade);
+        if (!empty($_SESSION['orcamento']->servico->colagem)) {
+            foreach ($_SESSION['orcamento']->servico->colagem as $key => $value) {
+                $value->valor_unitario = $value->calcula_valor_unitario($value->sub_total, $servico_quantidade);
+            }
         }
-        foreach ($_SESSION['orcamento']->servico->empastamento as $key => $value) {
-            $value->valor_unitario = $value->calcula_valor_unitario($value->sub_total, $servico_quantidade);
+        if (!empty($_SESSION['orcamento']->servico->empastamento)) {
+            foreach ($_SESSION['orcamento']->servico->empastamento as $key => $value) {
+                $value->valor_unitario = $value->calcula_valor_unitario($value->sub_total, $servico_quantidade);
+            }
         }
-        foreach ($_SESSION['orcamento']->servico->papel as $key => $value) {
-            $value[0]->valor_unitario = $value[0]->calcula_valor_unitario($value[0]->quantidade, $servico_quantidade);
+        if (!empty($_SESSION['orcamento']->servico->papel)) {
+            foreach ($_SESSION['orcamento']->servico->papel as $key => $value) {
+                $value->valor_unitario = $value->calcula_valor_unitario($value->quantidade, $servico_quantidade);
+            }
         }
-        foreach ($_SESSION['orcamento']->servico->impressao as $key => $value) {
-            $value[0]->valor_unitario = $value[0]->calcula_valor_unitario($servico_quantidade);
-            $value[0]->sub_total = $servico_quantidade * $value[0]->valor_unitario;
+        if (!empty($_SESSION['orcamento']->servico->impressao)) {
+            if ($_SESSION['orcamento']->servico->tipo == 'servico') {
+                foreach ($_SESSION['orcamento']->servico->impressao as $key => $value) {
+                    $value->valor_unitario = $value->calcula_valor_unitario($servico_quantidade);
+                    $value->sub_total = $servico_quantidade * $value->valor_unitario;
+                }
+            }  else {
+                foreach ($_SESSION['orcamento']->servico->impressao as $key => $value) {
+                    $value->valor_unitario = $value->calcula_valor_unitario($servico_quantidade,$value);
+                    $value->sub_total = $servico_quantidade * $value->valor_unitario;
+                }
+            }
         }
         redirect(base_url('servico'), 'location');
     }
@@ -595,8 +615,8 @@ class Servico extends CI_Controller {
         $faca->quantidade = 1;
         $faca->valor_faca = $faca->calcular_valor($faca->altura, $faca->largura);
         $faca->sub_total = $faca->quantidade * $faca->valor_faca;
-        $_SESSION['faca'][] = $faca;
-        $_SESSION['orcamento']->servico->faca = $_SESSION['faca'];
+        
+        $_SESSION['orcamento']->servico->faca[] = $faca;
         redirect(base_url('servico'), 'location');
     }
 

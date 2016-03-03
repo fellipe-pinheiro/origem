@@ -28,7 +28,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Nome: ', 'nome', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('nome', $impressao_formato->nome, ' id="nome" class="form-control" placeholder="Nome"') ?>
+                            <?= form_input('nome', $impressao_formato->nome, 'autofocus required id="nome" class="form-control" placeholder="Nome"') ?>
                         </div>
                     </div>
 
@@ -36,7 +36,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Altura (mm): ', 'altura', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('altura', $impressao_formato->altura, ' id="altura" class="form-control" placeholder="Digite a altura em milimetros"') ?>
+                            <?= form_input('altura', $impressao_formato->altura, 'required min="0" step="1" id="altura" class="form-control" placeholder="Digite a altura em milimetros"') ?>
                         </div>
                     </div>
                     
@@ -44,7 +44,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Largura (mm): ', 'largura', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('largura', $impressao_formato->largura, ' id="largura" class="form-control" placeholder="Digite a largura em milimetros"') ?>
+                            <?= form_input('largura', $impressao_formato->largura, 'required min="0" step="1" id="largura" class="form-control" placeholder="Digite a largura em milimetros"') ?>
                         </div>
                     </div>
                     

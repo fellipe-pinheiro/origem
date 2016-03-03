@@ -14,19 +14,34 @@
     </style>
     <body>
         <div class="container">
-            <?= form_open(base_url('login/logar'), 'class="form-signin"') ?>
-            <h1 class="form-signin-heading">Origem</h1>
-            <?= form_error('senha')?>
-            <?= form_label('Login: ', 'login', array('class' => 'sr-only')) ?>
-            <?= form_input('login', set_value('login'), ' id="login" class="form-control" placeholder="Login" autofocus required') ?>
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <br><br><br><br><br><br>
+                    <div class="panel panel-default">
 
-            <?= form_label('Senha: ', 'senha', array('class' => 'sr-only')) ?>
-            <?= form_password('senha', '', ' id="senha" class="form-control" placeholder="Senha"') ?>
+                        <div class="panel-body">
+                            <?= form_open(base_url('login/logar'), 'class="form-signin"') ?>
+                            <h1 class="form-signin-heading">Origem</h1>
+                            <?= form_error('senha') ?>
+                            <?= form_label('Login: ', 'login', array('class' => 'sr-only')) ?>
+                            <?= form_input('login', set_value('login'), ' id="login" class="form-control" placeholder="Login" autofocus required') ?>
+                            <br>
+                            <?= form_label('Senha: ', 'senha', array('class' => 'sr-only')) ?>
+                            <?= form_password('senha', '', ' id="senha" class="form-control" placeholder="Senha"') ?>
 
-            <hr>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-            <?= form_close() ?>
-
+                            <hr>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+                            <?= form_close() ?>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+            <br><br><br>
             <?php $this->load->view('_include/footer'); ?>
         </div>
     </body>
