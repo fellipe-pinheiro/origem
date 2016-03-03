@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 02-Mar-2016 às 04:59
+-- Generation Time: 03-Mar-2016 às 14:38
 -- Versão do servidor: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `fotolito` (
   `impressao_formato` int(11) NOT NULL,
   `descricao` text NOT NULL,
   `valor` decimal(5,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `fotolito`
@@ -137,7 +137,8 @@ CREATE TABLE IF NOT EXISTS `fotolito` (
 
 INSERT INTO `fotolito` (`id`, `impressao_formato`, `descricao`, `valor`) VALUES
 (1, 1, 'gsdgsd', '25.00'),
-(2, 2, '', '30.00');
+(2, 2, '', '30.00'),
+(3, 3, '', '1.00');
 
 -- --------------------------------------------------------
 
@@ -157,7 +158,8 @@ CREATE TABLE IF NOT EXISTS `frete` (
 --
 
 INSERT INTO `frete` (`id`, `nome`, `descricao`, `valor`) VALUES
-(1, 'Motoboy', 'Entrega por motoboy', '30.00');
+(1, 'Motoboy', 'Entrega por motoboy', '30.00'),
+(2, 'Não Cobrar', '', '0.00');
 
 -- --------------------------------------------------------
 
@@ -217,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `impressao_formato` (
   `altura` int(5) NOT NULL,
   `largura` int(5) NOT NULL,
   `descricao` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `impressao_formato`
@@ -225,7 +227,9 @@ CREATE TABLE IF NOT EXISTS `impressao_formato` (
 
 INSERT INTO `impressao_formato` (`id`, `nome`, `altura`, `largura`, `descricao`) VALUES
 (1, 'Formato A', 220, 480, 'Teste'),
-(2, 'Formato B', 320, 330, 'Formato b');
+(2, 'Formato B', 320, 330, 'Formato b'),
+(3, 'Formato C', 330, 480, 'dsfa'),
+(4, 'Formato D', 100, 100, 'werwer');
 
 -- --------------------------------------------------------
 
@@ -281,29 +285,32 @@ CREATE TABLE IF NOT EXISTS `orcamento` (
   `total` decimal(10,2) NOT NULL,
   `frete_id` int(11) DEFAULT NULL,
   `valor_frete` decimal(10,2) DEFAULT NULL,
+  `frete_personalizado` decimal(10,2) DEFAULT NULL,
   `nota_fiscal_id` int(11) DEFAULT NULL,
+  `valor_nota_fiscal` decimal(10,2) NOT NULL,
   `servico_id` int(11) NOT NULL,
   `cliente_id` int(11) NOT NULL,
-  `valor_nota_fiscal` decimal(10,2) NOT NULL,
-  `frete_personalizado` decimal(10,2) DEFAULT NULL,
   `ativo` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `orcamento`
 --
 
-INSERT INTO `orcamento` (`id`, `data_orcamento`, `total`, `frete_id`, `valor_frete`, `nota_fiscal_id`, `servico_id`, `cliente_id`, `valor_nota_fiscal`, `frete_personalizado`, `ativo`) VALUES
-(1, '2016-03-01', '725.00', NULL, NULL, NULL, 1, 1, '0.00', NULL, 1),
-(2, '2016-03-01', '840.84', 1, NULL, 12, 2, 1, '0.00', NULL, 1),
-(3, '2016-03-01', '840.84', 1, NULL, 2, 3, 1, '0.00', NULL, 1),
-(4, '2016-03-01', '22.93', NULL, NULL, 2, 4, 2, '2.43', NULL, 1),
-(5, '2016-03-01', '840.84', 1, NULL, 2, 6, 1, '85.84', NULL, 1),
-(6, '2016-03-01', '840.84', 1, '30.00', 2, 7, 1, '85.84', NULL, 0),
-(7, '2016-03-01', '745.00', NULL, '20.00', 1, 8, 1, '0.00', '20.00', 0),
-(8, '2016-03-01', '310.00', NULL, '20.00', 1, 9, 1, '0.00', '20.00', 0),
-(11, '2016-03-01', '840.84', 1, '30.00', 2, 13, 1, '85.84', NULL, 0),
-(12, '2016-03-01', '840.84', 1, '30.00', 2, 14, 1, '85.84', NULL, 1);
+INSERT INTO `orcamento` (`id`, `data_orcamento`, `total`, `frete_id`, `valor_frete`, `frete_personalizado`, `nota_fiscal_id`, `valor_nota_fiscal`, `servico_id`, `cliente_id`, `ativo`) VALUES
+(1, '2016-03-01', '725.00', NULL, '30.00', '30.00', 1, '0.00', 1, 1, 1),
+(2, '2016-03-01', '840.84', 1, '30.00', NULL, 1, '0.00', 2, 1, 1),
+(3, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '0.00', 3, 1, 1),
+(4, '2016-03-01', '22.93', NULL, NULL, NULL, 2, '2.43', 4, 2, 1),
+(5, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 6, 1, 1),
+(6, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 7, 1, 0),
+(7, '2016-03-01', '745.00', NULL, '20.00', '20.00', 1, '0.00', 8, 1, 0),
+(8, '2016-03-01', '310.00', NULL, '20.00', '20.00', 1, '0.00', 9, 1, 0),
+(11, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 13, 1, 0),
+(12, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 14, 1, 1),
+(13, '2016-03-02', '2032.09', NULL, '50.00', '50.00', 3, '132.09', 15, 1, 0),
+(14, '2016-03-02', '1978.52', NULL, '50.00', '50.00', 3, '128.52', 16, 1, 0),
+(15, '2016-03-02', '2032.09', NULL, '50.00', '50.00', 3, '132.09', 17, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -344,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `servico` (
   `valor_unitario` decimal(10,2) NOT NULL,
   `sub_total` decimal(10,2) NOT NULL,
   `total` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico`
@@ -360,7 +367,10 @@ INSERT INTO `servico` (`id`, `tipo`, `quantidade`, `desconto`, `valor_unitario`,
 (8, 'servico', 100, '0.00', '7.25', '0.00', '725.00'),
 (9, 'servico', 100, '0.00', '2.90', '0.00', '290.00'),
 (13, 'servico', 100, '0.00', '7.25', '0.00', '725.00'),
-(14, 'servico', 100, '0.00', '7.25', '0.00', '725.00');
+(14, 'servico', 100, '0.00', '7.25', '0.00', '725.00'),
+(15, 'servico', 500, '0.00', '3.70', '0.00', '1850.00'),
+(16, 'servico', 500, '0.00', '3.60', '0.00', '1800.00'),
+(17, 'servico', 500, '0.00', '3.70', '0.00', '1850.00');
 
 -- --------------------------------------------------------
 
@@ -470,7 +480,7 @@ CREATE TABLE IF NOT EXISTS `servico_impressao` (
   `impressao_id` int(11) NOT NULL,
   `fotolito_id` int(11) NOT NULL,
   `impressao_formato_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_impressao`
@@ -484,7 +494,13 @@ INSERT INTO `servico_impressao` (`id`, `servico_id`, `impressao_id`, `fotolito_i
 (6, 7, 1, 1, 1),
 (7, 8, 1, 1, 1),
 (8, 13, 1, 1, 1),
-(9, 14, 1, 1, 1);
+(9, 14, 1, 1, 1),
+(10, 15, 1, 1, 1),
+(12, 16, 1, 1, 1),
+(14, 17, 1, 1, 1),
+(11, 15, 2, 1, 1),
+(13, 16, 2, 1, 1),
+(15, 17, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -543,7 +559,7 @@ CREATE TABLE IF NOT EXISTS `servico_papel` (
   `empastamento_valor` decimal(10,2) NOT NULL,
   `quantidade` int(11) NOT NULL,
   `empastamento_status` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_papel`
@@ -557,7 +573,9 @@ INSERT INTO `servico_papel` (`id`, `servico_id`, `papel_id`, `empastamento_valor
 (6, 7, 1, '100.00', 10, 1),
 (7, 8, 1, '100.00', 10, 1),
 (8, 13, 1, '100.00', 10, 1),
-(9, 14, 1, '100.00', 10, 1);
+(9, 14, 1, '100.00', 10, 1),
+(10, 15, 1, '0.00', 10, 0),
+(11, 17, 1, '0.00', 10, 0);
 
 -- --------------------------------------------------------
 
@@ -570,7 +588,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `nome` varchar(50) NOT NULL,
   `login` varchar(20) NOT NULL,
   `senha` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `usuario`
@@ -578,7 +596,8 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 INSERT INTO `usuario` (`id`, `nome`, `login`, `senha`) VALUES
 (1, 'fellipe pinheiro', 'fellipe', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220'),
-(2, 'teste nome', 'teste', '');
+(2, 'Eric', 'ericnakaw', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220'),
+(3, 'Mario', 'mario', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220');
 
 --
 -- Indexes for dumped tables
@@ -696,13 +715,13 @@ ALTER TABLE `servico_faca_cartao`
 -- Indexes for table `servico_impressao`
 --
 ALTER TABLE `servico_impressao`
- ADD PRIMARY KEY (`id`,`servico_id`,`impressao_id`,`fotolito_id`,`impressao_formato_id`);
+ ADD PRIMARY KEY (`id`,`servico_id`,`impressao_id`,`fotolito_id`,`impressao_formato_id`), ADD KEY `impressao_id` (`impressao_id`);
 
 --
 -- Indexes for table `servico_impressao_cartao`
 --
 ALTER TABLE `servico_impressao_cartao`
- ADD PRIMARY KEY (`id`,`servico_id`,`impressao_cartao_id`,`impressao_formato_id`,`fotolito_id`);
+ ADD PRIMARY KEY (`id`,`servico_id`,`impressao_cartao_id`,`impressao_formato_id`,`fotolito_id`), ADD KEY `impressao_cartao_id` (`impressao_cartao_id`);
 
 --
 -- Indexes for table `servico_laminacao`
@@ -720,7 +739,7 @@ ALTER TABLE `servico_papel`
 -- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `login` (`login`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -750,7 +769,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `fotolito`
 --
 ALTER TABLE `fotolito`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `frete`
 --
@@ -770,7 +789,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `impressao_formato`
 --
 ALTER TABLE `impressao_formato`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `laminacao`
 --
@@ -785,7 +804,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `orcamento`
 --
 ALTER TABLE `orcamento`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `papel`
 --
@@ -795,7 +814,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `servico`
 --
 ALTER TABLE `servico`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `servico_acabamento`
 --
@@ -820,7 +839,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `servico_impressao`
 --
 ALTER TABLE `servico_impressao`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `servico_impressao_cartao`
 --
@@ -835,12 +854,28 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 -- AUTO_INCREMENT for table `servico_papel`
 --
 ALTER TABLE `servico_papel`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `servico_impressao`
+--
+ALTER TABLE `servico_impressao`
+ADD CONSTRAINT `servico_impressao_ibfk_1` FOREIGN KEY (`impressao_id`) REFERENCES `impressao` (`id`);
+
+--
+-- Limitadores para a tabela `servico_impressao_cartao`
+--
+ALTER TABLE `servico_impressao_cartao`
+ADD CONSTRAINT `servico_impressao_cartao_ibfk_1` FOREIGN KEY (`impressao_cartao_id`) REFERENCES `impressao_cartao` (`id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
