@@ -7,6 +7,9 @@ class Cliente extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('Cliente_m');
+        $this->load->helper('url');
+        $this->load->helper('form');
+        $this->load->helper('array');
         empty($_SESSION) ? session_start() : '';
         login_necessario();
     }
