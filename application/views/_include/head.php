@@ -17,21 +17,13 @@
 
     <script type="text/javascript" src="<?= base_url("assets/js/jquery-min.js"); ?>"></script>
 
-    <script type="text/javascript" src="<?= base_url("assets/js/bootstrap.js"); ?>"></script>
+    <script type="text/javascript" src="<?= base_url("assets/js/bootstrap.min.js"); ?>"></script>
 
-    <link rel="stylesheet" href="<?= base_url("assets/css/bootstrap.css"); ?>" />
-    <link rel="stylesheet" href="<?= base_url("assets/css/bootstrap-theme.css"); ?>" />
-    <link rel="stylesheet" href="<?= base_url("assets/css/bootstrap-theme.css.map"); ?>" />
+    <link rel="stylesheet" href="<?= base_url("assets/css/bootstrap.min.css"); ?>" />
+    <link rel="stylesheet" href="<?= base_url("assets/css/bootstrap-theme.min.css"); ?>" />
+    <link rel="stylesheet" href="<?= base_url("assets/css/bootstrap-theme.min.css.map"); ?>" />
 
 
     <link rel="icon" href="<?= base_url('/assets/img/icone.ico') ?>" type="image/x-icon" />
     <link rel="shortcut icon" href="<?= base_url('/assets/img/icone.ico') ?>" type="image/x-icon" />
-    <style type="text/css">
-        /* Posiciona o radape no fim da pagina */
-        footer {
-            /*            position:absolute;
-                        bottom:0;
-                        width:100%;*/
-        }
-    </style>
 </head>

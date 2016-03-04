@@ -2,26 +2,35 @@
 <html lang="pt-br">
     <?php $this->load->view('_include/head', ['titulo' => 'Home']); ?>
     <?php $this->load->view('_include/js-lista', ['crud' => 'Papel']); ?>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tabela').DataTable({
+                "language": {
+                    "search": "Pesquisar:",
+                    "lengthMenu": "Mostar _MENU_ linhas por pagina",
+                    "zeroRecords": "Nada encontrado - refaça a busca",
+                    "info": "Mostrando a pagina _PAGE_ de _PAGES_",
+                    "paginate": {
+                        "first": "Primeira",
+                        "last": "Ultima",
+                        "next": "Proxima",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
     <body>
         <?php $this->load->view('_include/menu'); ?>
         <div class="container">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Lista de Papeis</h3>
+                    <h3 class="panel-title">Lista de Papeis </h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-3">
-                            <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
-                        </div>
-                        <div class="col-md-3">
-                            <a class="btn btn-primary inserir" href="<?= base_url('papel/form') ?>">Novo Papel</a>
-                        </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-hover">
+                            <table id="tabela" class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -31,7 +40,7 @@
                                         <th>Largura (mm)</th>
                                         <th>Descrição</th>
                                         <th>Valor</th>
-                                        <th colspan="2">Ações</th>
+                                        <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody id="fbody">
@@ -44,8 +53,10 @@
                                             <td><?= $value->largura ?></td>
                                             <td><?= $value->descricao ?></td>
                                             <td><?= $value->valor ?></td>
-                                            <td style="width: 46px;"><a class="btn btn-primary editar" href="<?= base_url("papel/form/{$value->id}") ?>">Editar</a></td>
-                                            <td style="width: 46px;"><a class="btn btn-danger deletar" href="<?= base_url("papel/deletar/{$value->id}") ?>">Deletar</a></td>
+                                            <td>
+                                                <a class="btn btn-primary editar" href="<?= base_url("papel/form/{$value->id}") ?>">Editar</a>
+                                                <a class="btn btn-danger deletar" href="<?= base_url("papel/deletar/{$value->id}") ?>">Deletar</a>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

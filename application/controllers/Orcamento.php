@@ -45,5 +45,9 @@ class Orcamento extends CI_Controller {
         redirect(base_url('orcamento'), 'location');
     }
 
+    public function teste() {
+        $data['lista_orcamento'] = $this->Orcamento_m->listar_view();
+        $this->load->view('Orcamento/lista_1', $data);
+    }
 
 }
