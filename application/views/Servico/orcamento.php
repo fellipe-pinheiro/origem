@@ -39,9 +39,9 @@ $titulo = 'Serviço';
             //Habilitar empastamento ao selecionar radio empastamento
             $("input[type=radio][name=empastamento_status]").change(function () {
                 if ($("#form_papel_empastamento_valor").prop("disabled")) {
-                    $("#form_papel_empastamento_valor").prop("disabled",false);
+                    $("#form_papel_empastamento_valor").prop("disabled", false);
                 } else {
-                    $("#form_papel_empastamento_valor").prop("disabled",true);
+                    $("#form_papel_empastamento_valor").prop("disabled", true);
                 }
             });
 
@@ -63,18 +63,22 @@ $titulo = 'Serviço';
             });
 
             //Selecionar os valores de frete
-            <?php if (!empty($_SESSION['orcamento']->frete->id)) {
-                print "$(\"#frete option[value='{$_SESSION['orcamento']->frete->id}']\").attr('selected', 'selected');";
-            } elseif (!empty($_SESSION['orcamento']->frete_personalizado)){
-                print "$(\"#frete option[value=0]\").attr('selected', 'selected');";
-            }else{
-                print "$(\"#frete option[value='-1']\").attr('selected', 'selected');";
-            } ?>
+<?php
+if (!empty($_SESSION['orcamento']->frete->id)) {
+    print "$(\"#frete option[value='{$_SESSION['orcamento']->frete->id}']\").attr('selected', 'selected');";
+} elseif (!empty($_SESSION['orcamento']->frete_personalizado)) {
+    print "$(\"#frete option[value=0]\").attr('selected', 'selected');";
+} else {
+    print "$(\"#frete option[value='-1']\").attr('selected', 'selected');";
+}
+?>
 
             //Selecionar os valores da nota fiscal
-            <?php if (!empty($_SESSION['orcamento']->nota_fiscal)) { 
-                print "$(\"#nota_fiscal option[value='{$_SESSION['orcamento']->nota_fiscal->id}']\").attr('selected', 'selected');";
-            } ?>
+<?php
+if (!empty($_SESSION['orcamento']->nota_fiscal)) {
+    print "$(\"#nota_fiscal option[value='{$_SESSION['orcamento']->nota_fiscal->id}']\").attr('selected', 'selected');";
+}
+?>
 
             // Limpa os modais ao adicionar um item
             $("#md_btn_acabamento").click(function () {
@@ -107,7 +111,7 @@ $titulo = 'Serviço';
                 $("#form_papel_empastamento_valor").val('');
             });
             $("#md_btn_impressao_cartao").click(function () {
-                $("#form_impressao_cartao").prop("action","servico/impressao_cartao_sessao_inserir")
+                $("#form_impressao_cartao").prop("action", "servico/impressao_cartao_sessao_inserir")
                 $("#impressao_cartao_select option[value='']").prop("selected", true);
                 $("#impressao_cartao_qtd_cor_frente").val('');
                 $("#impressao_cartao_qtd_cor_verso").val('');
@@ -117,29 +121,29 @@ $titulo = 'Serviço';
             $("#btn_finalizar").click(function () {
                 if ($("#cliente_inp_nome").val().length < 1) {
                     $("#modal_cliente").modal();
-                }else {
-                    if($("#nota_fiscal").val()==null){
-                        $("#msg_nota_fiscal").prop("open",true);
-                        
+                } else {
+                    if ($("#nota_fiscal").val() == null) {
+                        $("#msg_nota_fiscal").prop("open", true);
+
                         $("#nota_fiscal").focus();
-                    }else{
+                    } else {
                         $("#modal_finalizar").modal();
                     }
                 }
             });
         });
-        
+
         function open_impressao_modal(posicao, idImpressao, qtd_cor_frente, qtd_cor_verso) {
-            if("<?=$_SESSION['orcamento']->servico->tipo?>" == "cartao"){
-                 $("#form_impressao_cartao").prop("action","servico/impressao_cartao_sessao_editar/" + posicao);
-                 $("#impressao_cartao_select option[value=" + idImpressao + "]").prop("selected", true);
-                 $("#impressao_cartao_qtd_cor_frente").val(qtd_cor_frente);
-                 $("#impressao_cartao_qtd_cor_verso").val(qtd_cor_verso);
-                 $("#myModal_impressao_cartao").modal();
-             }
-            if("<?=$_SESSION['orcamento']->servico->tipo?>" == "servico"){
+            if ("<?= $_SESSION['orcamento']->servico->tipo ?>" == "cartao") {
+                $("#form_impressao_cartao").prop("action", "servico/impressao_cartao_sessao_editar/" + posicao);
+                $("#impressao_cartao_select option[value=" + idImpressao + "]").prop("selected", true);
+                $("#impressao_cartao_qtd_cor_frente").val(qtd_cor_frente);
+                $("#impressao_cartao_qtd_cor_verso").val(qtd_cor_verso);
+                $("#myModal_impressao_cartao").modal();
+            }
+            if ("<?= $_SESSION['orcamento']->servico->tipo ?>" == "servico") {
                 $("#md_impressao_select option[value=" + idImpressao + "]").prop("selected", true);
-                $("#form_impressao").prop("action","servico/impressao_sessao_editar/" + posicao);
+                $("#form_impressao").prop("action", "servico/impressao_sessao_editar/" + posicao);
                 $("#myModal_impressao").modal();
             }
         }
@@ -153,23 +157,23 @@ $titulo = 'Serviço';
             } else {
                 $("input[type=radio][name=empastamento_status][value=0]").prop("checked", true);
             }
-            $("#form_papel").prop("action","servico/papel_sessao_editar/" + posicao);
+            $("#form_papel").prop("action", "servico/papel_sessao_editar/" + posicao);
             $("#myModal_papel").modal();
         }
         function open_acabamento_modal(posicao, qtd, id) {
             $("#md_acabamento_select option[value=" + id + "]").attr("selected", "selected");
             $("#md_acabamento_qtd").val(qtd);
-            $("#form_acabamento").prop("action","servico/acabamento_sessao_editar/" + posicao);
+            $("#form_acabamento").prop("action", "servico/acabamento_sessao_editar/" + posicao);
             $("#myModal_acabamento").modal();
         }
         function open_faca_modal(posicao, id, altura, largura) {
-            if("<?=$_SESSION['orcamento']->servico->tipo?>" == "cartao"){
-                $("#faca_cartao_form").prop("action","servico/faca_cartao_sessao_editar/" + posicao);
+            if ("<?= $_SESSION['orcamento']->servico->tipo ?>" == "cartao") {
+                $("#faca_cartao_form").prop("action", "servico/faca_cartao_sessao_editar/" + posicao);
                 $("#md_faca_cartao_select option[value=" + id + "]").prop("selected", true);
                 $("#myModal_faca_cartao").modal();
             }
-            if("<?=$_SESSION['orcamento']->servico->tipo?>" == "servico"){
-                $("#form_faca").prop("action","servico/faca_cartao_sessao_editar/" + posicao);
+            if ("<?= $_SESSION['orcamento']->servico->tipo ?>" == "servico") {
+                $("#form_faca").prop("action", "servico/faca_cartao_sessao_editar/" + posicao);
                 $("#md_faca_select option[value=" + id + "]").prop("selected", true);
                 $("#md_faca_altura").val(altura);
                 $("#md_faca_largura").val(largura);
@@ -184,7 +188,7 @@ $titulo = 'Serviço';
         function open_laminacao_modal(posicao, id, valor) {
             $("#md_laminacao_select_laminacao option[value=" + id + "]").attr("selected", "selected");
             $("#md_laminacao_valor").val(valor);
-            $("#form_laminacao").prop("action","servico/laminacao_sessao_editar/" + posicao);
+            $("#form_laminacao").prop("action", "servico/laminacao_sessao_editar/" + posicao);
             $("#myModal_laminacao").modal();
         }
         function open_servico_modal() {
@@ -651,7 +655,7 @@ $titulo = 'Serviço';
 
                             <!--Quantidade Cor verso-->
                             <?= form_label('Qtd cores verso: ', 'qtd_cor_verso', array('class' => ' control-label')) ?>
-                            <?= form_input('qtd_cor_verso','', ' step="0" min="0" type="number" id="impressao_cartao_qtd_cor_verso" class="form-control" placeholder="Quantidade cores verso"') ?>
+                            <?= form_input('qtd_cor_verso', '', ' step="0" min="0" type="number" id="impressao_cartao_qtd_cor_verso" class="form-control" placeholder="Quantidade cores verso"') ?>
 
                         </div>
                         <div class="modal-footer">
@@ -726,117 +730,126 @@ $titulo = 'Serviço';
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <?= form_open('Servico/cliente_session_criar', 'class="form-horizontal col-md-12" role="form"') ?>
-                            <!--Nome-->
+                            <?= form_open('Servico/cliente_session_criar', 'role="form"') ?>
+                            <div class="col-md-12">
+                                <h4>Dados do Cliente</h4>
+                            </div>
                             <div class="form-group">
-                                <?= form_label('Nome: ', 'nome', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('nome', '', ' id="nome" class="form-control" placeholder="Nome"') ?>
+                                <div class="col-md-2">
+                                    <!--ID-->
+                                    <?= form_hidden('id', '') ?>
+                                    <!--Pessoa_tipo-->
+                                    <?php
+                                    $options = array(
+                                        '0' => 'Pessoa Fisica',
+                                        '1' => 'Pessoa Juridica',
+                                    );
+                                    ?>
+                                    <div class="form-group">
+                                        <?= form_label('Pessoa_tipo: ', 'pessoa_tipo', array('class' => 'control-label')) ?>
+                                        <?= form_dropdown('pessoa_tipo', $options, '', 'id="pessoa_tipo" class="form-control input-sm"') ?>
+                                    </div>
                                 </div>
-                            </div>    
-                            <!--Cnpj_cpf-->
-                            <div class="form-group">
-                                <?= form_label('Cnpj_cpf: ', 'cnpj_cpf', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('cnpj_cpf', '', ' id="cnpj_cpf" class="form-control" placeholder="Cnpj_cpf"') ?>
+                                <div class="col-md-6">
+                                    <!--Nome-->
+                                    <div class="form-group">
+                                        <?= form_label('Nome: ', 'nome', array('class' => 'control-label')) ?>
+                                        <?= form_input('nome', '', 'id="nome" placeholder="Nome / Razão Social" class="form-control input-sm"') ?>
+                                    </div>
+                                </div>
+                                <!--CPF/CNPJ-->
+                                <div class="col-md-4">
+                                    <?= form_label('CNPJ/CPF: ', 'cnpj_cpf', array('class' => 'control-label')) ?>
+                                    <?= form_input('cnpj_cpf', '', ' id="cnpj_cpf" class="form-control input-sm" placeholder="CNPJ / CPF"') ?>
                                 </div>
                             </div>
-                            <!--Pessoa_tipo-->
+                        </div>
+                        <div class="row">
                             <div class="form-group">
-                                <?= form_label('Pessoa_tipo: ', 'pessoa_tipo', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('pessoa_tipo', '', ' id="pessoa_tipo" class="form-control" placeholder="Pessoa_tipo"') ?>
+                                <!--ie-->
+                                <div class="col-md-3">
+                                    <?= form_label('Ie: ', 'ie', array('class' => 'control-label')) ?>
+                                    <?= form_input('ie', '', ' id="ie" placeholder="Inscrição estadual" class="form-control input-sm"') ?>
                                 </div>
-                            </div>    
-                            <!--Email-->
-                            <div class="form-group">
-                                <?= form_label('Email: ', 'email', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('email', '', ' id="email" class="form-control" placeholder="Email"') ?>
-                                </div>
-                            </div>    
-                            <!--Telefone-->
-                            <div class="form-group">
-                                <?= form_label('Telefone: ', 'telefone', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('telefone', '', ' id="telefone" class="form-control" placeholder="Telefone"') ?>
-                                </div>
-                            </div>    
-                            <!--Celular-->
-                            <div class="form-group">
-                                <?= form_label('Celular: ', 'celular', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('celular', '', ' id="celular" class="form-control" placeholder="Celular"') ?>
+                                <!--im-->
+                                <div class="col-md-3">
+                                    <?= form_label('Im: ', 'im', array('class' => 'control-label')) ?>
+                                    <?= form_input('im', '', ' id="im" placeholder="Inscrição municipal" class="form-control input-sm"') ?>
                                 </div>
                             </div>
-                            <!--Rua-->
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Contato</h4>
+                            </div>
                             <div class="form-group">
-                                <?= form_label('Rua: ', 'rua', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('rua', '', ' id="rua" class="form-control" placeholder="Rua"') ?>
+                                <!--telefone-->
+                                <div class="col-md-4">
+                                    <?= form_label('<span class="glyphicon glyphicon-phone-alt"></span> Telefone: ', 'telefone', array('class' => 'control-label')) ?>
+                                    <?= form_input('telefone', '', ' id="telefone" class="form-control input-sm" placeholder="Telefone"') ?>
+                                </div>
+                                <!--celular-->
+                                <div class="col-md-4">
+                                    <?= form_label('<span class="glyphicon glyphicon-phone"></span> Celular: ', 'celular', array('class' => 'control-label')) ?>
+                                    <?= form_input('celular', '', ' id="celular" class="form-control input-sm" placeholder="Celular"') ?>
+                                </div>
+                                <!--email-->
+                                <div class="col-md-4">
+                                    <?= form_label('<span class="glyphicon glyphicon-envelope"></span> Email: ', 'email', array('class' => 'control-label')) ?>
+                                    <?= form_input('email', '', ' id="email" class="form-control input-sm" placeholder="Email"') ?>
                                 </div>
                             </div>
-                            <!--Numero-->
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Endereço</h4>
+                            </div>
                             <div class="form-group">
-                                <?= form_label('Numero: ', 'numero', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('numero', '', ' id="numero" class="form-control" placeholder="Numero"') ?>
+                                <!--logradouro-->
+                                <div class="col-md-4">
+                                    <?= form_label('<span class="glyphicon glyphicon-road"></span> Logradouro: ', 'rua', array('class' => 'control-label')) ?>
+                                    <?= form_input('rua', '', ' id="rua" class="form-control input-sm" placeholder="Rua"') ?>
                                 </div>
-                            </div>    
-                            <!--Complemento-->
-                            <div class="form-group">
-                                <?= form_label('Complemento: ', 'complemento', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('complemento', '', ' id="complemento" class="form-control" placeholder="Complemento"') ?>
+                                <!--numero-->
+                                <div class="col-md-2">
+                                    <?= form_label('Numero: ', 'numero', array('class' => 'control-label')) ?>
+                                    <?= form_input('numero', '', ' id="numero" class="form-control input-sm" placeholder="Numero"') ?>
                                 </div>
-                            </div>    
-                            <!--Bairro-->
-                            <div class="form-group">
-                                <?= form_label('Bairro: ', 'bairro', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('bairro', '', ' id="bairro" class="form-control" placeholder="Bairro"') ?>
+                                <!--complemento-->
+                                <div class="col-md-2">
+                                    <?= form_label('Complemento: ', 'complemento', array('class' => 'control-label')) ?>
+                                    <?= form_input('complemento', '', ' id="complemento" class="form-control input-sm" placeholder="Complemento"') ?>
                                 </div>
-                            </div>    
-                            <!--Cidade-->
-                            <div class="form-group">
-                                <?= form_label('Cidade: ', 'cidade', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('cidade', '', ' id="cidade" class="form-control" placeholder="Cidade"') ?>
+                                <!--bairro-->
+                                <div class="col-md-4">
+                                    <?= form_label('Bairro: ', 'bairro', array('class' => 'control-label')) ?>
+                                    <?= form_input('bairro', '', ' id="bairro" class="form-control input-sm" placeholder="Bairro"') ?>
                                 </div>
-                            </div>    
-                            <!--Estado-->
+                            </div>
                             <div class="form-group">
-                                <?= form_label('Estado: ', 'estado', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('estado', '', ' id="estado" class="form-control" placeholder="Estado"') ?>
-                                </div>
-                            </div>    
-                            <!--Cep-->
-                            <div class="form-group">
-                                <?= form_label('Cep: ', 'cep', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
+                                <!--cep-->
+                                <div class="col-md-4">
+                                    <?= form_label('Cep: ', 'cep', array('class' => 'control-label')) ?>
                                     <?= form_input('cep', '', ' id="cep" class="form-control" placeholder="Cep"') ?>
                                 </div>
-                            </div>        
-                            <!--Ie-->
-                            <div class="form-group">
-                                <?= form_label('Ie: ', 'ie', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('ie', '', ' id="ie" class="form-control" placeholder="Ie"') ?>
+                                <!--cidade-->
+                                <div class="col-md-4">
+                                    <?= form_label('Cidade: ', 'cidade', array('class' => 'control-label')) ?>
+                                    <?= form_input('cidade', '', ' id="cidade" class="form-control input-sm" placeholder="Cidade"') ?>
                                 </div>
-                            </div>    
-                            <!--Im-->
-                            <div class="form-group">
-                                <?= form_label('Im: ', 'im', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('im', '', ' id="im" class="form-control" placeholder="Im"') ?>
+                                <!--estado-->
+                                <div class="col-md-4">
+                                    <?= form_label('Estado: ', 'estado', array('class' => 'control-label')) ?>
+                                    <?= form_input('estado', '', ' id="estado" class="form-control" placeholder="Estado"') ?>
                                 </div>
-                            </div>    
-                            <!--Observacao-->
+                            </div>
                             <div class="form-group">
-                                <?= form_label('Observacao: ', 'observacao', array('class' => 'control-label col-sm-2')) ?>
-                                <div class="col-sm-5">
-                                    <?= form_input('observacao', '', ' id="observacao" class="form-control" placeholder="Observacao"') ?>
+                                <!--observacao-->
+                                <div class="col-md-12">
+                                    <?= form_label('Observacao: ', 'observacao', array('class' => 'control-label')) ?>
+                                    <?= form_textarea('observacao', '', ' id="observacao" class="form-control" placeholder="Observacao"') ?>
                                 </div>
                             </div>
                         </div>
@@ -844,6 +857,7 @@ $titulo = 'Serviço';
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <input type="submit" class="btn btn-success" value="Salvar">
+
                     </div>
                     <?php form_close(); ?>
                 </div>
@@ -860,8 +874,10 @@ $titulo = 'Serviço';
                     <div class="modal-body">
                         <div class="row">
                             <!--filtro-->
-                            <div class="col-md-3">
-                                <?= form_input('', '', ' id="txtPesquisar" class="" placeholder="Pesquisar"') ?>
+                            <div class="col-md-4">
+                                <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
+                            </div>
+                            <div class="col-md-2">
                                 <button id="md_btn_criar_cliente" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Novo</button>
                             </div>
                             <!--lista clientes-->

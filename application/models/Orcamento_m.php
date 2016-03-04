@@ -78,7 +78,7 @@ class Orcamento_m extends CI_Model {
 
     public function Listar_view() {
 
-        $result = $this->db->query("SELECT o.id,date_format(o.data_orcamento,'%d/%m/%Y') as data_orcamento,o.total,c.nome,c.cnpj_cpf,c.email,o.total FROM orcamento as o inner join cliente as c on o.cliente_id = c.id where ativo = 1 ORDER BY o.id DESC");
+        $result = $this->db->query("SELECT o.id,date_format(o.data_orcamento,'%d/%m/%Y') as data_orcamento,o.total,c.nome,c.cnpj_cpf,c.email,o.total FROM orcamento as o inner join cliente as c on o.cliente_id = c.id ORDER BY o.id DESC");
 
         $result_array = $result->result_array();
 
