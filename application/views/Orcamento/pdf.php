@@ -23,7 +23,7 @@
                                 <table class="table table-condensed">
                                     <tr>
                                         <td>
-                                            <h1>Origem</h1>
+                                            <?php  echo img(base_url('/assets/img/origem_logo.png')); ?>
                                         </td>
                                         <td>
                                             <h5><br>

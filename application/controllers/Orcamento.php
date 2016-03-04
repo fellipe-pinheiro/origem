@@ -34,6 +34,7 @@ class Orcamento extends CI_Controller {
     }
     
     public function pdf() {
+        $this->load->helper('html');
         $id = $this->uri->segment(3);
         $data['orcamento'] = $this->Orcamento_m->get_orcamento($id);
         $this->load->view('Orcamento/pdf', $data);
