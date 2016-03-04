@@ -42,7 +42,7 @@ if ($acao == 'inserir') {
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <!--Nome-->
+                                <!--Nome/Razão social-->
                                 <div class="form-group">
                                     <?= form_label('Nome: ', 'nome', array('class' => 'control-label')) ?>
                                     <?= form_input('nome', $cliente->nome, ' id="nome" placeholder="Nome / Razão Social" class="form-control input-sm"') ?>
@@ -75,18 +75,23 @@ if ($acao == 'inserir') {
                             <h4>Contato</h4>
                         </div>
                         <div class="form-group">
+                            <!--Nome contato-->
+                            <div class="col-md-3">
+                                <?= form_label('Contato Nome: ', 'contato_nome', array('class' => 'control-label')) ?>
+                                <?= form_input('contato_nome', $cliente->contato_nome, ' id="contato_nome" placeholder="Nome do contato" class="form-control input-sm"') ?>
+                            </div>
                             <!--telefone-->
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <?= form_label('<span class="glyphicon glyphicon-phone-alt"></span> Telefone: ', 'telefone', array('class' => 'control-label')) ?>
                                 <?= form_input('telefone', $cliente->telefone, ' id="telefone" class="form-control input-sm" placeholder="Telefone"') ?>
                             </div>
                             <!--celular-->
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <?= form_label('<span class="glyphicon glyphicon-phone"></span> Celular: ', 'celular', array('class' => 'control-label')) ?>
                                 <?= form_input('celular', $cliente->celular, ' id="celular" class="form-control input-sm" placeholder="Celular"') ?>
                             </div>
                             <!--email-->
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <?= form_label('<span class="glyphicon glyphicon-envelope"></span> Email: ', 'email', array('class' => 'control-label')) ?>
                                 <?= form_input('email', $cliente->email, ' id="email" class="form-control input-sm" placeholder="Email"') ?>
                             </div>
@@ -144,11 +149,11 @@ if ($acao == 'inserir') {
                             </div>
                         </div>
                     </div>
-                        <!--Botoes-->
+                    <!--Botoes-->
                     <div class="form-group">  
                         <div class="col-md-10"></div>
                         <div class="col-md-2">
-                        <br>
+                            <br>
                             <?= form_button('cancelar', 'Cancelar', 'class="btn btn-default" onClick="javascript:history.back(1)"') ?>
                             <?= form_submit('salvar', 'Salvar', 'class="btn btn-default"') ?>
                         </div>

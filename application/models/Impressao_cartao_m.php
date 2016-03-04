@@ -124,15 +124,14 @@ class Impressao_cartao_m extends CI_Model {
 
     public function calcula_valor_unitario($quantidade_pedido = '', Impressao_cartao_m $impressao) {
         if ($quantidade_pedido < 500) {
-            $valor_unitario = $impressao->valor_100 / $quantidade_pedido;
+            $valor_unitario = $impressao->valor_100 / 100;
         } elseif ($quantidade_pedido < 1000) {
-            $valor_unitario = $impressao->valor_500 / $quantidade_pedido;
+            $valor_unitario = $impressao->valor_500 / 100;
         } elseif ($quantidade_pedido >= 1000) {
-            $valor_unitario = $impressao->valor_1000 / $quantidade_pedido;
+            $valor_unitario = $impressao->valor_1000 / 100;
         }
         $qtd_cor = $impressao->qtd_cor_frente + $impressao->qtd_cor_verso;
         $valor_unitario = $valor_unitario * $qtd_cor;
-
         return $valor_unitario;
     }
 

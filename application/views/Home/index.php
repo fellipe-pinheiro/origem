@@ -8,11 +8,12 @@
             <div class="row row-offcanvas row-offcanvas-right">
                 <div class="col-md-12">
                     <div class="jumbotron">
-                        <h1 style="color: green">Origem</h1>
+                        <?php img() ?>
+                        <?php  echo img(base_url('/assets/img/origem_logo.png')); ?>
                     </div>
                 </div>
             </div>
-            
+            <br><br><br><br><br><br><br><br><br><br>
             <?php $this->load->view('_include/footer'); ?>
         </div>
     </body>

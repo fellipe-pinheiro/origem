@@ -44,12 +44,12 @@ if ($acao == 'inserir') {
 
                     <!--Impressao Formato-->
                     <div class="form-group">
-                        <?= form_label('Impressao Formato: ', 'impressao_formato', array('class' => 'control-label col-sm-2')) ?>
+                        <?= form_label('Área Impressão: ', 'impressao_formato', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
                             <?php
                             $lista = array();
                             foreach ($impressao_formato as $key => $value) {
-                                $lista[$value->id] = $value->altura.'x'.$value->largura;
+                                $lista[$value->id] =$value->altura.'x'.$value->largura.' ............('.$value->nome.')';
                             }
                             print form_dropdown('impressao_formato', $lista, $impressao->impressao_formato->id,' id="valor" class="form-control" placeholder="Valor"');
                             ?>

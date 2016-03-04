@@ -7,6 +7,7 @@ class Home extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('Usuario_m');
+        $this->load->helper('html');
         empty($_SESSION) ? session_start() : '';
         login_necessario();
     }

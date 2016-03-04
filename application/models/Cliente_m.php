@@ -8,6 +8,7 @@ class Cliente_m extends CI_Model {
     var $nome;
     var $pessoa_tipo;
     var $email;
+    var $contato_nome;
     var $celular;
     var $telefone;
     var $cnpj_cpf;
@@ -87,6 +88,7 @@ class Cliente_m extends CI_Model {
             $cliente->id = $value['id'];
             $cliente->nome = $value['nome'];
             $cliente->email = $value['email'];
+            $cliente->contato_nome = $value['contato_nome'];
             $cliente->telefone = $value['telefone'];
             $cliente->celular = $value['celular'];
             $cliente->pessoa_tipo = $value['pessoa_tipo'];

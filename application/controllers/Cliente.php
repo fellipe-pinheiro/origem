@@ -43,6 +43,7 @@ class Cliente extends CI_Controller {
         $cliente->nome = $this->input->post('nome');
         $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
         $cliente->email = $this->input->post('email');
+        $cliente->contato_nome = $this->input->post('contato_nome');
         $cliente->celular = $this->input->post('celular');
         $cliente->telefone = $this->input->post('telefone');
         $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
@@ -71,6 +72,7 @@ class Cliente extends CI_Controller {
         $cliente->nome = $this->input->post('nome');
         $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
         $cliente->email = $this->input->post('email');
+        $cliente->contato_nome = $this->input->post('contato_nome');
         $cliente->celular = $this->input->post('celular');
         $cliente->telefone = $this->input->post('telefone');
         $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
@@ -108,6 +110,7 @@ class Cliente extends CI_Controller {
         $cliente->nome = $this->input->post('nome');
         $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
         $cliente->email = $this->input->post('email');
+        $cliente->contato_nome = $this->input->post('contato_nome');
         $cliente->celular = $this->input->post('celular');
         $cliente->telefone = $this->input->post('telefone');
         $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
@@ -135,6 +138,7 @@ class Cliente extends CI_Controller {
         $cliente->nome = $this->input->post('nome');
         $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');
         $cliente->email = $this->input->post('email');
+        $cliente->contato_nome = $this->input->post('contato_nome');
         $cliente->celular = $this->input->post('celular');
         $cliente->telefone = $this->input->post('telefone');
         $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');

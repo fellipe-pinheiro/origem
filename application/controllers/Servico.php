@@ -172,6 +172,12 @@ class Servico extends CI_Controller {
         redirect(base_url('servico'), 'location');
     }
     
+    public function condicoes_sessao() {
+        $_SESSION['orcamento']->pagamento = $this->input->post('pagamento');
+        $_SESSION['orcamento']->prazo = $this->input->post('prazo');
+        redirect(base_url('servico'), 'location');
+    }
+    
     public function frete_sessao() {
         $id = $this->input->get('id');
         if ($id == -2) {
@@ -256,9 +262,12 @@ class Servico extends CI_Controller {
             $_SESSION['orcamento']->servico = new Servico_m();
         }
         $_SESSION['orcamento']->servico->tipo = $_POST['tipo'];
-        $servico_quantidade = $_SESSION['orcamento']->servico->quantidade = $_POST['quantidade'];
-        $servico_desconto = $_SESSION['orcamento']->servico->desconto = str_replace(',', '.', $_POST['desconto']);
-
+        $_SESSION['orcamento']->servico->quantidade = $_POST['quantidade'];
+        $_SESSION['orcamento']->servico->desconto = str_replace(',', '.', $_POST['desconto']);
+        
+        $servico_quantidade = $_SESSION['orcamento']->servico->quantidade;
+        $servico_desconto = $_SESSION['orcamento']->servico->desconto;
+        
         //recalcula valores para os itens que dependem da quantidade
         if (!empty($_SESSION['orcamento']->servico->laminacao)) {
             foreach ($_SESSION['orcamento']->servico->laminacao as $key => $value) {

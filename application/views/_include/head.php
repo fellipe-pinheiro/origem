@@ -24,6 +24,6 @@
     <link rel="stylesheet" href="<?= base_url("assets/css/bootstrap-theme.min.css.map"); ?>" />
 
 
-    <link rel="icon" href="<?= base_url('/assets/img/icone.ico') ?>" type="image/x-icon" />
-    <link rel="shortcut icon" href="<?= base_url('/assets/img/icone.ico') ?>" type="image/x-icon" />
+    <link rel="icon" href="<?= base_url('/assets/img/origem.ico') ?>" type="image/x-icon" />
+    <link rel="shortcut icon" href="<?= base_url('/assets/img/origem.ico') ?>" type="image/x-icon" />
 </head>

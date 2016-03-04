@@ -15,6 +15,8 @@ class Orcamento_m extends CI_Model {
     var $nota_fiscal;
     var $valor_nota_fiscal;
     var $edicao;
+    var $pagamento;
+    var $prazo;
 
     function __construct() {
         parent::__construct();
@@ -68,6 +70,8 @@ class Orcamento_m extends CI_Model {
         $orcamento->frete_personalizado = $frete_personalizado;
         $orcamento->nota_fiscal = $nota_fiscal;
         $orcamento->valor_nota_fiscal = $result_orc['valor_nota_fiscal'];
+        $orcamento->pagamento = $result_orc['pagamento'];
+        $orcamento->prazo = $result_orc['prazo'];
         $orcamento->servico = $servico;
         $orcamento->cliente = $cliente;
         
@@ -107,7 +111,9 @@ class Orcamento_m extends CI_Model {
                 'data_orcamento' => $orcamento->data_orcamento,
                 'total' => $orcamento->total,
                 'nota_fiscal_id' => $orcamento->nota_fiscal->id,
-                'valor_nota_fiscal' => $orcamento->valor_nota_fiscal
+                'valor_nota_fiscal' => $orcamento->valor_nota_fiscal,
+                'pagamento' => $orcamento->pagamento,
+                'prazo' => $orcamento->prazo
             );
             if (empty($orcamento->frete->id)) {
                 $dados['frete_personalizado'] = $orcamento->frete_personalizado;
@@ -195,10 +201,6 @@ class Orcamento_m extends CI_Model {
     public function calcula_total_orcamento() {
         $this->total = 0;
         
-//        var_dump($this->frete);
-        //var_dump($this->servico->total);
-        //var_dump($this->valor_nota_fiscal);
-//        die();
         if (!empty($this->nota_fiscal)) {
             $this->valor_nota_fiscal = ($this->servico->total * ($this->nota_fiscal->valor / 100));
             $this->total += $this->valor_nota_fiscal;

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 03-Mar-2016 às 19:06
+-- Generation Time: 04-Mar-2016 às 08:50
 -- Versão do servidor: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -65,18 +65,24 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `cep` varchar(8) DEFAULT NULL,
   `ie` varchar(20) DEFAULT NULL,
   `im` varchar(20) DEFAULT NULL,
-  `observacao` text
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `observacao` text,
+  `contato_nome` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `cliente`
 --
 
-INSERT INTO `cliente` (`id`, `nome`, `pessoa_tipo`, `cnpj_cpf`, `email`, `celular`, `telefone`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `cep`, `ie`, `im`, `observacao`) VALUES
-(1, 'Eric', 1, '222.333.444-90', 'eric@eric.com.br', '92222-3333', '2222-3333', 'Brasil', 1, 'Sem', 'Chácara Seis de Outubro', 'São Paulo', 'SP', '03318900', '243.220.078.129', '243.220.078.129', 'Lorem.......'),
-(2, 'Fellipe', 0, '222.333.444-95', 'fellipe@felipe', '92222-4444', '2222-4444', NULL, 2, 'AP 3', 'ipiranga', 'São Paulo', 'SP', '03508030', '243.220.078.129', '243.220.078.129', 'Lorem.......'),
-(3, 'Alice e Yasmin Publicidade e Propaganda ME', 1, '17.365.506/0001-05', 'tesouraria@aliceyasmin.com.br', '(14) 99679-2342', '(14) 2642-2159', 'Rua Doutor Ranimiro Lotufo', 822, 'nao tem', 'Vila São Judas Thadeu', 'Botucatu', 'SP', '18607-05', '334.111.926.294', '765.725.121.616', 'Lorem ipsum ut varius malesuada cras etiam metus, diam vehicula curae torquent aenean metus, lacinia primis eu malesuada eros congue. dolor mattis auctor quisque praesent quam convallis blandit sed eu ac aliquam, bibendum posuere imperdiet auctor lectus primis cursus adipiscing platea ullamcorper mollis, posuere consectetur semper quisque neque et lobortis quisque cursus consectetur. eget platea pulvinar ac tortor sodales dictum habitasse fames auctor mollis, lobortis condimentum lacinia nulla in cursus conubia mollis quis curabitur morbi, urna inceptos interdum consectetur sem lacus neque etiam et. rhoncus sapien lorem massa integer in erat neque facilisis primis facilisis, aenean non lectus quisque non fringilla curabitur maecenas massa. \r\n'),
-(4, 'Emanuel e Luiz Construções ME', 1, '01.862.914/0001-24', 'marketing@emanuelluiz.com.br', '(19) 99195-6148', '(19) 2786-0597', 'Rua Ângelo José de Araújo', 316, '', 'Jardim São Francisco', 'Amparo', 'SP', '13903-11', '328.996.673.800', '', '\r\n	Lorem ipsum ut varius malesuada cras etiam metus, diam vehicula curae torquent aenean metus, lacinia primis eu malesuada eros congue. dolor mattis auctor quisque praesent quam convallis blandit sed eu ac aliquam, bibendum posuere imperdiet auctor lectus primis cursus adipiscing platea ullamcorper mollis, posuere consectetur semper quisque neque et lobortis quisque cursus consectetur. eget platea pulvinar ac tortor sodales dictum habitasse fames auctor mollis, lobortis condimentum lacinia nulla in cursus conubia mollis quis curabitur morbi, urna inceptos interdum consectetur sem lacus neque etiam et. rhoncus sapien lorem massa integer in erat neque facilisis primis facilisis, aenean non lectus quisque non fringilla curabitur maecenas massa. \r\n\r\n	Pharetra adipiscing massa eget torquent ad scelerisque sociosqu orci sollicitudin etiam augue, gravida per etiam lorem nibh lacinia nulla accumsan sapien. suscipit laoreet maecenas tincidunt pulvinar sed porta euismod viverra ut augue, mauris semper convallis arcu sapien purus erat fusce purus, lobortis consequat sollicitudin cursus himenaeos curabitur fermentum cursus rhoncus. cubilia aliquam nostra scelerisque pharetra malesuada porttitor odio aliquet mauris inceptos, condimentum pulvinar aliquet adipiscing neque sapien proin congue netus. pretium tincidunt magna quisque vulputate tristique diam tincidunt ut cursus, fames praesent urna lacinia dapibus leo interdum netus, felis porta vulputate per nisi aliquam diam adipiscing. \r\n\r\n	Proin nostra lorem lobortis felis nullam inceptos tellus, cubilia leo commodo maecenas cubilia dictum, etiam ipsum magna at elementum sociosqu. aliquet scelerisque orci ut pretium vivamus ullamcorper, euismod morbi porttitor torquent nisl etiam interdum, imperdiet convallis fames senectus integer. nec metus donec lectus suspendisse vulputate vel sagittis hac lacus, curabitur consectetur aliquet tristique elit senectus curae adipiscing ultrices donec, justo nam rutrum ut urna consequat vestibulum odio. placerat convallis turpis semper lacinia phasellus sem ligula phasellus elementum conubia, integer in mattis platea aliquet vestibulum consectetur quisque nisi ipsum, fringilla tristique aliquet nunc dictum feugiat habitasse imperdiet risus. \r\n\r\n	Eget tempus habitant ligula lectus elementum pretium, aliquam pellentesque condimentum nisi feugiat non pellentesque, tellus erat quam maecenas elementum. elit litora purus nisl justo aenean imperdiet semper aptent mauris ultrices fames mi sem, cubilia fringilla massa ante lorem fermentum nibh varius blandit class mattis rhoncus. hendrerit nibh duis habitant congue lectus dui netus suspendisse maecenas mattis, maecenas accumsan praesent orci adipiscing ullamcorper scelerisque feugiat. platea placerat aliquam inceptos risus mattis curabitur lorem litora hac sem netus, pretium conubia id lectus consequat enim ullamcorper suscipit sollicitudin. aliquam rhoncus vestibulum lorem nostra enim quis condimentum ut elit ligula augue rhoncus viverra, dictumst vehicula diam class magna class donec mi sit convallis dui. \r\n\r\n	Nunc urna nunc egestas gravida litora dolor, himenaeos lorem lectus ante nisi consequat nunc, sociosqu suspendisse netus rhoncus porta. molestie cubilia elementum platea erat non praesent tristique vitae eros luctus, habitant nisl metus nisl bibendum elementum nec felis volutpat, ut aliquam ut scelerisque nisi donec egestas pharetra adipiscing. habitasse at nisi purus in hendrerit molestie laoreet, platea integer velit lobortis dui lobortis, fermentum aliquam iaculis porttitor varius amet. convallis taciti ultricies tristique et interdum lacinia nullam urna, libero vehicula elementum posuere aenean dictumst odio egestas vitae, feugiat ut lacinia dictum pretium cursus congue. \r\n');
+INSERT INTO `cliente` (`id`, `nome`, `pessoa_tipo`, `cnpj_cpf`, `email`, `celular`, `telefone`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `cep`, `ie`, `im`, `observacao`, `contato_nome`) VALUES
+(1, 'Eric', 1, '222.333.444-90', 'eric@eric.com.br', '92222-3333', '2222-3333', 'Brasil', 1, 'Sem', 'Chácara Seis de Outubro', 'São Paulo', 'SP', '03318900', '243.220.078.129', '243.220.078.129', 'Lorem.......', NULL),
+(2, 'Fellipe', 0, '222.333.444-95', 'fellipe@felipe', '92222-4444', '2222-4444', NULL, 2, 'AP 3', 'ipiranga', 'São Paulo', 'SP', '03508030', '243.220.078.129', '243.220.078.129', 'Lorem.......', NULL),
+(3, 'Alice e Yasmin Publicidade e Propaganda ME', 1, '17.365.506/0001-05', 'tesouraria@aliceyasmin.com.br', '(14) 99679-2342', '(14) 2642-2159', 'Rua Doutor Ranimiro Lotufo', 822, 'nao tem', 'Vila São Judas Thadeu', 'Botucatu', 'SP', '18607-05', '334.111.926.294', '765.725.121.616', 'Lorem ipsum ut varius malesuada cras etiam metus, diam vehicula curae torquent aenean metus, lacinia primis eu malesuada eros congue. dolor mattis auctor quisque praesent quam convallis blandit sed eu ac aliquam, bibendum posuere imperdiet auctor lectus primis cursus adipiscing platea ullamcorper mollis, posuere consectetur semper quisque neque et lobortis quisque cursus consectetur. eget platea pulvinar ac tortor sodales dictum habitasse fames auctor mollis, lobortis condimentum lacinia nulla in cursus conubia mollis quis curabitur morbi, urna inceptos interdum consectetur sem lacus neque etiam et. rhoncus sapien lorem massa integer in erat neque facilisis primis facilisis, aenean non lectus quisque non fringilla curabitur maecenas massa. \r\n', NULL),
+(4, 'Emanuel e Luiz Construções ME', 1, '01.862.914/0001-24', 'marketing@emanuelluiz.com.br', '(19) 99195-6148', '(19) 2786-0597', 'Rua Ângelo José de Araújo', 316, '', 'Jardim São Francisco', 'Amparo', 'SP', '13903-11', '328.996.673.800', '', '\r\n	Lorem ipsum ut varius malesuada cras etiam metus, diam vehicula curae torquent aenean metus, lacinia primis eu malesuada eros congue. dolor mattis auctor quisque praesent quam convallis blandit sed eu ac aliquam, bibendum posuere imperdiet auctor lectus primis cursus adipiscing platea ullamcorper mollis, posuere consectetur semper quisque neque et lobortis quisque cursus consectetur. eget platea pulvinar ac tortor sodales dictum habitasse fames auctor mollis, lobortis condimentum lacinia nulla in cursus conubia mollis quis curabitur morbi, urna inceptos interdum consectetur sem lacus neque etiam et. rhoncus sapien lorem massa integer in erat neque facilisis primis facilisis, aenean non lectus quisque non fringilla curabitur maecenas massa. \r\n\r\n	Pharetra adipiscing massa eget torquent ad scelerisque sociosqu orci sollicitudin etiam augue, gravida per etiam lorem nibh lacinia nulla accumsan sapien. suscipit laoreet maecenas tincidunt pulvinar sed porta euismod viverra ut augue, mauris semper convallis arcu sapien purus erat fusce purus, lobortis consequat sollicitudin cursus himenaeos curabitur fermentum cursus rhoncus. cubilia aliquam nostra scelerisque pharetra malesuada porttitor odio aliquet mauris inceptos, condimentum pulvinar aliquet adipiscing neque sapien proin congue netus. pretium tincidunt magna quisque vulputate tristique diam tincidunt ut cursus, fames praesent urna lacinia dapibus leo interdum netus, felis porta vulputate per nisi aliquam diam adipiscing. \r\n\r\n	Proin nostra lorem lobortis felis nullam inceptos tellus, cubilia leo commodo maecenas cubilia dictum, etiam ipsum magna at elementum sociosqu. aliquet scelerisque orci ut pretium vivamus ullamcorper, euismod morbi porttitor torquent nisl etiam interdum, imperdiet convallis fames senectus integer. nec metus donec lectus suspendisse vulputate vel sagittis hac lacus, curabitur consectetur aliquet tristique elit senectus curae adipiscing ultrices donec, justo nam rutrum ut urna consequat vestibulum odio. placerat convallis turpis semper lacinia phasellus sem ligula phasellus elementum conubia, integer in mattis platea aliquet vestibulum consectetur quisque nisi ipsum, fringilla tristique aliquet nunc dictum feugiat habitasse imperdiet risus. \r\n\r\n	Eget tempus habitant ligula lectus elementum pretium, aliquam pellentesque condimentum nisi feugiat non pellentesque, tellus erat quam maecenas elementum. elit litora purus nisl justo aenean imperdiet semper aptent mauris ultrices fames mi sem, cubilia fringilla massa ante lorem fermentum nibh varius blandit class mattis rhoncus. hendrerit nibh duis habitant congue lectus dui netus suspendisse maecenas mattis, maecenas accumsan praesent orci adipiscing ullamcorper scelerisque feugiat. platea placerat aliquam inceptos risus mattis curabitur lorem litora hac sem netus, pretium conubia id lectus consequat enim ullamcorper suscipit sollicitudin. aliquam rhoncus vestibulum lorem nostra enim quis condimentum ut elit ligula augue rhoncus viverra, dictumst vehicula diam class magna class donec mi sit convallis dui. \r\n\r\n	Nunc urna nunc egestas gravida litora dolor, himenaeos lorem lectus ante nisi consequat nunc, sociosqu suspendisse netus rhoncus porta. molestie cubilia elementum platea erat non praesent tristique vitae eros luctus, habitant nisl metus nisl bibendum elementum nec felis volutpat, ut aliquam ut scelerisque nisi donec egestas pharetra adipiscing. habitasse at nisi purus in hendrerit molestie laoreet, platea integer velit lobortis dui lobortis, fermentum aliquam iaculis porttitor varius amet. convallis taciti ultricies tristique et interdum lacinia nullam urna, libero vehicula elementum posuere aenean dictumst odio egestas vitae, feugiat ut lacinia dictum pretium cursus congue. \r\n', NULL),
+(9, 'Origem', 1, '1234', 'origemart@origem.com.br', '1234', '25746006', NULL, 34, 'fgsg', 'Vila Gomes Cardim', 'São Paulo', 'SP', '03318900', '1234', '1234', 'sdgfgfghfgh', NULL),
+(10, 'Emanuel e Luiz Construções ME', 0, '', 'marketing@emanuelluiz.com.br', '1927860597', '1927860597', NULL, 0, '', '', 'Amparo', 'SP', '13903-11', '', '', '', NULL),
+(11, 'Origem', 0, '1234', 'origemart@origem.com.br', '1234', '1234', NULL, 222, 'nao tem', 'Vila Gomes Cardim', 'São Paulo', 'SP', '13903-11', '1234', '1324', 'werwqr', NULL),
+(12, 'Emanuel e Luiz Construções ME', 1, '67.187.885/0001-50', 'marketing@emanuelluiz.com.br', '1927860597', '1927860597', 'Rua Ângelo José de Araújo', 8, 'ghgdfhd', 'Bandeirantes', 'Amparo', 'SP', '13903-11', '334.111.926.294', '765.725.121.616', '', 'Manoel'),
+(13, 'João da Silva', 1, '67.187.885/0001-50', 'tesouraria@aliceyasmin.com.br', '1927860597', '1426422159', NULL, 822, 'sem', 'Chácara Seis de Outubro', 'Amparo', 'SP', '03318900', '243.220.078.129', '243.220.078.129', 'loremm', NULL);
 
 -- --------------------------------------------------------
 
@@ -131,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `fotolito` (
   `impressao_formato` int(11) NOT NULL,
   `descricao` text NOT NULL,
   `valor` decimal(5,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `fotolito`
@@ -140,7 +146,9 @@ CREATE TABLE IF NOT EXISTS `fotolito` (
 INSERT INTO `fotolito` (`id`, `impressao_formato`, `descricao`, `valor`) VALUES
 (1, 1, 'gsdgsd', '25.00'),
 (2, 2, '', '30.00'),
-(3, 3, '', '1.00');
+(3, 3, '', '1.00'),
+(4, 5, 'Fotolito para  cartao', '12.00'),
+(5, 6, '', '0.00');
 
 -- --------------------------------------------------------
 
@@ -199,15 +207,15 @@ CREATE TABLE IF NOT EXISTS `impressao_cartao` (
   `valor_100` decimal(10,2) NOT NULL,
   `valor_500` decimal(10,2) NOT NULL,
   `valor_1000` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `impressao_cartao`
 --
 
 INSERT INTO `impressao_cartao` (`id`, `nome`, `descricao`, `impressao_formato`, `valor_100`, `valor_500`, `valor_1000`) VALUES
-(2, 'Alto Relevo', 'Teste', 1, '38.00', '30.00', '28.00'),
-(3, 'Baixo Relevo', '', 1, '30.00', '28.00', '25.00');
+(2, 'Cartao Visita', 'Unitario', 5, '38.00', '30.00', '28.00'),
+(4, 'Revenda Cartao de visita', 'Revenda', 6, '30.00', '28.00', '25.00');
 
 -- --------------------------------------------------------
 
@@ -221,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `impressao_formato` (
   `altura` int(5) NOT NULL,
   `largura` int(5) NOT NULL,
   `descricao` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `impressao_formato`
@@ -231,7 +239,9 @@ INSERT INTO `impressao_formato` (`id`, `nome`, `altura`, `largura`, `descricao`)
 (1, 'Formato A', 220, 480, 'Teste'),
 (2, 'Formato B', 320, 330, 'Formato b'),
 (3, 'Formato C', 330, 480, 'dsfa'),
-(4, 'Formato D', 100, 100, 'werwer');
+(4, 'Formato D', 100, 100, 'werwer'),
+(5, 'Area para cartão', 55, 95, 'dfgs'),
+(6, 'Area para cartão (REVENDA)', 55, 95, 'Revenda');
 
 -- --------------------------------------------------------
 
@@ -273,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `nota` (
 INSERT INTO `nota` (`id`, `nome`, `descricao`, `valor`) VALUES
 (1, 'Sem Nota', 'Sem Nota fiscal', '0.00'),
 (2, 'Serviço', 'des', '11.84'),
-(3, 'Vendas', '', '7.14');
+(3, 'Vendas', '', '7.54');
 
 -- --------------------------------------------------------
 
@@ -292,34 +302,43 @@ CREATE TABLE IF NOT EXISTS `orcamento` (
   `valor_nota_fiscal` decimal(10,2) NOT NULL,
   `servico_id` int(11) NOT NULL,
   `cliente_id` int(11) NOT NULL,
-  `ativo` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+  `ativo` tinyint(1) NOT NULL DEFAULT '1',
+  `pagamento` text,
+  `prazo` text
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `orcamento`
 --
 
-INSERT INTO `orcamento` (`id`, `data_orcamento`, `total`, `frete_id`, `valor_frete`, `frete_personalizado`, `nota_fiscal_id`, `valor_nota_fiscal`, `servico_id`, `cliente_id`, `ativo`) VALUES
-(1, '2016-03-01', '725.00', NULL, '30.00', '30.00', 1, '0.00', 1, 1, 1),
-(2, '2016-03-01', '840.84', 1, '30.00', NULL, 1, '0.00', 2, 1, 1),
-(3, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '0.00', 3, 1, 1),
-(4, '2016-03-01', '22.93', NULL, NULL, NULL, 2, '2.43', 4, 2, 1),
-(5, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 6, 1, 1),
-(6, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 7, 1, 0),
-(7, '2016-03-01', '745.00', NULL, '20.00', '20.00', 1, '0.00', 8, 1, 0),
-(8, '2016-03-01', '310.00', NULL, '20.00', '20.00', 1, '0.00', 9, 1, 0),
-(11, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 13, 1, 0),
-(12, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 14, 1, 1),
-(13, '2016-03-02', '2032.09', NULL, '50.00', '50.00', 3, '132.09', 15, 1, 0),
-(14, '2016-03-02', '1978.52', NULL, '50.00', '50.00', 3, '128.52', 16, 1, 0),
-(15, '2016-03-02', '2032.09', NULL, '50.00', '50.00', 3, '132.09', 17, 1, 1),
-(16, '2016-03-03', '465.25', 2, '0.00', NULL, 2, '49.25', 18, 1, 0),
-(17, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 19, 1, 0),
-(18, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 20, 1, 1),
-(19, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 21, 1, 1),
-(20, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 22, 1, 1),
-(21, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 23, 1, 1),
-(22, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 24, 1, 1);
+INSERT INTO `orcamento` (`id`, `data_orcamento`, `total`, `frete_id`, `valor_frete`, `frete_personalizado`, `nota_fiscal_id`, `valor_nota_fiscal`, `servico_id`, `cliente_id`, `ativo`, `pagamento`, `prazo`) VALUES
+(1, '2016-03-01', '725.00', NULL, '30.00', '30.00', 1, '0.00', 1, 1, 1, NULL, NULL),
+(2, '2016-03-01', '840.84', 1, '30.00', NULL, 1, '0.00', 2, 1, 1, NULL, NULL),
+(3, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '0.00', 3, 1, 1, NULL, NULL),
+(4, '2016-03-01', '22.93', NULL, NULL, NULL, 2, '2.43', 4, 2, 1, NULL, NULL),
+(5, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 6, 1, 1, NULL, NULL),
+(6, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 7, 1, 0, NULL, NULL),
+(7, '2016-03-01', '745.00', NULL, '20.00', '20.00', 1, '0.00', 8, 1, 0, NULL, NULL),
+(8, '2016-03-01', '310.00', NULL, '20.00', '20.00', 1, '0.00', 9, 1, 0, NULL, NULL),
+(11, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 13, 1, 0, NULL, NULL),
+(12, '2016-03-01', '840.84', 1, '30.00', NULL, 2, '85.84', 14, 1, 1, NULL, NULL),
+(13, '2016-03-02', '2032.09', NULL, '50.00', '50.00', 3, '132.09', 15, 1, 0, NULL, NULL),
+(14, '2016-03-02', '1978.52', NULL, '50.00', '50.00', 3, '128.52', 16, 1, 0, NULL, NULL),
+(15, '2016-03-02', '2032.09', NULL, '50.00', '50.00', 3, '132.09', 17, 1, 1, NULL, NULL),
+(16, '2016-03-03', '465.25', 2, '0.00', NULL, 2, '49.25', 18, 1, 0, NULL, NULL),
+(17, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 19, 1, 0, NULL, NULL),
+(18, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 20, 1, 1, NULL, NULL),
+(19, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 21, 1, 1, NULL, NULL),
+(20, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 22, 1, 1, NULL, NULL),
+(21, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 23, 1, 1, NULL, NULL),
+(22, '2016-03-03', '324.34', 2, '0.00', NULL, 2, '34.34', 24, 1, 0, NULL, NULL),
+(23, '2016-03-03', '360.00', NULL, '50.00', '50.00', 3, '21.87', 26, 4, 0, NULL, NULL),
+(24, '2016-03-03', '338.49', NULL, '50.00', '50.00', 3, '20.36', 27, 4, 1, NULL, NULL),
+(25, '2016-03-03', '492.10', 2, '0.00', NULL, 2, '52.10', 28, 1, 1, NULL, NULL),
+(26, '2016-03-03', '540.91', NULL, '60.00', '60.00', 2, '50.91', 29, 4, 0, NULL, NULL),
+(27, '2016-03-03', '473.81', NULL, '60.00', '60.00', 2, '43.81', 30, 4, 1, NULL, NULL),
+(28, '2016-03-03', '563.28', NULL, '60.00', '60.00', 2, '53.28', 31, 4, 0, NULL, NULL),
+(29, '2016-03-04', '563.28', NULL, '60.00', '60.00', 2, '53.28', 32, 12, 1, 'teste pagamento teste2', 'teste prazo testes222 aqtqtq');
 
 -- --------------------------------------------------------
 
@@ -335,7 +354,7 @@ CREATE TABLE IF NOT EXISTS `papel` (
   `largura` int(5) NOT NULL,
   `descricao` text NOT NULL,
   `valor` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `papel`
@@ -344,7 +363,8 @@ CREATE TABLE IF NOT EXISTS `papel` (
 INSERT INTO `papel` (`id`, `nome`, `gramatura`, `altura`, `largura`, `descricao`, `valor`) VALUES
 (1, 'aspen', 250, 660, 960, 'Color Plus Metalico', '5.00'),
 (2, 'majorca', 250, 660, 960, 'Color Plus Metalico', '7.00'),
-(3, 'couche', 240, 660, 960, '', '3.00');
+(3, 'couche', 240, 660, 960, '', '3.00'),
+(4, 'Los angeles', 240, 660, 960, 'asdfa', '7.00');
 
 -- --------------------------------------------------------
 
@@ -360,7 +380,7 @@ CREATE TABLE IF NOT EXISTS `servico` (
   `valor_unitario` decimal(10,2) NOT NULL,
   `sub_total` decimal(10,2) NOT NULL,
   `total` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico`
@@ -386,7 +406,14 @@ INSERT INTO `servico` (`id`, `tipo`, `quantidade`, `desconto`, `valor_unitario`,
 (21, 'cartao', 100, '0.00', '2.90', '0.00', '290.00'),
 (22, 'cartao', 100, '0.00', '2.90', '0.00', '290.00'),
 (23, 'cartao', 100, '0.00', '2.90', '0.00', '290.00'),
-(24, 'cartao', 100, '0.00', '2.90', '0.00', '290.00');
+(24, 'cartao', 100, '0.00', '2.90', '0.00', '290.00'),
+(26, 'cartao', 100, '1.87', '2.90', '0.00', '290.00'),
+(27, 'cartao', 100, '1.87', '2.70', '0.00', '270.00'),
+(28, 'cartao', 100, '0.00', '4.40', '0.00', '440.00'),
+(29, 'cartao', 100, '0.00', '4.30', '0.00', '430.00'),
+(30, 'cartao', 100, '0.00', '3.70', '0.00', '370.00'),
+(31, 'cartao', 100, '0.00', '4.50', '0.00', '450.00'),
+(32, 'cartao', 100, '0.00', '4.50', '0.00', '450.00');
 
 -- --------------------------------------------------------
 
@@ -399,7 +426,7 @@ CREATE TABLE IF NOT EXISTS `servico_acabamento` (
   `servico_id` int(11) NOT NULL,
   `acabamento_id` int(11) NOT NULL,
   `quantidade` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_acabamento`
@@ -420,7 +447,14 @@ INSERT INTO `servico_acabamento` (`id`, `servico_id`, `acabamento_id`, `quantida
 (13, 21, 2, 2),
 (14, 22, 2, 2),
 (15, 23, 2, 2),
-(16, 24, 2, 2);
+(16, 24, 2, 2),
+(19, 26, 1, 1),
+(20, 26, 2, 2),
+(21, 27, 1, 1),
+(22, 28, 2, 2),
+(23, 29, 1, 1),
+(24, 31, 1, 1),
+(25, 32, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -432,7 +466,7 @@ CREATE TABLE IF NOT EXISTS `servico_colagem` (
 `id` int(11) NOT NULL,
   `servico_id` int(11) NOT NULL,
   `colagem_valor` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_colagem`
@@ -448,7 +482,8 @@ INSERT INTO `servico_colagem` (`id`, `servico_id`, `colagem_valor`) VALUES
 (8, 8, '200.00'),
 (9, 9, '200.00'),
 (13, 13, '200.00'),
-(14, 14, '200.00');
+(14, 14, '200.00'),
+(15, 28, '100.00');
 
 -- --------------------------------------------------------
 
@@ -489,7 +524,7 @@ CREATE TABLE IF NOT EXISTS `servico_faca_cartao` (
 `id` int(11) NOT NULL,
   `servico_id` int(11) NOT NULL,
   `faca_cartao_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_faca_cartao`
@@ -502,7 +537,14 @@ INSERT INTO `servico_faca_cartao` (`id`, `servico_id`, `faca_cartao_id`) VALUES
 (4, 21, 2),
 (5, 22, 2),
 (6, 23, 2),
-(7, 24, 2);
+(7, 24, 2),
+(9, 26, 1),
+(10, 27, 1),
+(11, 28, 2),
+(12, 29, 2),
+(13, 30, 2),
+(14, 31, 2),
+(15, 32, 2);
 
 -- --------------------------------------------------------
 
@@ -552,14 +594,21 @@ CREATE TABLE IF NOT EXISTS `servico_impressao_cartao` (
   `fotolito_id` int(11) NOT NULL,
   `qtd_cor_frente` int(11) NOT NULL,
   `qtd_cor_verso` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_impressao_cartao`
 --
 
 INSERT INTO `servico_impressao_cartao` (`id`, `servico_id`, `impressao_cartao_id`, `impressao_formato_id`, `fotolito_id`, `qtd_cor_frente`, `qtd_cor_verso`) VALUES
-(1, 18, 2, 1, 1, 1, 1);
+(1, 18, 2, 1, 1, 1, 1),
+(3, 26, 2, 5, 4, 1, 2),
+(4, 27, 2, 5, 4, 1, 2),
+(5, 28, 2, 5, 4, 1, 0),
+(6, 29, 2, 5, 4, 2, 1),
+(7, 30, 2, 5, 4, 2, 1),
+(8, 31, 2, 5, 4, 2, 1),
+(9, 32, 2, 5, 4, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -572,7 +621,7 @@ CREATE TABLE IF NOT EXISTS `servico_laminacao` (
   `servico_id` int(11) NOT NULL,
   `laminacao_id` int(11) NOT NULL,
   `valor` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_laminacao`
@@ -594,7 +643,8 @@ INSERT INTO `servico_laminacao` (`id`, `servico_id`, `laminacao_id`, `valor`) VA
 (17, 21, 1, '100.00'),
 (18, 22, 1, '100.00'),
 (19, 23, 1, '100.00'),
-(20, 24, 1, '100.00');
+(20, 24, 1, '100.00'),
+(21, 28, 1, '100.00');
 
 -- --------------------------------------------------------
 
@@ -609,7 +659,7 @@ CREATE TABLE IF NOT EXISTS `servico_papel` (
   `empastamento_valor` decimal(10,2) NOT NULL,
   `quantidade` int(11) NOT NULL,
   `empastamento_status` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_papel`
@@ -632,7 +682,12 @@ INSERT INTO `servico_papel` (`id`, `servico_id`, `papel_id`, `empastamento_valor
 (15, 21, 1, '0.00', 10, 0),
 (16, 22, 1, '0.00', 10, 0),
 (17, 23, 1, '0.00', 10, 0),
-(18, 24, 1, '0.00', 10, 0);
+(18, 24, 1, '0.00', 10, 0),
+(19, 28, 1, '0.00', 10, 0),
+(20, 29, 1, '50.00', 10, 1),
+(21, 30, 1, '50.00', 10, 1),
+(22, 31, 2, '50.00', 10, 1),
+(23, 32, 2, '50.00', 10, 1);
 
 -- --------------------------------------------------------
 
@@ -645,7 +700,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `nome` varchar(50) NOT NULL,
   `login` varchar(20) NOT NULL,
   `senha` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `usuario`
@@ -654,7 +709,8 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 INSERT INTO `usuario` (`id`, `nome`, `login`, `senha`) VALUES
 (1, 'fellipe pinheiro', 'fellipe', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220'),
 (2, 'Eric', 'ericnakaw', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220'),
-(3, 'Mario', 'mario', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220');
+(3, 'Mario', 'mario', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220'),
+(4, 'Fernando', 'fernando', 'ec3e661d7bc7bfbf5334e7dfad309f947dace5f7');
 
 --
 -- Indexes for dumped tables
@@ -811,7 +867,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `cliente`
 --
 ALTER TABLE `cliente`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `faca`
 --
@@ -826,7 +882,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `fotolito`
 --
 ALTER TABLE `fotolito`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `frete`
 --
@@ -841,12 +897,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `impressao_cartao`
 --
 ALTER TABLE `impressao_cartao`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `impressao_formato`
 --
 ALTER TABLE `impressao_formato`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `laminacao`
 --
@@ -861,27 +917,27 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `orcamento`
 --
 ALTER TABLE `orcamento`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `papel`
 --
 ALTER TABLE `papel`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `servico`
 --
 ALTER TABLE `servico`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `servico_acabamento`
 --
 ALTER TABLE `servico_acabamento`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `servico_colagem`
 --
 ALTER TABLE `servico_colagem`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `servico_faca`
 --
@@ -891,7 +947,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 -- AUTO_INCREMENT for table `servico_faca_cartao`
 --
 ALTER TABLE `servico_faca_cartao`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `servico_impressao`
 --
@@ -901,22 +957,22 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 -- AUTO_INCREMENT for table `servico_impressao_cartao`
 --
 ALTER TABLE `servico_impressao_cartao`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `servico_laminacao`
 --
 ALTER TABLE `servico_laminacao`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `servico_papel`
 --
 ALTER TABLE `servico_papel`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
