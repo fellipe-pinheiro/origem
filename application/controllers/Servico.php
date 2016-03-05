@@ -513,12 +513,12 @@ class Servico extends CI_Controller {
         $papel->sub_total = $quantidade_pedido * $papel->valor_unitario;
         $empastamento = new Empastamento_m();
         if ($_POST['empastamento_status'] == 1) {
-            $empastamento->nome = $_POST['empastamento_nome'];
+            $empastamento->nome = 'Empastamento';
             $empastamento->status = TRUE;
             $empastamento->sub_total = $_POST['empastamento_valor'];
             $empastamento->valor_unitario = $empastamento->calcula_valor_unitario($empastamento->sub_total, $quantidade_pedido);
         } else {
-            $empastamento->nome = $_POST['empastamento_nome'];
+            $empastamento->nome = 'Empastamento';
             $empastamento->status = FALSE;
             $empastamento->sub_total = 0;
             $empastamento->valor_unitario = 0;

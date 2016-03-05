@@ -45,25 +45,25 @@ $titulo = 'Serviço';
                     $("#form_papel_empastamento_valor").prop("disabled", true);
                 }
             });
-/*
- //DESATIVADO ESTA FUNÇÃO
-            //Envia nota fiscal para sessao
-            $("#nota_fiscal").change(function () {
-                var id = $("#nota_fiscal option:selected").val();
-                window.location.href = "<?= base_url('Servico/nota_fiscal_sessao') ?>?id=" + id;
-            });
-*/
+            /*
+             //DESATIVADO ESTA FUNÇÃO
+             //Envia nota fiscal para sessao
+             $("#nota_fiscal").change(function () {
+             var id = $("#nota_fiscal option:selected").val();
+             window.location.href = "<?= base_url('Servico/nota_fiscal_sessao') ?>?id=" + id;
+             });
+             */
 //DESATIVADO ESTA FUNÇÃO
-        /*            $("#frete").change(function () {
-         var id = $("#frete option:selected").val();
-         
-         if (id == 0) {
-         $("#modal_frete_valor").modal();
-         } else {
-         window.location.href = "<?= base_url('Servico/frete_sessao') ?>?id=" + id;
-         }
-         });
-*/
+            /*            $("#frete").change(function () {
+             var id = $("#frete option:selected").val();
+             
+             if (id == 0) {
+             $("#modal_frete_valor").modal();
+             } else {
+             window.location.href = "<?= base_url('Servico/frete_sessao') ?>?id=" + id;
+             }
+             });
+             */
 <?php
 //Selecionar os valores de frete
 if (!empty($_SESSION['orcamento']->frete->id)) {
@@ -133,12 +133,23 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                     }
                 }
             });
+            //NOVO Mostrar input do valor_frete para definir
+            $("#frete").change(function () {
+                var id = $("#frete option:selected").val();
+                //Mostra o input
+                if (id == 0) {
+                    $("#valor_frete").prop("disabled", false).attr('type', 'number').prop("autofocus", true);
+                    //Esconde o input
+                } else {
+                    $("#valor_frete").prop("disabled", true).attr('type', 'hidden').prop("required", false);
+                }
+            });
         });
 
 //Verifica se a nota fiscal esta selecionada ao finalizar e se o frete esta com valor se for personalizado
         function valida_condicoes() {
             var nota = document.forms["form_condicoes"]["nota_fiscal"].value;
-            var id = $("#frete option:selected").val();
+            //var id = $("#frete option:selected").val();
             var valor_frete = $("#valor_frete").val();
 
             //NOTA
@@ -147,7 +158,8 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                 return false;
             }
             //Frete
-            if (id == 0 && valor_frete == '') {
+            //if (id == 0 && valor_frete == '') {
+            if (id == 0) {
                 alert('Insira um valor para o frete');
                 return false;
             }
@@ -185,17 +197,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
             }
         }
 
-//NOVO Mostrar input do valor_frete para definir
-        $("#frete").change(function () {
-            var id = $("#frete option:selected").val();
-            //Mostra o input
-            if (id == 0) {
-                $("#valor_frete").prop("disabled", false).attr('type', 'number').prop("autofocus", true);
-                //Esconde o input
-            } else {
-                $("#valor_frete").prop("disabled", true).attr('type', 'hidden').prop("required", false);
-            }
-        });
+
 
 //ABRE MODAL    
         function open_impressao_modal(posicao, idImpressao, qtd_cor_frente, qtd_cor_verso) {
@@ -339,9 +341,14 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                         ?>
                                         <?php
                                         if (!empty($_SESSION['orcamento']->valor_frete)) {
+                                            if($_SESSION['orcamento']->frete != NULL){
+                                                $entrega = $_SESSION['orcamento']->frete->nome;
+                                            }  else {
+                                                $entrega = 'Personalizado';
+                                            }
                                             ?>
                                             <tr>
-                                                <td>Frete</td>
+                                                <td>Frete (<?= $entrega ?>)</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td>R$ <?= number_format($_SESSION['orcamento']->valor_frete, 2, ",", ".") ?> </td>
@@ -423,26 +430,26 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                             </div>
                             <br><br><br>
                             <!--<?php if (!empty($_SESSION['orcamento']->servico->quantidade)) { ?>
-                                    <div class="col-md-12">
-                                            <label for="frete"><span class="glyphicon glyphicon-plane"></span>Tipo de frete:</label>
-                                        <select name="frete" id="frete" class="form-control">
-                                            <option value="-1" selected disabled>Selecione</option>
-                                            <option value="0" >Definir</option>
+                                        <div class="col-md-12">
+                                                <label for="frete"><span class="glyphicon glyphicon-plane"></span>Tipo de frete:</label>
+                                            <select name="frete" id="frete" class="form-control">
+                                                <option value="-1" selected disabled>Selecione</option>
+                                                <option value="0" >Definir</option>
                                 <?php foreach ($frete as $value) { ?>
-                                                        <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                                                <option value="<?= $value->id ?>"><?= $value->nome ?></option>
                                 <?php } ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="nota_fiscal"><span class="glyphicon glyphicon-file"></span>Nota fiscal:</label>
-                                        <select name="nota_fiscal" id="nota_fiscal" class="form-control">
-                                            <option selected disabled >Selecione</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="nota_fiscal"><span class="glyphicon glyphicon-file"></span>Nota fiscal:</label>
+                                            <select name="nota_fiscal" id="nota_fiscal" class="form-control">
+                                                <option selected disabled >Selecione</option>
                                 <?php foreach ($nota_fiscal as $value) { ?>
-                                                    <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                                            <option value="<?= $value->id ?>"><?= $value->nome ?></option>
                                 <?php } ?>
-                                        </select>
-                                        <dialog id="msg_nota_fiscal" style="width: 200px;">Selecione uma nota fiscal</dialog>
-                                    </div>
+                                            </select>
+                                            <dialog id="msg_nota_fiscal" style="width: 200px;">Selecione uma nota fiscal</dialog>
+                                        </div>
                             <?php } ?>-->
                         </div>
                     </div>
@@ -1078,7 +1085,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                             <label for="frete"><span class="glyphicon glyphicon-plane"></span>Tipo de frete:</label>
                             <select name="frete" id="frete" class="form-control">
                                 <option value="-1" selected disabled>Selecione</option>
-                                <option value="0" >Definir</option>
+                                <option value="0" >Personalizado</option>
                                 <?php foreach ($frete as $value) { ?>
                                     <option value="<?= $value->id ?>"><?= $value->nome ?></option>
                                 <?php } ?>
