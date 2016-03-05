@@ -164,6 +164,37 @@ class Servico extends CI_Controller {
         redirect(base_url('servico'), 'location');
     }
 
+    public function condicoes_sessao() {
+        
+        //Nota fiscal
+        $nota_id = $this->input->post('nota_fiscal');
+        $nota_fiscal = $this->Nota_m->listar($nota_id);
+        $nota_fiscal = $nota_fiscal[0];
+        $_SESSION['orcamento']->nota_fiscal = $nota_fiscal;
+
+        if ($this->input->post('frete') == 0) {
+            //Frete personalizado
+            $valor_frete = $this->input->post('valor_frete');
+            $_SESSION['orcamento']->valor_frete = str_replace(',', '.', $valor_frete);
+            $_SESSION['orcamento']->frete_personalizado = str_replace(',', '.', $valor_frete);
+            $_SESSION['orcamento']->frete = null;
+        } else {
+            //Frete
+            $frete_id = $this->input->post('frete');
+            $frete = $this->Frete_m->listar($frete_id);
+            $frete = $frete[0];
+            $_SESSION['orcamento']->frete = $frete;
+            $_SESSION['orcamento']->valor_frete = $frete->valor;
+        }
+
+        //Pagamento
+        $_SESSION['orcamento']->pagamento = $this->input->post('pagamento');
+
+        //Prazo
+        $_SESSION['orcamento']->prazo = $this->input->post('prazo');
+        redirect(base_url('servico'), 'location');
+    }
+
     public function frete_sessao_definir() {
         $valor = $this->input->post('valor_frete');
         $_SESSION['orcamento']->valor_frete = str_replace(',', '.', $valor);
@@ -171,36 +202,21 @@ class Servico extends CI_Controller {
         $_SESSION['orcamento']->frete = null;
         redirect(base_url('servico'), 'location');
     }
-    
-    public function condicoes_sessao() {
-        $_SESSION['orcamento']->pagamento = $this->input->post('pagamento');
-        $_SESSION['orcamento']->prazo = $this->input->post('prazo');
-        redirect(base_url('servico'), 'location');
-    }
-    
+
     public function frete_sessao() {
         $id = $this->input->get('id');
-        if ($id == -2) {
-            // opcao nao cobrar
-            unset($_SESSION['orcamento']->frete);
-            $_SESSION['orcamento']->valor_frete = null;
-        } else {
-            // opcao motoboy ou frete do banco
-            $frete = $this->Frete_m->listar($id);
-            $frete = $frete[0];
-            $_SESSION['orcamento']->valor_frete = 0;
-            $_SESSION['orcamento']->frete = $frete;
-            $_SESSION['orcamento']->valor_frete = $frete->valor;
-        }
+        // opcao motoboy ou frete do banco
+        $frete = $this->Frete_m->listar($id);
+        $frete = $frete[0];
+        $_SESSION['orcamento']->frete = $frete;
+        $_SESSION['orcamento']->valor_frete = $frete->valor;
         redirect(base_url('servico'), 'location');
     }
 
     public function nota_fiscal_sessao() {
         $id = $this->input->get('id');
-
         $nota_fiscal = $this->Nota_m->listar($id);
         $nota_fiscal = $nota_fiscal[0];
-
         $_SESSION['orcamento']->nota_fiscal = $nota_fiscal;
 
         redirect(base_url('servico'), 'location');
@@ -241,7 +257,7 @@ class Servico extends CI_Controller {
 
     public function excluir_todos_servicos() {
         unset($_SESSION['orcamento']);
-        
+
         redirect(base_url('servico'), 'location');
     }
 
@@ -264,10 +280,10 @@ class Servico extends CI_Controller {
         $_SESSION['orcamento']->servico->tipo = $_POST['tipo'];
         $_SESSION['orcamento']->servico->quantidade = $_POST['quantidade'];
         $_SESSION['orcamento']->servico->desconto = str_replace(',', '.', $_POST['desconto']);
-        
+
         $servico_quantidade = $_SESSION['orcamento']->servico->quantidade;
         $servico_desconto = $_SESSION['orcamento']->servico->desconto;
-        
+
         //recalcula valores para os itens que dependem da quantidade
         if (!empty($_SESSION['orcamento']->servico->laminacao)) {
             foreach ($_SESSION['orcamento']->servico->laminacao as $key => $value) {
@@ -295,9 +311,9 @@ class Servico extends CI_Controller {
                     $value->valor_unitario = $value->calcula_valor_unitario($servico_quantidade);
                     $value->sub_total = $servico_quantidade * $value->valor_unitario;
                 }
-            }  else {
+            } else {
                 foreach ($_SESSION['orcamento']->servico->impressao as $key => $value) {
-                    $value->valor_unitario = $value->calcula_valor_unitario($servico_quantidade,$value);
+                    $value->valor_unitario = $value->calcula_valor_unitario($servico_quantidade, $value);
                     $value->sub_total = $servico_quantidade * $value->valor_unitario;
                 }
             }
@@ -624,7 +640,7 @@ class Servico extends CI_Controller {
         $faca->quantidade = 1;
         $faca->valor_faca = $faca->calcular_valor($faca->altura, $faca->largura);
         $faca->sub_total = $faca->quantidade * $faca->valor_faca;
-        
+
         $_SESSION['orcamento']->servico->faca[] = $faca;
         redirect(base_url('servico'), 'location');
     }

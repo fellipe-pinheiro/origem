@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/origem/application/views/Papel/lista.php</file>
+            <file>file:/C:/xampp/htdocs/origem/application/views/Cliente/form.php</file>
+            <file>file:/C:/xampp/htdocs/origem/application/controllers/Cliente.php</file>
+            <file>file:/C:/xampp/htdocs/origem/application/models/Orcamento_m.php</file>
+            <file>file:/C:/xampp/htdocs/origem/application/models/Cliente_m.php</file>
+            <file>file:/C:/xampp/htdocs/origem/application/views/Servico/orcamento.php</file>
+            <file>file:/C:/xampp/htdocs/origem/application/controllers/Servico.php</file>
         </group>
     </open-files>
 </project-private>
