@@ -8,7 +8,6 @@
             <div class="row row-offcanvas row-offcanvas-right">
                 <div class="col-md-12">
                     <div class="jumbotron">
-                        <?php img() ?>
                         <?php  echo img(base_url('/assets/img/origem_logo.png')); ?>
                     </div>
                 </div>

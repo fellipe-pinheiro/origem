@@ -268,7 +268,84 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
         <?php $this->load->view('_include/menu'); ?>
         <div class="container">
             <div class="row">
-                <!--Tabela do servico-->
+                <!--PAINEL OPÇÕES-->
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">OPÇÕES</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-12">
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle btn-block" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Menu
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        <?php if (empty($_SESSION['orcamento']->servico->quantidade)) { ?>
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#myModal_produto">
+                                                    <span class="glyphicon glyphicon-plus"></span> Novo produto
+                                                </a>
+                                            </li>
+                                        <?php } else { ?>
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#myModal_condicoes">
+                                                    <span class="glyphicon glyphicon-usd"></span> Condições <span class="glyphicon glyphicon-time"></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= base_url('Servico/excluir_todos_servicos') ?>">
+                                                    <span class="glyphicon glyphicon-trash"></span> Limpar Orcamento
+                                                </a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            <li>
+                                                <a href="#" id="btn_finalizar">
+                                                    <span class="glyphicon glyphicon-ok"></span> Finalizar
+                                                </a>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
+                            </div>
+                            <br><br><br>
+                            <!--<?php if (!empty($_SESSION['orcamento']->servico->quantidade)) { ?>
+                                                <div class="col-md-12">
+                                                        <label for="frete"><span class="glyphicon glyphicon-plane"></span>Tipo de frete:</label>
+                                                    <select name="frete" id="frete" class="form-control">
+                                                        <option value="-1" selected disabled>Selecione</option>
+                                                        <option value="0" >Definir</option>
+                                <?php foreach ($frete as $value) { ?>
+                                                                                <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                <?php } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="nota_fiscal"><span class="glyphicon glyphicon-file"></span>Nota fiscal:</label>
+                                                    <select name="nota_fiscal" id="nota_fiscal" class="form-control">
+                                                        <option selected disabled >Selecione</option>
+                                <?php foreach ($nota_fiscal as $value) { ?>
+                                                                            <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                <?php } ?>
+                                                    </select>
+                                                    <dialog id="msg_nota_fiscal" style="width: 200px;">Selecione uma nota fiscal</dialog>
+                                                </div>
+                            <?php } ?>-->
+                            <?php
+                            if (empty($_SESSION['orcamento']->servico->quantidade)) {
+                                echo img(base_url('/assets/img/origem_logo.png'));
+                            } elseif ($_SESSION['orcamento']->servico->tipo == 'cartao') {
+                                echo img(base_url('/assets/img/businesscard.png'));
+                            } else {
+                                echo img(base_url('/assets/img/silkscreen.png'));
+                            }
+                            ?>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <!--PAINEL PRODUTO-->
                 <div class="col-md-9">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -341,9 +418,9 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                         ?>
                                         <?php
                                         if (!empty($_SESSION['orcamento']->valor_frete)) {
-                                            if($_SESSION['orcamento']->frete != NULL){
+                                            if ($_SESSION['orcamento']->frete != NULL) {
                                                 $entrega = $_SESSION['orcamento']->frete->nome;
-                                            }  else {
+                                            } else {
                                                 $entrega = 'Personalizado';
                                             }
                                             ?>
@@ -384,73 +461,6 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                     </tfoot>
                                 </table>  
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!--PAINEL OPCÇÕES-->
-                <div class="col-md-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">OPÇÕES</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="col-md-12">
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle btn-block" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Menu
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <?php if (empty($_SESSION['orcamento']->servico->quantidade)) { ?>
-                                            <li>
-                                                <a href="#" data-toggle="modal" data-target="#myModal_produto">
-                                                    <span class="glyphicon glyphicon-plus"></span> Novo produto
-                                                </a>
-                                            </li>
-                                        <?php } else { ?>
-                                            <li>
-                                                <a href="#" data-toggle="modal" data-target="#myModal_condicoes">
-                                                    <span class="glyphicon glyphicon-usd"></span> Condições <span class="glyphicon glyphicon-time"></span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="<?= base_url('Servico/excluir_todos_servicos') ?>">
-                                                    <span class="glyphicon glyphicon-trash"></span> Limpar Orcamento
-                                                </a>
-                                            </li>
-                                            <li role="separator" class="divider"></li>
-                                            <li>
-                                                <a href="#" id="btn_finalizar">
-                                                    <span class="glyphicon glyphicon-ok"></span> Finalizar
-                                                </a>
-                                            </li>
-                                        <?php } ?>
-                                    </ul>
-                                </div>
-                            </div>
-                            <br><br><br>
-                            <!--<?php if (!empty($_SESSION['orcamento']->servico->quantidade)) { ?>
-                                        <div class="col-md-12">
-                                                <label for="frete"><span class="glyphicon glyphicon-plane"></span>Tipo de frete:</label>
-                                            <select name="frete" id="frete" class="form-control">
-                                                <option value="-1" selected disabled>Selecione</option>
-                                                <option value="0" >Definir</option>
-                                <?php foreach ($frete as $value) { ?>
-                                                                <option value="<?= $value->id ?>"><?= $value->nome ?></option>
-                                <?php } ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label for="nota_fiscal"><span class="glyphicon glyphicon-file"></span>Nota fiscal:</label>
-                                            <select name="nota_fiscal" id="nota_fiscal" class="form-control">
-                                                <option selected disabled >Selecione</option>
-                                <?php foreach ($nota_fiscal as $value) { ?>
-                                                            <option value="<?= $value->id ?>"><?= $value->nome ?></option>
-                                <?php } ?>
-                                            </select>
-                                            <dialog id="msg_nota_fiscal" style="width: 200px;">Selecione uma nota fiscal</dialog>
-                                        </div>
-                            <?php } ?>-->
                         </div>
                     </div>
                 </div>

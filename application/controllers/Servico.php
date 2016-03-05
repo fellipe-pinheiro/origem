@@ -24,6 +24,7 @@ class Servico extends CI_Controller {
         $this->load->model('Orcamento_m');
         $this->load->model('Usuario_m');
         $this->load->helper('date');
+        $this->load->helper('html');
         $this->load->database();
         empty($_SESSION) ? session_start() : '';
         login_necessario();
