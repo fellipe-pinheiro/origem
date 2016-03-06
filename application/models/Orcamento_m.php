@@ -17,6 +17,7 @@ class Orcamento_m extends CI_Model {
     var $edicao;
     var $pagamento;
     var $prazo;
+    var $observacao;
 
     function __construct() {
         parent::__construct();
@@ -43,7 +44,7 @@ class Orcamento_m extends CI_Model {
 
         //retorna um servico
         $servico = $this->Servico_m->listar($result_orc['servico_id']);
-        
+
         // frete
         $frete = null;
         if (!empty($result_orc['frete_id'])) {
@@ -56,7 +57,7 @@ class Orcamento_m extends CI_Model {
             $frete_personalizado = $result_orc['frete_personalizado'];
             $orcamento->valor_frete = $result_orc['valor_frete'];
         }
-        
+
         // nota_fiscal
         if (!empty($result_orc['nota_fiscal_id'])) {
             $nota_fiscal = $this->Nota_m->listar($result_orc['nota_fiscal_id']);
@@ -72,17 +73,26 @@ class Orcamento_m extends CI_Model {
         $orcamento->valor_nota_fiscal = $result_orc['valor_nota_fiscal'];
         $orcamento->pagamento = $result_orc['pagamento'];
         $orcamento->prazo = $result_orc['prazo'];
+        $orcamento->observacao = $result_orc['observacao'];
+        $orcamento->status = $result_orc['status'];
         $orcamento->servico = $servico;
         $orcamento->cliente = $cliente;
-        
+
         $orcamento->edicao = $result_orc['id'];
-        
+
         return $orcamento;
+    }
+
+    public function set_status($id,$status) {
+        $this->db->set('status', $status);
+        $this->db->where('id', $id);
+        $retorno = $this->db->update('orcamento');
+        return $retorno;
     }
 
     public function Listar_view() {
 
-        $result = $this->db->query("SELECT o.id,date_format(o.data_orcamento,'%d/%m/%Y') as data_orcamento,o.total,c.nome,c.cnpj_cpf,c.email,o.total FROM orcamento as o inner join cliente as c on o.cliente_id = c.id ORDER BY o.id DESC");
+        $result = $this->db->query("SELECT o.id,date_format(o.data_orcamento,'%d/%m/%Y') as data_orcamento,o.total,c.nome,c.cnpj_cpf,c.email,c.contato_nome,o.status FROM orcamento as o inner join cliente as c on o.cliente_id = c.id ORDER BY o.id DESC");
 
         $result_array = $result->result_array();
 
@@ -92,9 +102,11 @@ class Orcamento_m extends CI_Model {
                 'data' => $value['data_orcamento'],
                 'total' => $value['total'],
                 'cliente_nome' => $value['nome'],
+                'contato_nome' => $value['contato_nome'],
                 'cnpj_cpf' => $value['cnpj_cpf'],
                 'email' => $value['email'],
-                'valor' => $value['total']
+                'valor' => $value['total'],
+                'status' => $value['status']
             );
             $lista_orcamento[] = $dados;
         }
@@ -113,7 +125,8 @@ class Orcamento_m extends CI_Model {
                 'nota_fiscal_id' => $orcamento->nota_fiscal->id,
                 'valor_nota_fiscal' => $orcamento->valor_nota_fiscal,
                 'pagamento' => $orcamento->pagamento,
-                'prazo' => $orcamento->prazo
+                'prazo' => $orcamento->prazo,
+                'observacao' => $orcamento->observacao
             );
             if (empty($orcamento->frete->id)) {
                 $dados['frete_personalizado'] = $orcamento->frete_personalizado;
@@ -124,12 +137,12 @@ class Orcamento_m extends CI_Model {
                 $dados['valor_frete'] = $orcamento->valor_frete;
                 $dados['frete_personalizado'] = null;
             }
-            
+
             if ($this->db->insert('orcamento', $dados)) {
                 if (!empty($_SESSION['orcamento']->edicao)) {
                     $this->db->set('ativo', 0);
                     $this->db->where('id', $_SESSION['orcamento']->edicao);
-                    $this->db->update('orcamento'); 
+                    $this->db->update('orcamento');
                 }
                 print $this->db->last_query();
                 return $this->db->insert_id();
@@ -140,67 +153,67 @@ class Orcamento_m extends CI_Model {
             return false;
         }
     }
-    
-/*
-    public function inserir(Orcamento_m $orcamento) {
-        if (!empty($orcamento)) {
-            if ($this->db->insert('orcamento', $orcamento)) {
-                return $this->db->insert_id();
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
 
-    public function editar(Orcamento_m $orcamento) {
-        if (!empty($orcamento->id)) {
-            $this->db->where('id', $orcamento->id);
-            if ($this->db->update('orcamento', $orcamento)) {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
+    /*
+      public function inserir(Orcamento_m $orcamento) {
+      if (!empty($orcamento)) {
+      if ($this->db->insert('orcamento', $orcamento)) {
+      return $this->db->insert_id();
+      } else {
+      return false;
+      }
+      } else {
+      return false;
+      }
+      }
 
-    public function deletar($id = '') {
-        if (!empty($id)) {
-            $this->db->where('id', $id);
-            if ($this->db->delete('orcamento')) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
+      public function editar(Orcamento_m $orcamento) {
+      if (!empty($orcamento->id)) {
+      $this->db->where('id', $orcamento->id);
+      if ($this->db->update('orcamento', $orcamento)) {
+      return true;
+      }
+      } else {
+      return false;
+      }
+      }
 
-    function _changeToObject($result_db = '') {
-        $orcamento_lista = array();
+      public function deletar($id = '') {
+      if (!empty($id)) {
+      $this->db->where('id', $id);
+      if ($this->db->delete('orcamento')) {
+      return true;
+      } else {
+      return false;
+      }
+      } else {
+      return false;
+      }
+      }
 
-        foreach ($result_db as $key => $value) {
-            $orcamento = new Orcamento_m();
-            $orcamento->id = $value['id'];
-            $orcamento->cliente = $value['nome'];
-            $orcamento->gramatura = $value['gramatura'];
-            $orcamento->altura = $value['altura'];
-            $orcamento->largura = $value['largura'];
-            $orcamento->descricao = $value['descricao'];
-            $orcamento->valor = $value['valor'];
+      function _changeToObject($result_db = '') {
+      $orcamento_lista = array();
 
-            $orcamento_lista[] = $orcamento;
-        }
+      foreach ($result_db as $key => $value) {
+      $orcamento = new Orcamento_m();
+      $orcamento->id = $value['id'];
+      $orcamento->cliente = $value['nome'];
+      $orcamento->gramatura = $value['gramatura'];
+      $orcamento->altura = $value['altura'];
+      $orcamento->largura = $value['largura'];
+      $orcamento->descricao = $value['descricao'];
+      $orcamento->valor = $value['valor'];
 
-        return $orcamento_lista;
-    }
-*/
-    
+      $orcamento_lista[] = $orcamento;
+      }
+
+      return $orcamento_lista;
+      }
+     */
+
     public function calcula_total_orcamento() {
         $this->total = 0;
-        
+
         if (!empty($this->nota_fiscal)) {
             $this->valor_nota_fiscal = ($this->servico->total * ($this->nota_fiscal->valor / 100));
             $this->total += $this->valor_nota_fiscal;

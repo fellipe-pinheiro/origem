@@ -88,7 +88,7 @@ class Laminacao_m extends CI_Model {
             $laminacao->id = $value['id'];
             $laminacao->nome = $value['nome'];
             $laminacao->descricao = $value['descricao'];
-            $laminacao->valor = str_replace('.', ',', $value['valor']);
+            $laminacao->valor = $value['valor'];
 
             $laminacao_lista[] = $laminacao;
         }

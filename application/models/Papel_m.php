@@ -43,7 +43,7 @@ class Papel_m extends CI_Model {
                 'altura' => $papel->altura,
                 'largura' => $papel->largura,
                 'descricao' => $papel->descricao,
-                'valor' => $papel->valor
+                'valor' => str_replace(',', '.', $papel->valor)
             );
             if ($this->db->insert('papel', $data)) {
                 return $this->db->insert_id();
@@ -64,7 +64,7 @@ class Papel_m extends CI_Model {
                 'altura' => $papel->altura,
                 'largura' => $papel->largura,
                 'descricao' => $papel->descricao,
-                'valor' => $papel->valor
+                'valor' => str_replace(',', '.', $papel->valor)
             );
             $this->db->where('id', $papel->id);
             if ($this->db->update('papel', $data)) {

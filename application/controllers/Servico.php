@@ -166,7 +166,6 @@ class Servico extends CI_Controller {
     }
 
     public function condicoes_sessao() {
-        
         //Nota fiscal
         $nota_id = $this->input->post('nota_fiscal');
         $nota_fiscal = $this->Nota_m->listar($nota_id);
@@ -193,6 +192,9 @@ class Servico extends CI_Controller {
 
         //Prazo
         $_SESSION['orcamento']->prazo = $this->input->post('prazo');
+
+        //Prazo
+        $_SESSION['orcamento']->observacao = $this->input->post('observacao');
         redirect(base_url('servico'), 'location');
     }
 

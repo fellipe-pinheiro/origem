@@ -20,6 +20,31 @@ $titulo = 'Serviço';
     </style>    
     <!--JavaScript-->
     <script>
+//CONTADOR DE CARACTERES PARA PAGAMENTO,OBSERVACAO E PRAZO        
+        //Contador de caracteres na observacao
+        $(document).on("keydown", "#pagamento", function () {
+            var caracteresRestantes = 255;
+            var caracteresDigitados = parseInt($(this).val().length);
+            var caracteresRestantes = caracteresRestantes - caracteresDigitados;
+
+            $(".caracteres_pagamento").text(caracteresRestantes);
+        });
+        //Contador de caracteres na observacao
+        $(document).on("keydown", "#prazo", function () {
+            var caracteresRestantes = 255;
+            var caracteresDigitados = parseInt($(this).val().length);
+            var caracteresRestantes = caracteresRestantes - caracteresDigitados;
+
+            $(".caracteres_prazo").text(caracteresRestantes);
+        });
+        //Contador de caracteres na observacao
+        $(document).on("keydown", "#observacao", function () {
+            var caracteresRestantes = 255;
+            var caracteresDigitados = parseInt($(this).val().length);
+            var caracteresRestantes = caracteresRestantes - caracteresDigitados;
+
+            $(".caracteres_observacao").text(caracteresRestantes);
+        });
         $(document).ready(function () {
             // Filtrar Tabela cliente
             $("#txtPesquisar").keyup(function () {
@@ -334,11 +359,11 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                             <?php } ?>-->
                             <?php
                             if (empty($_SESSION['orcamento']->servico->quantidade)) {
-                                echo img(base_url('/assets/img/origem_logo.png'));
+                                echo img(base_url('/assets/img/origem_logo_200x200.png'));
                             } elseif ($_SESSION['orcamento']->servico->tipo == 'cartao') {
-                                echo img(base_url('/assets/img/businesscard.png'));
+                                echo img(base_url('/assets/img/businesscard_200x200.png'));
                             } else {
-                                echo img(base_url('/assets/img/silkscreen.png'));
+                                echo img(base_url('/assets/img/silkscreen_200x200.png'));
                             }
                             ?>
                             <br>
@@ -478,45 +503,45 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                     ?>
                                     <div class="col-md-2">
                                         <button id="md_btn_papel" class="btn btn-default btn-block btn_m" data-toggle="modal" data-target="#myModal_papel">
-                                            <span class="glyphicon glyphicon-file"></span> Papel
+                                            <span class="glyphicon glyphicon-file"></span> Papel <span class="badge"><?= count($_SESSION['orcamento']->servico->papel)  ?></span>
                                         </button>
                                     </div>
                                     <?php if ($_SESSION['orcamento']->servico->tipo == 'cartao') { ?>
                                         <div class="col-md-2">
                                             <button  id="md_btn_impressao_cartao" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_impressao_cartao">
-                                                <span class="glyphicon glyphicon-print"></span> Impressão
+                                                <span class="glyphicon glyphicon-print"></span> Impressão <span class="badge"><?= count($_SESSION['orcamento']->servico->impressao)  ?></span>
                                             </button>
                                         </div>
                                         <div class="col-md-2">
                                             <button id="md_btn_faca_cartao" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_faca_cartao">
-                                                <span class="glyphicon glyphicon-wrench"></span> Faca
+                                                <span class="glyphicon glyphicon-wrench"></span> Faca <span class="badge"><?= count($_SESSION['orcamento']->servico->faca)  ?></span>
                                             </button>
                                         </div>
                                     <?php } else { ?>
                                         <div class="col-md-2">
                                             <button id="md_btn_impressao" class = "btn btn-default btn-block col-md-2 btn_m" data-toggle = "modal" data-target = "#myModal_impressao">
-                                                <span class = "glyphicon glyphicon-print"></span> Impressão
+                                                <span class = "glyphicon glyphicon-print"></span> Impressão <span class="badge"><?= count($_SESSION['orcamento']->servico->impressao)  ?></span>
                                             </button>
                                         </div>
                                         <div class="col-md-2">
                                             <button id="md_btn_faca" class = "btn btn-default btn-block col-md-2 btn_m" data-toggle = "modal" data-target = "#myModal_faca">
-                                                <span class = "glyphicon glyphicon-wrench"></span> Faca
+                                                <span class = "glyphicon glyphicon-wrench"></span> Faca <span class="badge"><?= count($_SESSION['orcamento']->servico->faca)  ?></span>
                                             </button>
                                         </div>
                                     <?php } ?>
                                     <div class="col-md-2">
                                         <button id="md_btn_acabamento" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_acabamento">
-                                            <span class="glyphicon glyphicon-scissors"></span> Acabamento
+                                            <span class="glyphicon glyphicon-scissors"></span> Acabamento <span class="badge"><?= count($_SESSION['orcamento']->servico->acabamento)  ?></span>
                                         </button>
                                     </div>
                                     <div class="col-md-2">
                                         <button id="md_btn_laminacao" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_laminacao">
-                                            <span class="glyphicon glyphicon-tags"></span> Laminação
+                                            <span class="glyphicon glyphicon-tags"></span> Laminação <span class="badge"><?= count($_SESSION['orcamento']->servico->laminacao)  ?></span>
                                         </button>
                                     </div>
                                     <div class="col-md-2">
                                         <button  id="md_btn_colagem" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_colagem">
-                                            <span class="glyphicon glyphicon-envelope"></span> Colagem
+                                            <span class="glyphicon glyphicon-envelope"></span> Colagem <span class="badge"><?= count($_SESSION['orcamento']->servico->colagem)  ?></span>
                                         </button>
                                     </div>
                                 <?php } ?>
@@ -1112,18 +1137,25 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                             </select>
                             <br>
                             <label class="control-label" for="pagamento"><span class="glyphicon glyphicon-usd"></span> Pagamento:</label>
-                            <textarea name="pagamento" class="form-control" rows="3" placeholder="Descreva neste campo as formas de pagamentos"><?php
+                            <textarea id="pagamento" name="pagamento" class="form-control" rows="3" placeholder="Descreva neste campo as formas de pagamentos"><?php
                                 if (!empty($_SESSION['orcamento']->pagamento)) {
                                     print $_SESSION['orcamento']->pagamento;
                                 }
-                                ?></textarea>
+                                ?></textarea><span class="caracteres_pagamento">255</span> Restantes <br>
                             <br>
-                            <label class="control-label" for="pagamento"><span class="glyphicon glyphicon-time"></span>  Prazo:</label>
-                            <textarea name="prazo" class="form-control" rows="3" placeholder="Descreva neste campo o prazo de entrega"><?php
+                            <label class="control-label" for="prazo"><span class="glyphicon glyphicon-time"></span>  Prazo:</label>
+                            <textarea id="prazo" name="prazo" class="form-control" rows="3" placeholder="Descreva neste campo o prazo de entrega"><?php
                                 if (!empty($_SESSION['orcamento']->prazo)) {
                                     print $_SESSION['orcamento']->prazo;
                                 }
-                                ?></textarea>
+                                ?></textarea><span class="caracteres_prazo">255</span> Restantes <br>
+                            <br>
+                            <label class="control-label" for="observacao"><span class="glyphicon glyphicon-comment"></span>  Observações:</label>
+                            <textarea id="observacao" name="observacao" class="form-control" rows="3" placeholder="Descreva neste campo as observacões do pedido"><?php
+                                if (!empty($_SESSION['orcamento']->observacao)) {
+                                    print $_SESSION['orcamento']->observacao;
+                                }
+                                ?></textarea><span class="caracteres_observacao">255</span> Restantes <br>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>

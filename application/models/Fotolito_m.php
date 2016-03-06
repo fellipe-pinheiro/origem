@@ -18,20 +18,20 @@ class Fotolito_m extends CI_Model {
         $this->load->model('Impressao_formato_m');
     }
 
-    public function total_linhas() {
-        return $this->db->get('fotolito')->num_rows();
-    }
-
-    public function _listar($id = '') {
-
-        if (!empty($id)) {
-            $result = $this->db->get_where('fotolito', array('id' => $id));
-        } else {
-            $result = $this->db->get('fotolito');
-        }
-
-        return $result->result_array();
-    }
+//    public function total_linhas() {
+//        return $this->db->get('fotolito')->num_rows();
+//    }
+//
+//    public function _listar($id = '') {
+//
+//        if (!empty($id)) {
+//            $result = $this->db->get_where('fotolito', array('id' => $id));
+//        } else {
+//            $result = $this->db->get('fotolito');
+//        }
+//
+//        return $result->result_array();
+//    }
 
     public function listar($id = '') {
 
@@ -111,7 +111,7 @@ class Fotolito_m extends CI_Model {
             $fotolito = new Fotolito_m();
             $fotolito->id = $value['id'];
             $fotolito->descricao = $value['descricao'];
-            $fotolito->valor = str_replace('.', ',', $value['valor']);
+            $fotolito->valor = $value['valor'];
 
             foreach ($this->Impressao_formato_m->listar($value['impressao_formato']) as $key => $value) {
                 $fotolito->impressao_formato = $value;

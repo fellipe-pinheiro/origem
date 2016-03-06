@@ -91,7 +91,7 @@ class Faca_m extends CI_Model {
             $faca->id = $value['id'];
             $faca->nome = $value['nome'];
             $faca->descricao = $value['descricao'];
-            $faca->valor = str_replace('.', ',', $value['valor']);
+            $faca->valor = $value['valor'];
 
             $faca_lista[] = $faca;
         }

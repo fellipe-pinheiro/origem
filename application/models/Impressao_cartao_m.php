@@ -107,9 +107,9 @@ class Impressao_cartao_m extends CI_Model {
             $impressao_cartao = new Impressao_cartao_m();
             $impressao_cartao->id = $value['id'];
             $impressao_cartao->nome = $value['nome'];
-            $impressao_cartao->valor_100 = str_replace('.', ',', $value['valor_100']);
-            $impressao_cartao->valor_500 = str_replace('.', ',', $value['valor_500']);
-            $impressao_cartao->valor_1000 = str_replace('.', ',', $value['valor_1000']);
+            $impressao_cartao->valor_100 = $value['valor_100'];
+            $impressao_cartao->valor_500 = $value['valor_500'];
+            $impressao_cartao->valor_1000 = $value['valor_1000'];
             $impressao_cartao->descricao = $value['descricao'];
 
             foreach ($this->Impressao_formato_m->listar($value['impressao_formato']) as $key => $value) {

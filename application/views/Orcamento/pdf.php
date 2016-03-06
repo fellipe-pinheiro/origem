@@ -23,7 +23,7 @@
                                 <table class="table table-condensed">
                                     <tr>
                                         <td>
-                                            <?php  echo img(base_url('/assets/img/origem_logo.png')); ?>
+                                            <?php echo img(base_url('/assets/img/origem_logo_pdf.png')); ?>
                                         </td>
                                         <td>
                                             <h5><br>
@@ -42,7 +42,6 @@
                                     </tr>
                                 </table>
                             </div>
-                            <hr>
                             <div class="table-responsive">
                                 <h4>DADOS DO CLIENTE</h4>
                                 <table class="table table-condensed table-bordered">
@@ -248,6 +247,20 @@
                                 </table>
                             </div>
                             <hr>
+                            <div>
+                                <h4>PAGAMENTO</h4>
+                                <textarea rows="3" class="form-control" readonly=""><?= $orcamento->pagamento ?></textarea>
+                            </div>
+                            <hr>
+                            <div>
+                                <h4>Prazo</h4>
+                                <textarea rows="3" class="form-control" readonly=""><?= $orcamento->prazo ?></textarea>
+                            </div>
+                            <hr>
+                            <div>
+                                <h4>Observações</h4>
+                                <textarea rows="3" class="form-control" readonly=""><?= $orcamento->observacao ?></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>

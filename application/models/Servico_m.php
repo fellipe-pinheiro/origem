@@ -78,7 +78,7 @@ class Servico_m extends CI_Model {
     }
 
 //  Criar objeto servico a partir da lista de orcamento  
-    public function listar($id = '') {
+/*    public function listar($id = '') {
         //Query do servico
         $this->db->select('*');
         $this->db->from('servico');
@@ -252,7 +252,192 @@ class Servico_m extends CI_Model {
 
         return $servico;
     }
+*/
+    
+    public function listar($id = '') {
+        //Query do servico
+        $this->db->select('*');
+        $this->db->from('servico');
+        $this->db->where("servico.id = $id");
+        $result = $this->db->get();
+        $result_serv = $result->result_array();
+        $result_serv = $result_serv[0];
+        //cria um servico e seta as variaveis
+        $servico = new Servico_m();
+        $servico->id = $result_serv['id'];
+        $servico->tipo = $result_serv['tipo'];
+        $servico->quantidade = $result_serv['quantidade'];
+        $servico->desconto = $result_serv['desconto'];
+        $servico->valor_unitario = $result_serv['valor_unitario'];
+        $servico->sub_total = $result_serv['sub_total'];
+        $servico->total = $result_serv['total'];
+        
+        //acabamento
+        $this->db->select('*');
+        $this->db->from('servico_acabamento');
+        $this->db->where("servico_id = $id");
+        $result = $this->db->get();
+        $result_acab = $result->result_array();
+        foreach ($result_acab as $key => $value) {
+            $acabamento = $this->Acabamento_m->listar($value['acabamento_id']);
+            $acabamento = $acabamento[0];
+            $acabamento->quantidade = $value['quantidade'];
+            $acabamento->valor_unitario = $acabamento->valor;
+            $acabamento->sub_total = $acabamento->quantidade * $acabamento->valor_unitario;
+            $servico->acabamento[] = $acabamento;
+        }
+        
+        //colagem
+        $this->db->select('*');
+        $this->db->from('servico_colagem');
+        $this->db->where("servico_id = $id");
+        $result = $this->db->get();
+        $result_col = $result->result_array();
+        foreach ($result_col as $key => $value) {
+            $colagem = new Colagem_m();
+            $colagem->nome = 'Colagem';
+            $colagem->valor_unitario = $colagem->calcula_valor_unitario($value['colagem_valor'], $servico->quantidade);
+            $colagem->sub_total = $value['colagem_valor'];
+            $servico->colagem[] = $colagem;
+        }
+        
+        //laminacao
+        $this->db->select('*');
+        $this->db->from('servico_laminacao');
+        $this->db->where("servico_id = $id");
+        $result = $this->db->get();
+        $result_lam = $result->result_array();
+        foreach ($result_lam as $key => $value) {
+            $laminacao = $this->Laminacao_m->listar($value['laminacao_id']);
+            $laminacao = $laminacao[0];
+            $laminacao->valor_unitario = $laminacao->calcula_valor_unitario($value['valor'], $servico->quantidade);
+            $laminacao->sub_total = $value['valor'];
+            $servico->laminacao[] = $laminacao;
+        }
+        
+        //papel
+        $this->db->select('*');
+        $this->db->from('servico_papel');
+        $this->db->where("servico_id = $id");
+        $result = $this->db->get();
+        $result_pap = $result->result_array();
+        foreach ($result_pap as $key => $value) {
+            $papel = $this->Papel_m->listar($value['papel_id']);
+            $papel = $papel[0];
+            $papel->valor = $value['papel_valor'];
+            $papel->quantidade = $value['quantidade'];
+            $papel->valor_unitario = $papel->calcula_valor_unitario($papel->quantidade, $servico->quantidade);
+            $papel->sub_total = $servico->quantidade * $papel->valor_unitario;
+            $empastamento = new Empastamento_m();
+            if ($value['empastamento_status'] == 1) {
+                $empastamento->nome = 'Empastamento';
+                $empastamento->status = TRUE;
+                $empastamento->sub_total = $value['empastamento_valor'];
+                $empastamento->valor_unitario = $empastamento->calcula_valor_unitario($empastamento->sub_total, $servico->quantidade);
+            } else {
+                $empastamento->nome = 'Empastamento';
+                $empastamento->status = FALSE;
+                $empastamento->sub_total = 0;
+                $empastamento->valor_unitario = 0;
+            }
+            $papel->empastamento = $empastamento;
+            $servico->papel[] = $papel;
+        }
+        //impressao & faca
+        if ($servico->tipo == 'cartao') {
+            //faca cartao
+            $this->db->select('*');
+            $this->db->from('servico_faca_cartao');
+            $this->db->where("servico_id = $id");
+            $result = $this->db->get();
+            $result_fac_car = $result->result_array();
+            foreach ($result_fac_car as $key => $value) {
+                $faca = $this->Faca_cartao_m->listar($value['faca_cartao_id']);
+                $faca = $faca[0];
+                $faca->quantidade = 1;
+                $faca->valor = $value['faca_cartao_valor'];
+                $faca->sub_total = $faca->valor;
+                $servico->faca[] = $faca;
+            }
+            //impressao cartao
+            $this->db->select('*');
+            $this->db->from('servico_impressao_cartao');
+            $this->db->where("servico_id = $id");
+            $result = $this->db->get();
+            $result_imp_car = $result->result_array();
+            foreach ($result_imp_car as $key => $value) {
+                $qtd_cor_frente = $value['qtd_cor_frente'];
+                $qtd_cor_verso = $value['qtd_cor_verso'];
+                $qtd_cor_frente == '' ? $qtd_cor_frente = 0 : '';
+                $qtd_cor_verso == '' ? $qtd_cor_verso = 0 : '';
 
+                $impressao = $this->Impressao_cartao_m->listar($value['impressao_cartao_id']); //listo a impressao pelo ID
+                $impressao = $impressao[0];
+                $impressao->valor_100 = $value['impressao_cartao_valor_100'];
+                $impressao->valor_500 = $value['impressao_cartao_valor_500'];
+                $impressao->valor_1000 = $value['impressao_cartao_valor_1000'];
+                $impressao->qtd_cor_frente = $qtd_cor_frente;
+                $impressao->qtd_cor_verso = $qtd_cor_verso;
+                $impressao->valor_unitario = $impressao->calcula_valor_unitario($servico->quantidade, $impressao);
+                $impressao->sub_total = $servico->quantidade * $impressao->valor_unitario;
+
+                $fotolito = $this->Fotolito_m->listar_formato($impressao->impressao_formato->id); //listo o fotolito pela coluna da impressao_formato
+                $fotolito = $fotolito[0];
+                if ($servico->tipo == 'cartao') {
+                    $fotolito->quantidade = $impressao->qtd_cor_frente + $impressao->qtd_cor_verso;
+                } else {
+                    $fotolito->quantidade = 1;
+                }
+                $fotolito->valor = $value['fotolito_valor'];
+                $fotolito->valor_unitario = $fotolito->valor;
+                $fotolito->sub_total = $fotolito->quantidade * $fotolito->valor_unitario;
+                $impressao->fotolito = $fotolito;
+                $servico->impressao[] = $impressao;
+            }
+        } else {
+            //faca
+            $this->db->select('*');
+            $this->db->from('servico_faca');
+            $this->db->where("servico_id = $id");
+            $result = $this->db->get();
+            $result_fac = $result->result_array();
+            foreach ($result_fac as $key => $value) {
+                $faca = $this->Faca_m->listar($value['faca_id']);
+                $faca = $faca[0];
+                $faca->altura = $value['altura'];
+                $faca->largura = $value['largura'];
+                $faca->valor = $value['faca_valor'];
+                $faca->quantidade = 1;
+                $faca->valor_faca = $faca->calcular_valor($faca->altura, $faca->largura);
+                $faca->sub_total = $faca->quantidade * $faca->valor_faca;
+                $servico->faca[] = $faca;
+            }
+            //impressao
+            $this->db->select('*');
+            $this->db->from('servico_impressao');
+            $this->db->where("servico_id = $id");
+            $result = $this->db->get();
+            $result_imp = $result->result_array();
+            foreach ($result_imp as $key => $value) {
+                $impressao = $this->Impressao_m->listar($value['impressao_id']); //listo a impressao pelo ID
+                $impressao = $impressao[0];
+                $impressao->valor = $value['impressao_valor'];
+                $impressao->valor_unitario = $impressao->calcula_valor_unitario($servico->quantidade);
+                $impressao->sub_total = $servico->quantidade * $impressao->valor_unitario;
+                $fotolito = $this->Fotolito_m->listar_formato($impressao->impressao_formato->id); //listo o fotolito pela coluna da impressao_formato
+                $fotolito = $fotolito[0];
+                $fotolito->quantidade = 1;
+                $fotolito->valor = $value['fotolito_valor'];
+                $fotolito->valor_unitario = $fotolito->valor;
+                $fotolito->sub_total = $fotolito->quantidade * $fotolito->valor_unitario;
+                $impressao->fotolito = $fotolito;
+                $servico->impressao[] = $impressao;
+            }
+        }
+
+        return $servico;
+    }
+    
     public function inserir_servico(Servico_m $servico) {
         if (!empty($servico)) {
             $dados = array(
@@ -279,6 +464,7 @@ class Servico_m extends CI_Model {
             $dados = array(
                 'servico_id' => $servico_id,
                 'papel_id' => $papel->id,
+                'papel_valor' => $papel->valor,
                 'quantidade' => $papel->quantidade,
                 'empastamento_status' => $papel->empastamento->status,
                 'empastamento_valor' => $papel->empastamento->sub_total
@@ -298,8 +484,10 @@ class Servico_m extends CI_Model {
             $dados = array(
                 'servico_id' => $servico_id,
                 'impressao_id' => $impressao->id,
+                'impressao_valor' => $impressao->valor,
                 'impressao_formato_id' => $impressao->impressao_formato->id,
                 'fotolito_id' => $impressao->fotolito->id,
+                'fotolito_valor' => $impressao->fotolito->valor,
             );
             if ($this->db->insert('servico_impressao', $dados)) {
                 return true;
@@ -316,8 +504,12 @@ class Servico_m extends CI_Model {
             $dados = array(
                 'servico_id' => $servico_id,
                 'impressao_cartao_id' => $impressao->id,
+                'impressao_cartao_valor_100' => $impressao->valor_100,
+                'impressao_cartao_valor_500' => $impressao->valor_500,
+                'impressao_cartao_valor_1000' => $impressao->valor_1000,
                 'impressao_formato_id' => $impressao->impressao_formato->id,
                 'fotolito_id' => $impressao->fotolito->id,
+                'fotolito_valor' => $impressao->fotolito->valor,
                 'qtd_cor_frente' => $impressao->qtd_cor_frente,
                 'qtd_cor_verso' => $impressao->qtd_cor_verso
             );
@@ -353,6 +545,7 @@ class Servico_m extends CI_Model {
             $dados = array(
                 'servico_id' => $servico_id,
                 'faca_id' => $faca->id,
+                'faca_valor' => $faca->valor,
                 'altura' => $faca->altura,
                 'largura' => $faca->largura
             );
@@ -370,7 +563,8 @@ class Servico_m extends CI_Model {
         if (!empty($faca)) {
             $dados = array(
                 'servico_id' => $servico_id,
-                'faca_cartao_id' => $faca->id
+                'faca_cartao_id' => $faca->id,
+                'faca_cartao_valor' => $faca->valor,
             );
             if ($this->db->insert('servico_faca_cartao', $dados)) {
                 return true;

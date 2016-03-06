@@ -92,7 +92,7 @@ class Impressao_m extends CI_Model {
             $impressao = new Impressao_m();
             $impressao->id = $value['id'];
             $impressao->nome = $value['nome'];
-            $impressao->valor = str_replace('.', ',', $value['valor']);
+            $impressao->valor = $value['valor'];
             $impressao->descricao = $value['descricao'];
 
             foreach ($this->Impressao_formato_m->listar($value['impressao_formato']) as $key => $value) {
