@@ -31,7 +31,7 @@ if ($acao == 'inserir') {
                             <?= form_input('nome', $papel->nome, 'autofocus id="nome" class="form-control" placeholder="Nome"') ?>
                         </div>
                     </div>
-                    
+
                     <!--Gramatura-->
                     <div class="form-group">
                         <?= form_label('Gramatura: ', 'gramatura', array('class' => 'control-label col-sm-2')) ?>
@@ -54,7 +54,7 @@ if ($acao == 'inserir') {
                             <?= form_input('largura', $papel->largura, ' id="largura" class="form-control" placeholder="Largura"') ?>
                         </div>
                     </div>
-                    
+
                     <!--Descricao-->
                     <div class="form-group">
                         <?= form_label('Descrição: ', 'descricao', array('class' => 'control-label col-sm-2')) ?>
@@ -62,19 +62,19 @@ if ($acao == 'inserir') {
                             <?= form_textarea('descricao', $papel->descricao, ' id="descricao" class="form-control" placeholder="Descrição"') ?>
                         </div>
                     </div>
-                    
+
                     <!--Valor-->
                     <div class="form-group">
                         <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor', $papel->valor, 'required id="valor" class="form-control" placeholder="Valor"') ?>
+                            <input required type="number" min="0" name="valor" value="<?= str_replace('.', ',', $papel->valor)?>"  id="valor" class="form-control" placeholder="Valor" />
                         </div>
                     </div>
 
                     <!--Botoes-->
                     <div class="form-group">        
                         <div class="col-sm-offset-2 col-sm-5">
-                            <?= form_button('cancelar', 'Cancelar', 'class="btn btn-default" onClick="javascript:history.back(1)"') ?>
+                            <?= anchor(base_url('papel'), 'Cancelar', 'class="btn btn-default"') ?>
                             <?= form_submit('salvar', 'Salvar', 'class="btn btn-default"') ?>
                         </div>
                     </div>

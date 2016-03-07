@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <?php $this->load->view('_include/head', ['titulo' => 'Home']); ?>
-    <?php $this->load->view('_include/js-lista', ['crud' => 'Papel']); ?>
+    <?php $this->load->view('_include/dataTable'); ?>
+    <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.11/type-detection/date-uk.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#tabela').DataTable({
-                "language": {
-                    "search": "Pesquisar:",
-                    "lengthMenu": "Mostar _MENU_ linhas por pagina",
-                    "zeroRecords": "Nada encontrado - refaça a busca",
-                    "info": "Mostrando a pagina _PAGE_ de _PAGES_",
-                    "paginate": {
-                        "first": "Primeira",
-                        "last": "Ultima",
-                        "next": "Proxima",
-                        "previous": "Anterior"
+            $('#deletar').click(function () {
+                if ($('table tbody tr.active td').eq(0).text() != '') {
+                    var id = $('table tbody tr.active td').eq(0).text();
+                    var nome = $('table tbody tr.active td').eq(1).text();
+                    if (confirm("O papel " + nome + " sera apagado!")) {
+                        window.location.replace("<?= base_url("papel/deletar") ?>/" + id);
                     }
+                }
+            });
+            $('#editar').click(function () {
+                if ($('table tbody tr.active td').eq(0).text() != '') {
+                    var id = $('table tbody tr.active td').eq(0).text();
+                    window.location.replace("<?= base_url("papel/form") ?>/" + id);
                 }
             });
         });
     </script>
+
     <body>
         <?php $this->load->view('_include/menu'); ?>
         <div class="container">
@@ -29,46 +32,43 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
+                        <div class="col-md-3">
+                            <a class="btn btn-success" href="<?= base_url('papel/form') ?>">Novo Papel</a>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-3">
+                            <button id="deletar" class="btn btn-danger" style="float: right;">deletar</button>
+                            <button id="editar" class="btn btn-primary">Editar</button>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-12">
-                            <table id="tabela" class="table table-hover">
+                            <table class="table display compact table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th class="hidden">ID</th>
                                         <th>Nome</th>
                                         <th>Gramatura</th>
                                         <th>Altura (mm)</th>
                                         <th>Largura (mm)</th>
                                         <th>Descrição</th>
                                         <th>Valor</th>
-                                        <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody id="fbody">
                                     <?php foreach ($papel as $key => $value) { ?>
                                         <tr>
-                                            <td><?= $value->id ?></td>
+                                            <td class="hidden"><?= $value->id ?></td>
                                             <td><?= $value->nome ?></td>
                                             <td><?= $value->gramatura ?></td>
                                             <td><?= $value->altura ?></td>
                                             <td><?= $value->largura ?></td>
                                             <td><?= $value->descricao ?></td>
-                                            <td><?= $value->valor ?></td>
-                                            <td>
-                                                <a class="btn btn-primary editar" href="<?= base_url("papel/form/{$value->id}") ?>">Editar</a>
-                                                <a class="btn btn-danger deletar" href="<?= base_url("papel/deletar/{$value->id}") ?>">Deletar</a>
-                                            </td>
+                                            <td><?= str_replace('.', ',', $value->valor) ?></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="8">
-                                            <ul class="pager" id="">
-                                                <?php (!empty($paginacao)) ? print $paginacao : ''; ?>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>

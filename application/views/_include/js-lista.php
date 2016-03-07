@@ -7,10 +7,10 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        // confirmar antes de apagar
-        $(".deletar").click(function () {
-            var id = $(".deletar").parent().parent().children("td:first").text();
-            return confirm("<?= $crud ?> ID:"+id+" sera apagado!");
+        $('table').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+            }
         });
     });
 </script>

@@ -2,28 +2,12 @@
 <html lang="pt-br">
     <?php
     $this->load->view('_include/head', ['titulo' => 'Orçamentos']);
-    $this->load->view('_include/js-lista', ['crud' => 'Orçamento']);
+    $this->load->view('_include/dataTable');
     ?>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#tabela').DataTable({
-                "language": {
-                    "search": "Pesquisar:",
-                    "lengthMenu": "Mostar _MENU_ linhas por pagina",
-                    "zeroRecords": "Nada encontrado - refaça a busca",
-                    "info": "Mostrando a pagina _PAGE_ de _PAGES_",
-                    "paginate": {
-                        "first": "Primeira",
-                        "last": "Ultima",
-                        "next": "Proxima",
-                        "previous": "Anterior"
-                    }
-                }
-            });
-        });
         function open_status_modal(id) {
             $("#md_status").modal();
-            $("#form_status").prop('action','<?=  base_url('orcamento/status')?>/' + id);
+            $("#form_status").prop('action', '<?= base_url('orcamento/status') ?>/' + id);
         }
     </script>
     <?php $this->load->view('_include/menu'); ?>
@@ -50,6 +34,19 @@
                                         <th>Açoes</th>
                                     </tr>
                                 </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Cliente</th>
+                                        <th>Contato</th>
+                                        <th>CNPJ/CPF</th>
+                                        <th>Email</th>
+                                        <th>Data</th>
+                                        <th>Valor</th>
+                                        <th>Status</th>
+                                        <th>Açoes</th>
+                                    </tr>
+                                </tfoot>
                                 <tbody>
                                     <?php foreach ($lista_orcamento as $key => $value) { ?>
                                         <?php
