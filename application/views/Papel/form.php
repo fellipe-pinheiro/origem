@@ -67,7 +67,6 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <input required type="number" min="0" name="valor" value="<?= str_replace('.', ',', $papel->valor)?>"  id="valor" class="form-control" placeholder="Valor" />
                             <?= form_input('', str_replace('.', ',', $papel->valor), 'required type="number" id="valor" class="form-control" placeholder="Valor"') ?>
                         </div>
                     </div>

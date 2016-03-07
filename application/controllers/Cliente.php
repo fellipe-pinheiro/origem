@@ -21,6 +21,36 @@ class Cliente extends CI_Controller {
 
     public function form() {
         $id = $this->uri->segment(3);
+        //Estados
+            $data['estados'] = array(
+            'AC' => 'AC',
+            'AL' => 'AL',
+            'AM' => 'AM',
+            'AP' => 'AP',
+            'BA' => 'BA',
+            'CE' => 'CE',
+            'DF' => 'DF',
+            'ES' => 'ES',
+            'GO' => 'GO',
+            'MA' => 'MA',
+            'MG' => 'MG',
+            'MS' => 'MS',
+            'MT' => 'MT',
+            'PA' => 'PA',
+            'PB' => 'PB',
+            'PE' => 'PE',
+            'PI' => 'PI',
+            'PR' => 'PR',
+            'RJ' => 'RJ',
+            'RN' => 'RN',
+            'RO' => 'RO',
+            'RR' => 'RR',
+            'RS' => 'RS',
+            'SC' => 'SC',
+            'SE' => 'SE',
+            'SP' => 'SP',
+            'TO' => 'TO',
+        );
 
         if (empty($id)) {
             $data['acao'] = 'inserir';
@@ -32,7 +62,7 @@ class Cliente extends CI_Controller {
             $data['cliente'] = $cliente[0];
             $data['acao'] = 'editar';
             $data['id'] = $id;
-
+            
             $this->load->view('cliente/form', $data);
         }
     }

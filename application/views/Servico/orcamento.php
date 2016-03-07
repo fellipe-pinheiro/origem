@@ -122,8 +122,8 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
             $("#md_btn_impressao_cartao").click(function () {
                 $("#form_impressao_cartao").prop("action", "servico/impressao_cartao_sessao_inserir")
                 $("#impressao_cartao_select option[value='']").prop("selected", true);
-                $("#impressao_cartao_qtd_cor_frente").val('').attr('min', 1).attr('type', 'number').attr('step', '1');
-                $("#impressao_cartao_qtd_cor_verso").val('').attr('min', 0).attr('type', 'number').attr('step', '1');
+                $("#impressao_cartao_qtd_cor_frente").val('').attr('type', 'number').attr('step', '1');
+                $("#impressao_cartao_qtd_cor_verso").val('').attr('type', 'number').attr('step', '1');
             });
             $("#md_btn_faca").click(function () {
                 $('#md_faca_select option[value=""]').attr('selected', 'selected').focus();
@@ -158,6 +158,10 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                     }
                 }
             });
+            $("#excluir_orcamento").click(function () {
+                $("#md_excluir_orcamento").modal();
+            });
+
             //NOVO Mostrar input do valor_frete para definir
             $("#frete").change(function () {
                 var id = $("#frete option:selected").val();
@@ -193,11 +197,21 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
             var frente_qtd = $('input[name="qtd_cor_frente"]').val();
             var verso_qtd = $('input[name="qtd_cor_verso"]').val();
 
-            if (frente_qtd <= 0) {
+            var soma = frente_qtd + verso_qtd;
+
+            if (soma < 1) {
+                alert('Insira a quantidade no campo FRENTE ou VERSO');
+                $('input[name="qtd_cor_frente"]').focus();
+                return false;
+            }
+            //Frente
+            if (frente_qtd < 0) {
                 alert('O valor inserido não pode ser ZERO ou NEGATIVO');
                 $('input[name="qtd_cor_frente"]').focus();
                 return false;
             }
+
+            //Verso
             if (verso_qtd < 0) {
                 alert('O valor inserido não pode ser NEGATIVO');
                 $('input[name="qtd_cor_verso"]').focus();
@@ -320,7 +334,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="<?= base_url('Servico/excluir_todos_servicos') ?>">
+                                                <a href="#" id="excluir_orcamento">
                                                     <span class="glyphicon glyphicon-trash"></span> Limpar Orcamento
                                                 </a>
                                             </li>
@@ -334,29 +348,6 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                     </ul>
                                 </div>
                             </div>
-                            <br><br><br>
-                            <!--<?php if (!empty($_SESSION['orcamento']->servico->quantidade)) { ?>
-                                                <div class="col-md-12">
-                                                        <label for="frete"><span class="glyphicon glyphicon-plane"></span>Tipo de frete:</label>
-                                                    <select name="frete" id="frete" class="form-control">
-                                                        <option value="-1" selected disabled>Selecione</option>
-                                                        <option value="0" >Definir</option>
-                                <?php foreach ($frete as $value) { ?>
-                                                                                <option value="<?= $value->id ?>"><?= $value->nome ?></option>
-                                <?php } ?>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <label for="nota_fiscal"><span class="glyphicon glyphicon-file"></span>Nota fiscal:</label>
-                                                    <select name="nota_fiscal" id="nota_fiscal" class="form-control">
-                                                        <option selected disabled >Selecione</option>
-                                <?php foreach ($nota_fiscal as $value) { ?>
-                                                                            <option value="<?= $value->id ?>"><?= $value->nome ?></option>
-                                <?php } ?>
-                                                    </select>
-                                                    <dialog id="msg_nota_fiscal" style="width: 200px;">Selecione uma nota fiscal</dialog>
-                                                </div>
-                            <?php } ?>-->
                             <?php
                             if (empty($_SESSION['orcamento']->servico->quantidade)) {
                                 echo img(base_url('/assets/img/origem_logo_200x200.png'));
@@ -366,7 +357,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                 echo img(base_url('/assets/img/silkscreen_200x200.png'));
                             }
                             ?>
-                            <br>
+                            <br><br>
                         </div>
                     </div>
                 </div>
@@ -503,45 +494,45 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                     ?>
                                     <div class="col-md-2">
                                         <button id="md_btn_papel" class="btn btn-default btn-block btn_m" data-toggle="modal" data-target="#myModal_papel">
-                                            <span class="glyphicon glyphicon-file"></span> Papel <span class="badge"><?= count($_SESSION['orcamento']->servico->papel)  ?></span>
+                                            <span class="glyphicon glyphicon-file"></span> Papel <span class="badge"><?= count($_SESSION['orcamento']->servico->papel) ?></span>
                                         </button>
                                     </div>
                                     <?php if ($_SESSION['orcamento']->servico->tipo == 'cartao') { ?>
                                         <div class="col-md-2">
                                             <button  id="md_btn_impressao_cartao" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_impressao_cartao">
-                                                <span class="glyphicon glyphicon-print"></span> Impressão <span class="badge"><?= count($_SESSION['orcamento']->servico->impressao)  ?></span>
+                                                <span class="glyphicon glyphicon-print"></span> Impressão <span class="badge"><?= count($_SESSION['orcamento']->servico->impressao) ?></span>
                                             </button>
                                         </div>
                                         <div class="col-md-2">
                                             <button id="md_btn_faca_cartao" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_faca_cartao">
-                                                <span class="glyphicon glyphicon-wrench"></span> Faca <span class="badge"><?= count($_SESSION['orcamento']->servico->faca)  ?></span>
+                                                <span class="glyphicon glyphicon-wrench"></span> Faca <span class="badge"><?= count($_SESSION['orcamento']->servico->faca) ?></span>
                                             </button>
                                         </div>
                                     <?php } else { ?>
                                         <div class="col-md-2">
                                             <button id="md_btn_impressao" class = "btn btn-default btn-block col-md-2 btn_m" data-toggle = "modal" data-target = "#myModal_impressao">
-                                                <span class = "glyphicon glyphicon-print"></span> Impressão <span class="badge"><?= count($_SESSION['orcamento']->servico->impressao)  ?></span>
+                                                <span class = "glyphicon glyphicon-print"></span> Impressão <span class="badge"><?= count($_SESSION['orcamento']->servico->impressao) ?></span>
                                             </button>
                                         </div>
                                         <div class="col-md-2">
                                             <button id="md_btn_faca" class = "btn btn-default btn-block col-md-2 btn_m" data-toggle = "modal" data-target = "#myModal_faca">
-                                                <span class = "glyphicon glyphicon-wrench"></span> Faca <span class="badge"><?= count($_SESSION['orcamento']->servico->faca)  ?></span>
+                                                <span class = "glyphicon glyphicon-wrench"></span> Faca <span class="badge"><?= count($_SESSION['orcamento']->servico->faca) ?></span>
                                             </button>
                                         </div>
                                     <?php } ?>
                                     <div class="col-md-2">
                                         <button id="md_btn_acabamento" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_acabamento">
-                                            <span class="glyphicon glyphicon-scissors"></span> Acabamento <span class="badge"><?= count($_SESSION['orcamento']->servico->acabamento)  ?></span>
+                                            <span class="glyphicon glyphicon-scissors"></span> Acabamento <span class="badge"><?= count($_SESSION['orcamento']->servico->acabamento) ?></span>
                                         </button>
                                     </div>
                                     <div class="col-md-2">
                                         <button id="md_btn_laminacao" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_laminacao">
-                                            <span class="glyphicon glyphicon-tags"></span> Laminação <span class="badge"><?= count($_SESSION['orcamento']->servico->laminacao)  ?></span>
+                                            <span class="glyphicon glyphicon-tags"></span> Laminação <span class="badge"><?= count($_SESSION['orcamento']->servico->laminacao) ?></span>
                                         </button>
                                     </div>
                                     <div class="col-md-2">
                                         <button  id="md_btn_colagem" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_colagem">
-                                            <span class="glyphicon glyphicon-envelope"></span> Colagem <span class="badge"><?= count($_SESSION['orcamento']->servico->colagem)  ?></span>
+                                            <span class="glyphicon glyphicon-envelope"></span> Colagem <span class="badge"><?= count($_SESSION['orcamento']->servico->colagem) ?></span>
                                         </button>
                                     </div>
                                 <?php } ?>
@@ -613,7 +604,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                     <td>Fotolito</td>
                                                     <td><?= $impressao->impressao_formato->nome ?> (<?= $impressao->impressao_formato->altura ?>x<?= $impressao->impressao_formato->largura ?>)</td>
                                                     <td><?= $impressao->fotolito->quantidade ?></td>
-                                                    <td>R$ <?= $impressao->fotolito->valor_unitario ?></td>
+                                                    <td>R$ <?= number_format($impressao->fotolito->valor_unitario, 2, ",", ".") ?></td>
                                                     <td>R$ <?= number_format($impressao->fotolito->sub_total, 2, ",", ".") ?></td>
                                                     <td></td>
                                                     <td></td>
@@ -639,7 +630,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                     <?php if ($_SESSION['orcamento']->servico->tipo == 'servico') { ?>
                                                         <td>R$ <?= number_format($faca->valor_faca, 2, ",", ".") ?></td>
                                                     <?php } else { ?>
-                                                        <td>R$ <?= $faca->valor ?></td>
+                                                        <td>R$ <?= number_format($faca->valor, 2, ",", ".") ?></td>
                                                     <?php } ?>
                                                     <td>R$ <?= number_format($faca->sub_total, 2, ",", ".") ?></td>
                                                     <?php if ($_SESSION['orcamento']->servico->tipo == 'servico') { ?>
@@ -722,10 +713,10 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Finalizar Orcamento</h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body text-center">
                         <h3>Deseja realizar mais um orçamento para este cliente?</h3>
                         <a href="<?= base_url('Servico/finalizar/0') ?>" class="btn btn-default  btn-lg" >
-                            <span class="glyphicon glyphicon-ok"></span> Não
+                            <span class="glyphicon glyphicon-remove"></span> Não
                         </a>
                         <a href="<?= base_url('Servico/finalizar/1') ?>" class="btn btn-success btn-lg" >
                             <span class="glyphicon glyphicon-ok"></span> Sim
@@ -745,7 +736,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Impressão</h4>
+                            <h4 class="modal-title">Impressão Cartão</h4>
                         </div>
                         <div class="modal-body">
                             <label for="impressao_cartao">Impressão:</label>
@@ -807,29 +798,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                 </div>
             </div>
         </div>
-        <!-- Modal Frete valor -->
-        <!--        <div class="modal fade" id="modal_frete_valor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Cliente</h4>
-                            </div>
-        <?= form_open('Servico/frete_sessao_definir', 'class=""') ?>
-                            <div class="modal-body">
-                                Valor
-        <?= form_label('Valor do Frete:', 'valor_frete') ?>
-        <?= form_input('valor_frete', '', ' id="valor_frete" class="form-control" placeholder="Valor do Frete"') ?>
-        
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button>
-                            </div>
-        <?= form_close() ?>
-                        </div>
-                    </div>
-                </div>-->
+
         <!-- Modal Cliente Form -->
         <div class="modal fade" id="modal_cliente_form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-lg" role="document">
@@ -947,7 +916,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                 <!--cep-->
                                 <div class="col-md-4">
                                     <?= form_label('Cep: ', 'cep', array('class' => 'control-label')) ?>
-                                    <?= form_input('cep', '', ' id="cep" class="form-control" placeholder="Cep"') ?>
+                                    <?= form_input('cep', '', ' id="cep" class="form-control input-sm" placeholder="Cep"') ?>
                                 </div>
                                 <!--cidade-->
                                 <div class="col-md-4">
@@ -955,16 +924,19 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                     <?= form_input('cidade', '', ' id="cidade" class="form-control input-sm" placeholder="Cidade"') ?>
                                 </div>
                                 <!--estado-->
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <?= form_label('Estado: ', 'estado', array('class' => 'control-label')) ?>
-                                    <?= form_input('estado', '', ' id="estado" class="form-control" placeholder="Estado"') ?>
+                                    <?= form_dropdown('estado', $estados, 'SP', 'id="estado" class="form-control input-sm"') ?>
+                                </div>
+                                <div class="col-md-2">
+
                                 </div>
                             </div>
                             <div class="form-group">
                                 <!--observacao-->
                                 <div class="col-md-12">
                                     <?= form_label('Observacao: ', 'observacao', array('class' => 'control-label')) ?>
-                                    <?= form_textarea('observacao', '', ' id="observacao" class="form-control" placeholder="Observacao"') ?>
+                                    <?= form_textarea('observacao', '', ' id="observacao" class="form-control input-sm" placeholder="Observacao"') ?>
                                 </div>
                             </div>
                         </div>
@@ -990,7 +962,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <div class="row">
                             <!--filtro-->
                             <div class="col-md-4">
-                                <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
+                                <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control input-sm" placeholder="Pesquisar"') ?>
                             </div>
                             <div class="col-md-2">
                                 <button id="md_btn_criar_cliente" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Novo</button>
@@ -1117,45 +1089,52 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                             <h4 class="modal-title">Condições</h4>
                         </div>
                         <div class="modal-body">
-                            <label for="frete"><span class="glyphicon glyphicon-plane"></span>Tipo de frete:</label>
-                            <select name="frete" id="frete" class="form-control">
-                                <option value="-1" selected disabled>Selecione</option>
-                                <option value="0" >Personalizado</option>
-                                <?php foreach ($frete as $value) { ?>
-                                    <option value="<?= $value->id ?>"><?= $value->nome ?></option>
-                                <?php } ?>
-                            </select>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="frete"><span class="glyphicon glyphicon-plane"></span>Tipo de frete:</label>
+                                    <select name="frete" id="frete" class="form-control">
+                                        <option value="-1" selected disabled>Selecione</option>
+                                        <option value="0" >Personalizado</option>
+                                        <?php foreach ($frete as $value) { ?>
+                                            <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                        <?php } ?>
+                                    </select>
 
-                            <input id="valor_frete" disabled="true" type="hidden" step="0.01" min="0" name="valor_frete" placeholder="Digite o valor para o frete" class="form-control">
-                            <br>
-                            <label for="nota_fiscal"><span class="glyphicon glyphicon-file"></span>Nota fiscal:</label>
-                            <select required name="nota_fiscal" id="nota_fiscal" class="form-control">
-                                <option selected disabled value="" >Selecione</option>
-                                <?php foreach ($nota_fiscal as $value) { ?>
-                                    <option value="<?= $value->id ?>"><?= $value->nome ?></option>
-                                <?php } ?>
-                            </select>
-                            <br>
-                            <label class="control-label" for="pagamento"><span class="glyphicon glyphicon-usd"></span> Pagamento:</label>
-                            <textarea id="pagamento" name="pagamento" class="form-control" rows="3" placeholder="Descreva neste campo as formas de pagamentos"><?php
-                                if (!empty($_SESSION['orcamento']->pagamento)) {
-                                    print $_SESSION['orcamento']->pagamento;
-                                }
-                                ?></textarea><span class="caracteres_pagamento">255</span> Restantes <br>
-                            <br>
-                            <label class="control-label" for="prazo"><span class="glyphicon glyphicon-time"></span>  Prazo:</label>
-                            <textarea id="prazo" name="prazo" class="form-control" rows="3" placeholder="Descreva neste campo o prazo de entrega"><?php
-                                if (!empty($_SESSION['orcamento']->prazo)) {
-                                    print $_SESSION['orcamento']->prazo;
-                                }
-                                ?></textarea><span class="caracteres_prazo">255</span> Restantes <br>
-                            <br>
-                            <label class="control-label" for="observacao"><span class="glyphicon glyphicon-comment"></span>  Observações:</label>
-                            <textarea id="observacao" name="observacao" class="form-control" rows="3" placeholder="Descreva neste campo as observacões do pedido"><?php
-                                if (!empty($_SESSION['orcamento']->observacao)) {
-                                    print $_SESSION['orcamento']->observacao;
-                                }
-                                ?></textarea><span class="caracteres_observacao">255</span> Restantes <br>
+                                    <input id="valor_frete" disabled="true" type="hidden" step="0.01" min="0" name="valor_frete" placeholder="Digite o valor para o frete" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="nota_fiscal"><span class="glyphicon glyphicon-file"></span>Nota fiscal:</label>
+                                    <select required name="nota_fiscal" id="nota_fiscal" class="form-control">
+                                        <option selected disabled value="" >Selecione</option>
+                                        <?php foreach ($nota_fiscal as $value) { ?>
+                                            <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <br>
+                                    <label class="control-label" for="pagamento"><span class="glyphicon glyphicon-usd"></span> Pagamento:</label>
+                                    <textarea id="pagamento" name="pagamento" class="form-control" rows="3" maxlength="255" placeholder="Descreva neste campo as formas de pagamentos"><?php
+                                        if (!empty($_SESSION['orcamento']->pagamento)) {
+                                            print $_SESSION['orcamento']->pagamento;
+                                        }
+                                        ?></textarea><span class="caracteres_pagamento">255</span> Restantes <br>
+                                    <br>
+                                    <label class="control-label" for="prazo"><span class="glyphicon glyphicon-time"></span>  Prazo:</label>
+                                    <textarea id="prazo" name="prazo" class="form-control" rows="3" maxlength="255" placeholder="Descreva neste campo o prazo de entrega"><?php
+                                        if (!empty($_SESSION['orcamento']->prazo)) {
+                                            print $_SESSION['orcamento']->prazo;
+                                        }
+                                        ?></textarea><span class="caracteres_prazo">255</span> Restantes <br>
+                                    <br>
+                                    <label class="control-label" for="observacao"><span class="glyphicon glyphicon-comment"></span>  Observações:</label>
+                                    <textarea id="observacao" name="observacao" class="form-control" rows="3" maxlength="255" placeholder="Descreva neste campo as observacões do pedido"><?php
+                                        if (!empty($_SESSION['orcamento']->observacao)) {
+                                            print $_SESSION['orcamento']->observacao;
+                                        }
+                                        ?></textarea><span class="caracteres_observacao">255</span> Restantes <br>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -1284,6 +1263,27 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                             <button id="form_colagem_acao" type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal colagem -->
+        <div class="modal fade" id="md_excluir_orcamento" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <form id="md_excluir_orcamento" action="<?= base_url('Servico/excluir_todos_servicos') ?>" method="POST" role="form">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body text-center">
+                            <h2>Deseja excluir este orçamento?</h2>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+                            <button id="form_colagem_acao" type="submit" class="btn btn-danger" ><span class="glyphicon glyphicon-trash"></span> Excluir</button>
                         </div>
                     </div>
                 </form>

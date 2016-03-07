@@ -46,6 +46,36 @@ class Servico extends CI_Controller {
 
         $data['nota_fiscal'] = $this->Nota_m->listar();
         $data['frete'] = $this->Frete_m->listar();
+//        Estados brasileiros
+        $data['estados'] = array(
+            'AC' => 'AC',
+            'AL' => 'AL',
+            'AM' => 'AM',
+            'AP' => 'AP',
+            'BA' => 'BA',
+            'CE' => 'CE',
+            'DF' => 'DF',
+            'ES' => 'ES',
+            'GO' => 'GO',
+            'MA' => 'MA',
+            'MG' => 'MG',
+            'MS' => 'MS',
+            'MT' => 'MT',
+            'PA' => 'PA',
+            'PB' => 'PB',
+            'PE' => 'PE',
+            'PI' => 'PI',
+            'PR' => 'PR',
+            'RJ' => 'RJ',
+            'RN' => 'RN',
+            'RO' => 'RO',
+            'RR' => 'RR',
+            'RS' => 'RS',
+            'SC' => 'SC',
+            'SE' => 'SE',
+            'SP' => 'SP',
+            'TO' => 'TO',
+        );
 
         if ($_SESSION['orcamento']->servico->tipo == 'servico') {
             $data['impressao_md'] = $this->Impressao_m->listar();
@@ -251,8 +281,7 @@ class Servico extends CI_Controller {
         $cliente->telefone = $this->input->post('telefone');
         $cliente->celular = $this->input->post('celular');
         $cliente->observacao = $this->input->post('observacao');
-
-        $id = $this->Cliente_m->inserir($cliente);
+        $cliente->id = $this->Cliente_m->inserir($cliente);
 
         $_SESSION['orcamento']->cliente = $cliente;
         redirect(base_url('servico'), 'location');
@@ -329,8 +358,8 @@ class Servico extends CI_Controller {
             redirect(base_url('servico'), 'location');
         }
         $id = $_POST['impressao_cartao'];
-        $qtd_cor_frente = $this->input->post('qtd_cor_frente');
-        $qtd_cor_verso = $this->input->post('qtd_cor_verso');
+        $qtd_cor_frente = intval($this->input->post('qtd_cor_frente'));
+        $qtd_cor_verso = intval($this->input->post('qtd_cor_verso'));
         $qtd_cor_frente == '' ? $qtd_cor_frente = 0 : '';
         $qtd_cor_verso == '' ? $qtd_cor_verso = 0 : '';
 
@@ -362,8 +391,8 @@ class Servico extends CI_Controller {
         }
         $posicao = $this->uri->segment(3);
         $id = $_POST['impressao_cartao'];
-        $qtd_cor_frente = $this->input->post('qtd_cor_frente');
-        $qtd_cor_verso = $this->input->post('qtd_cor_verso');
+        $qtd_cor_frente = intval($this->input->post('qtd_cor_frente'));
+        $qtd_cor_verso = intval($this->input->post('qtd_cor_verso'));
         $qtd_cor_frente == '' ? $qtd_cor_frente = 0 : '';
         $qtd_cor_verso == '' ? $qtd_cor_verso = 0 : '';
 

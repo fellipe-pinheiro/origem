@@ -128,7 +128,7 @@ if ($acao == 'inserir') {
                             <!--cep-->
                             <div class="col-md-4">
                                 <?= form_label('Cep: ', 'cep', array('class' => 'control-label')) ?>
-                                <?= form_input('cep', $cliente->cep, ' id="cep" class="form-control" placeholder="Cep"') ?>
+                                <?= form_input('cep', $cliente->cep, ' id="cep" class="form-control input-sm" placeholder="Cep"') ?>
                             </div>
                             <!--cidade-->
                             <div class="col-md-4">
@@ -136,16 +136,20 @@ if ($acao == 'inserir') {
                                 <?= form_input('cidade', $cliente->cidade, ' id="cidade" class="form-control input-sm" placeholder="Cidade"') ?>
                             </div>
                             <!--estado-->
-                            <div class="col-md-4">
+                            <div class="col-md-2">
+                                <?php $acao == 'inserir' ? $estado = 'SP' : $estado = $cliente->estado ?>
                                 <?= form_label('Estado: ', 'estado', array('class' => 'control-label')) ?>
-                                <?= form_input('estado', $cliente->estado, ' id="estado" class="form-control" placeholder="Estado"') ?>
+                                <?= form_dropdown('estado', $estados, $estado, 'id="estado" class="form-control input-sm"') ?>
+                            </div>
+                            <div class="col-md-2">
+                                
                             </div>
                         </div>
                         <div class="form-group">
                             <!--observacao-->
                             <div class="col-md-12">
                                 <?= form_label('Observacao: ', 'observacao', array('class' => 'control-label')) ?>
-                                <?= form_textarea('observacao', $cliente->observacao, ' id="observacao" class="form-control" placeholder="Observacao"') ?>
+                                <?= form_textarea('observacao', $cliente->observacao, ' id="observacao" class="form-control input-sm" placeholder="Observacao"') ?>
                             </div>
                         </div>
                     </div>
