@@ -22,7 +22,7 @@
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Banco de dados <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" id="menu_banco_dados">
                         <li><a href="<?= base_url('acabamento') ?>">Acabamento</a></li>
                         <li><a href="<?= base_url('faca') ?>">Faca</a></li>
                         <li><a href="<?= base_url('faca_cartao') ?>">Faca p/ cartão</a></li>
@@ -35,7 +35,7 @@
                         <li><a href="<?= base_url('frete') ?>">Frete</a></li>
                         <li><a href="<?= base_url('nota') ?>">Nota</a></li>
                         <li><a href="<?= base_url('cliente') ?>">Cliente</a></li>
-                        <li><a href="<?= base_url('usuario') ?>">Usuario</a></li>
+                        <li><a href="<?= base_url('usuario') ?>">Usuário</a></li>
                     </ul>
                 </li>
                 <?php if (usuario_logado()) { ?>
@@ -58,3 +58,14 @@
         </div>
     </div>
 </nav>
+<script>
+    //ORDENA A LISTA DE LINKS
+    var mylist = $('#menu_banco_dados');
+    var listitems = mylist.children('li').get();
+    listitems.sort(function (a, b) {
+        return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
+    })
+    $.each(listitems, function (idx, itm) {
+        mylist.append(itm);
+    });
+</script>

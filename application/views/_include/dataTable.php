@@ -1,8 +1,6 @@
 <link rel="stylesheet" href="<?= base_url("assets/css/dataTables.bootstrap.min.css"); ?>" />
-
 <script type="text/javascript" src="<?= base_url("assets/js/jquery.dataTables.js"); ?>"></script>
 <script type="text/javascript" src="<?= base_url("assets/js/dataTables.bootstrap.min.js"); ?>"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
         var table = $('table').dataTable({

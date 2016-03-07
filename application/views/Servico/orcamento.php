@@ -17,6 +17,9 @@ $titulo = 'Serviço';
             max-height: 470px;
             overflow-y: auto;
         }
+        table{
+            text-transform: uppercase;
+        }
     </style>    
     <!--JavaScript-->
     <script>
@@ -366,7 +369,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">ORÇAMENTO 
-                                <?php !empty($_SESSION['orcamento']->id)?print '<b>Nº '.$_SESSION['orcamento']->id.' </b>( Modo Edição)':print '(<b>Novo</b>)' ?></h3>
+                                <?php !empty($_SESSION['orcamento']->id) ? print '<b>Nº ' . $_SESSION['orcamento']->id . ' </b>( Modo Edição)' : print '(<b>Novo</b>)' ?></h3>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -428,9 +431,9 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                         if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                             ?>
                                             <tr>
+                                                <td></td>
+                                                <td></td>
                                                 <td>Nota Fiscal (<?= $_SESSION['orcamento']->nota_fiscal->nome ?>)</td>
-                                                <td></td>
-                                                <td></td>
                                                 <td>R$ <?= number_format($_SESSION['orcamento']->valor_nota_fiscal, 2, ",", ".") ?></td>
                                                 <td></td>
                                             </tr>
@@ -446,9 +449,9 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                             }
                                             ?>
                                             <tr>
+                                                <td></td>
+                                                <td></td>
                                                 <td>Frete (<?= $entrega ?>)</td>
-                                                <td></td>
-                                                <td></td>
                                                 <td>R$ <?= number_format($_SESSION['orcamento']->valor_frete, 2, ",", ".") ?> </td>
                                                 <td></td>
                                             </tr>
@@ -461,12 +464,12 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                             <td></td>
                                             <td></td>
                                             <td><b>Descontos</b></td>
-                                            <td>R$ 
+                                            <td class="text-danger"><b>R$</b> 
                                                 <?php
                                                 if ($_SESSION['orcamento']->servico->desconto == NULL) {
                                                     print '0,00';
                                                 } else {
-                                                    print number_format($_SESSION['orcamento']->servico->desconto, 2, ",", ".");
+                                                    print '<b>'.number_format($_SESSION['orcamento']->servico->desconto, 2, ",", ".").'</b>';
                                                 }
                                                 ?>
                                             </td>
@@ -475,8 +478,8 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td><b>Total</b></td>
-                                            <td>R$ <?= number_format($_SESSION['orcamento']->total, 2, ",", ".") ?></td>
+                                            <td><b>Total à pagar</b></td>
+                                            <td><b>R$ <?= number_format($_SESSION['orcamento']->total, 2, ",", ".") ?></b></td>
                                             <td></td>
                                         </tr>
                                     </tfoot>
@@ -564,7 +567,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                 ?>
                                                 <tr class="info">
                                                     <td><?= $count = $count + 1 ?></td>
-                                                    <td><b>Papel</b></td>
+                                                    <td><span class="glyphicon glyphicon-file"></span> <b>Papel</b></td>
                                                     <td><?= $papel->nome ?> (<?= $papel->quantidade ?> fls)</td>
                                                     <td><?= $_SESSION['orcamento']->servico->quantidade ?></td>
                                                     <td>R$ <?= number_format($papel->valor_unitario, 3, ",", ".") ?></td>
@@ -577,8 +580,8 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                     ?>
                                                     <tr class="info">
                                                         <td><?= $count = $count + 1 ?></td>
-                                                        <td><b>Empastamento</b></td>
-                                                        <td><?= $papel->empastamento->nome ?> => <?= $papel->nome ?></td>
+                                                        <td><span class="glyphicon glyphicon-duplicate"></span> <b>Empastamento</b></td>
+                                                        <td><?= $papel->empastamento->nome ?> (<?= $papel->nome ?>)</td>
                                                         <td><?= $_SESSION['orcamento']->servico->quantidade ?></td>
                                                         <td>R$ <?= number_format($papel->empastamento->valor_unitario, 3, ",", ".") ?></td>
                                                         <td>R$ <?= number_format($papel->empastamento->sub_total, 2, ",", ".") ?></td>
@@ -596,7 +599,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                 ?>
                                                 <tr class="active">
                                                     <td><?= $count = $count + 1 ?></td>
-                                                    <td><b>Impressão</b></td>
+                                                    <td><span class="glyphicon glyphicon-print"></span> <b>Impressão</b></td>
                                                     <td><?= $impressao->nome ?> (<?= $impressao->impressao_formato->altura ?>x<?= $impressao->impressao_formato->largura ?>)
                                                         <?= ($_SESSION['orcamento']->servico->tipo == 'cartao') ? "Cor: " . $impressao->qtd_cor_frente . 'x' . $impressao->qtd_cor_verso : ''; ?>
                                                     </td>
@@ -612,7 +615,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                 </tr>
                                                 <tr class="active">
                                                     <td><?= $count = $count + 1 ?></td>
-                                                    <td><b>Fotolito</b></td>
+                                                    <td><span class="glyphicon glyphicon-picture"></span> <b>Fotolito</b></td>
                                                     <td><?= $impressao->impressao_formato->nome ?> (<?= $impressao->impressao_formato->altura ?>x<?= $impressao->impressao_formato->largura ?>)</td>
                                                     <td><?= $impressao->fotolito->quantidade ?></td>
                                                     <td>R$ <?= number_format($impressao->fotolito->valor_unitario, 2, ",", ".") ?></td>
@@ -630,7 +633,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                 ?>
                                                 <tr class="success">
                                                     <td><?= $count = $count + 1 ?></td>
-                                                    <td><b>Faca</b></td>
+                                                    <td><span class="glyphicon glyphicon-wrench"></span> <b>Faca</b></td>
                                                     <?php if ($_SESSION['orcamento']->servico->tipo == 'servico') { ?>
                                                         <td><?= $faca->nome ?> : <?= $faca->altura ?> x <?= $faca->largura ?></td>
 
@@ -662,7 +665,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                 ?>
                                                 <tr class="warning">
                                                     <td><?= $count = $count + 1 ?></td>
-                                                    <td><b>Acabamento</b></td>
+                                                    <td><span class="glyphicon glyphicon-scissors"></span> <b>Acabamento</b></td>
                                                     <td><?= $acabamento->nome ?></td>
                                                     <td><?= $acabamento->quantidade ?></td>
                                                     <td>R$ <?= number_format($acabamento->valor_unitario, 2, ",", ".") ?></td>
@@ -680,7 +683,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                 ?>
                                                 <tr class="danger">
                                                     <td><?= $count = $count + 1 ?></td>
-                                                    <td><b>Laminação<b></td>
+                                                    <td><span class="glyphicon glyphicon-tags"></span> <b>Laminação<b></td>
                                                                 <td><?= $laminacao->nome ?></td>
                                                                 <td><?= $_SESSION['orcamento']->servico->quantidade ?></td>
                                                                 <td>R$ <?= number_format($laminacao->valor_unitario, 3, ",", ".") ?></td>
@@ -698,7 +701,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                                 ?>
                                                                 <tr>
                                                                     <td><?= $count = $count + 1 ?></td>
-                                                                    <td><b>Colagem</b></td>
+                                                                    <td><span class="glyphicon glyphicon-envelope"></span> <b>Colagem</b></td>
                                                                     <td><?= $colagem->nome ?></td>
                                                                     <td><?= $_SESSION['orcamento']->servico->quantidade ?></td>
                                                                     <td>R$ <?= number_format($colagem->valor_unitario, 3, ",", ".") ?></td>

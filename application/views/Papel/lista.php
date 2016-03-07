@@ -13,15 +13,16 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <a class="btn btn-success" href="<?= base_url('papel/form') ?>">Novo Papel</a>
+                            <a class="btn btn-success" href="<?= base_url('papel/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>
                         </div>
                         <div class="col-md-6">
                         </div>
-                        <div class="col-md-3">
-                            <button id="deletar" class="btn btn-danger" style="float: right;">deletar</button>
-                            <button id="editar" class="btn btn-primary">Editar</button>
+                        <div class="col-md-3 btn-group">
+                            <button id="editar" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Editar</button>
+                            <button id="deletar" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Deletar</button>
                         </div>
                     </div>
+                    <hr>
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table display compact table-bordered" cellspacing="0" width="100%">
@@ -38,7 +39,7 @@
                                 </thead>
                                 <tbody id="fbody">
                                     <?php foreach ($papel as $key => $value) { ?>
-                                        <tr>
+                                    <tr class="text-uppercase">
                                             <td class="hidden"><?= $value->id ?></td>
                                             <td><?= $value->nome ?></td>
                                             <td><?= $value->gramatura ?></td>

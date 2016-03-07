@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 07-Mar-2016 às 03:00
+-- Generation Time: 07-Mar-2016 às 18:33
 -- Versão do servidor: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -67,14 +67,14 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `im` varchar(20) DEFAULT NULL,
   `observacao` text,
   `contato_nome` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `cliente`
 --
 
 INSERT INTO `cliente` (`id`, `nome`, `pessoa_tipo`, `cnpj_cpf`, `email`, `celular`, `telefone`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `cep`, `ie`, `im`, `observacao`, `contato_nome`) VALUES
-(1, 'Eric', 1, '222.333.444-90', 'eric@eric.com.br', '92222-3333', '2222-3333', 'Brasil', 1, 'Sem', 'Chácara Seis de Outubro', 'São Paulo', 'SP', '03318900', '243.220.078.129', '243.220.078.129', 'Lorem.......', NULL),
+(1, 'Eric', 1, '222.333.444-90', 'eric@eric.com.br', '92222-3333', '2222-3333', 'Brasil', 1, 'Sem', 'Chácara Seis de Outubro', 'São Paulo', 'SC', '03318900', '243.220.078.129', '243.220.078.129', 'Lorem.......', ''),
 (2, 'Fellipe', 0, '222.333.444-95', 'fellipe@felipe', '92222-4444', '2222-4444', NULL, 2, 'AP 3', 'ipiranga', 'São Paulo', 'SP', '03508030', '243.220.078.129', '243.220.078.129', 'Lorem.......', NULL),
 (3, 'Alice e Yasmin Publicidade e Propaganda ME', 1, '17.365.506/0001-05', 'tesouraria@aliceyasmin.com.br', '(14) 99679-2342', '(14) 2642-2159', 'Rua Doutor Ranimiro Lotufo', 822, 'nao tem', 'Vila São Judas Thadeu', 'Botucatu', 'SP', '18607-05', '334.111.926.294', '765.725.121.616', 'Lorem ipsum ut varius malesuada cras etiam metus, diam vehicula curae torquent aenean metus, lacinia primis eu malesuada eros congue. dolor mattis auctor quisque praesent quam convallis blandit sed eu ac aliquam, bibendum posuere imperdiet auctor lectus primis cursus adipiscing platea ullamcorper mollis, posuere consectetur semper quisque neque et lobortis quisque cursus consectetur. eget platea pulvinar ac tortor sodales dictum habitasse fames auctor mollis, lobortis condimentum lacinia nulla in cursus conubia mollis quis curabitur morbi, urna inceptos interdum consectetur sem lacus neque etiam et. rhoncus sapien lorem massa integer in erat neque facilisis primis facilisis, aenean non lectus quisque non fringilla curabitur maecenas massa. \r\n', NULL),
 (4, 'Emanuel e Luiz Construções ME', 1, '01.862.914/0001-24', 'marketing@emanuelluiz.com.br', '(19) 99195-6148', '(19) 2786-0597', 'Rua Ângelo José de Araújo', 316, '', 'Jardim São Francisco', 'Amparo', 'SP', '13903-11', '328.996.673.800', '', '\r\n	Lorem ipsum ut varius malesuada cras etiam metus, diam vehicula curae torquent aenean metus, lacinia primis eu malesuada eros congue. dolor mattis auctor quisque praesent quam convallis blandit sed eu ac aliquam, bibendum posuere imperdiet auctor lectus primis cursus adipiscing platea ullamcorper mollis, posuere consectetur semper quisque neque et lobortis quisque cursus consectetur. eget platea pulvinar ac tortor sodales dictum habitasse fames auctor mollis, lobortis condimentum lacinia nulla in cursus conubia mollis quis curabitur morbi, urna inceptos interdum consectetur sem lacus neque etiam et. rhoncus sapien lorem massa integer in erat neque facilisis primis facilisis, aenean non lectus quisque non fringilla curabitur maecenas massa. \r\n\r\n	Pharetra adipiscing massa eget torquent ad scelerisque sociosqu orci sollicitudin etiam augue, gravida per etiam lorem nibh lacinia nulla accumsan sapien. suscipit laoreet maecenas tincidunt pulvinar sed porta euismod viverra ut augue, mauris semper convallis arcu sapien purus erat fusce purus, lobortis consequat sollicitudin cursus himenaeos curabitur fermentum cursus rhoncus. cubilia aliquam nostra scelerisque pharetra malesuada porttitor odio aliquet mauris inceptos, condimentum pulvinar aliquet adipiscing neque sapien proin congue netus. pretium tincidunt magna quisque vulputate tristique diam tincidunt ut cursus, fames praesent urna lacinia dapibus leo interdum netus, felis porta vulputate per nisi aliquam diam adipiscing. \r\n\r\n	Proin nostra lorem lobortis felis nullam inceptos tellus, cubilia leo commodo maecenas cubilia dictum, etiam ipsum magna at elementum sociosqu. aliquet scelerisque orci ut pretium vivamus ullamcorper, euismod morbi porttitor torquent nisl etiam interdum, imperdiet convallis fames senectus integer. nec metus donec lectus suspendisse vulputate vel sagittis hac lacus, curabitur consectetur aliquet tristique elit senectus curae adipiscing ultrices donec, justo nam rutrum ut urna consequat vestibulum odio. placerat convallis turpis semper lacinia phasellus sem ligula phasellus elementum conubia, integer in mattis platea aliquet vestibulum consectetur quisque nisi ipsum, fringilla tristique aliquet nunc dictum feugiat habitasse imperdiet risus. \r\n\r\n	Eget tempus habitant ligula lectus elementum pretium, aliquam pellentesque condimentum nisi feugiat non pellentesque, tellus erat quam maecenas elementum. elit litora purus nisl justo aenean imperdiet semper aptent mauris ultrices fames mi sem, cubilia fringilla massa ante lorem fermentum nibh varius blandit class mattis rhoncus. hendrerit nibh duis habitant congue lectus dui netus suspendisse maecenas mattis, maecenas accumsan praesent orci adipiscing ullamcorper scelerisque feugiat. platea placerat aliquam inceptos risus mattis curabitur lorem litora hac sem netus, pretium conubia id lectus consequat enim ullamcorper suscipit sollicitudin. aliquam rhoncus vestibulum lorem nostra enim quis condimentum ut elit ligula augue rhoncus viverra, dictumst vehicula diam class magna class donec mi sit convallis dui. \r\n\r\n	Nunc urna nunc egestas gravida litora dolor, himenaeos lorem lectus ante nisi consequat nunc, sociosqu suspendisse netus rhoncus porta. molestie cubilia elementum platea erat non praesent tristique vitae eros luctus, habitant nisl metus nisl bibendum elementum nec felis volutpat, ut aliquam ut scelerisque nisi donec egestas pharetra adipiscing. habitasse at nisi purus in hendrerit molestie laoreet, platea integer velit lobortis dui lobortis, fermentum aliquam iaculis porttitor varius amet. convallis taciti ultricies tristique et interdum lacinia nullam urna, libero vehicula elementum posuere aenean dictumst odio egestas vitae, feugiat ut lacinia dictum pretium cursus congue. \r\n', NULL),
@@ -82,7 +82,9 @@ INSERT INTO `cliente` (`id`, `nome`, `pessoa_tipo`, `cnpj_cpf`, `email`, `celula
 (10, 'Emanuel e Luiz Construções ME', 0, '', 'marketing@emanuelluiz.com.br', '1927860597', '1927860597', NULL, 0, '', '', 'Amparo', 'SP', '13903-11', '', '', '', NULL),
 (11, 'Origem', 0, '1234', 'origemart@origem.com.br', '1234', '1234', NULL, 222, 'nao tem', 'Vila Gomes Cardim', 'São Paulo', 'SP', '13903-11', '1234', '1324', 'werwqr', NULL),
 (12, 'Emanuel e Luiz Construções ME', 1, '67.187.885/0001-50', 'marketing@emanuelluiz.com.br', '1927860597', '1927860597', 'Rua Ângelo José de Araújo', 8, 'ghgdfhd', 'Bandeirantes', 'Amparo', 'SP', '13903-11', '334.111.926.294', '765.725.121.616', '', 'Manoel'),
-(13, 'João da Silva', 1, '67.187.885/0001-50', 'tesouraria@aliceyasmin.com.br', '1927860597', '1426422159', NULL, 822, 'sem', 'Chácara Seis de Outubro', 'Amparo', 'SP', '03318900', '243.220.078.129', '243.220.078.129', 'loremm', NULL);
+(13, 'João da Silva', 1, '67.187.885/0001-50', 'tesouraria@aliceyasmin.com.br', '1927860597', '1426422159', NULL, 822, 'sem', 'Chácara Seis de Outubro', 'Amparo', 'SP', '03318900', '243.220.078.129', '243.220.078.129', 'loremm', NULL),
+(14, 'Oito comunicacao', 1, '12345', 'projeto@8a80.com.br', '999998888', '2358-7374', NULL, 888, '1', 'Tatuapé', 'São Paulo', 'SP', '03567-01', '5678', '54321', 'Oito a oitenta', NULL),
+(15, 'Rayssa e Leonardo Construções Ltda', 1, '57.364.932/0001-30', 'financeiro@rayssaleonardo.com.br', '(11) 99462-0024', '(11) 3972-4188', NULL, 946, 'Não tem', 'Vila Curuçá', 'Santo André', 'SP', '09280-26', '836.858.908.143', '', 'IMPORTANTE: Nosso gerador online de EMPRESAS tem como intenção ajudar estudantes, programadores, analistas e testadores a gerar todos os documentos necessário para uma empresa. Normalmente necessários parar testar seus softwares em desenvolvimento. \r\nA má utilização dos dados aqui gerados é de total responsabilidade do usuário. \r\nOs números são gerados de forma aleatória, respeitando as regras de criação de cada documento.', NULL);
 
 -- --------------------------------------------------------
 
@@ -137,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `fotolito` (
   `impressao_formato` int(11) NOT NULL,
   `descricao` text NOT NULL,
   `valor` decimal(5,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `fotolito`
@@ -308,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `orcamento` (
   `prazo` text,
   `observacao` text,
   `status` int(1) DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `orcamento`
@@ -363,7 +365,9 @@ INSERT INTO `orcamento` (`id`, `data_orcamento`, `total`, `frete_id`, `valor_fre
 (48, '2016-03-06', '89.47', NULL, '0.00', '0.00', 2, '9.47', 54, 2, 0, '', '', '', 0),
 (49, '2016-03-06', '201.31', NULL, '0.00', '0.00', 2, '21.31', 55, 2, 0, '', '', '', 0),
 (50, '2016-03-06', '55.92', NULL, '0.00', '0.00', 2, '5.92', 56, 2, 0, '', '', '', 0),
-(51, '2016-03-06', '123.02', NULL, '0.00', '0.00', 2, '13.02', 57, 2, 1, '', '', '', 0);
+(51, '2016-03-06', '123.02', NULL, '0.00', '0.00', 2, '13.02', 57, 2, 1, '', '', '', 0),
+(52, '2016-03-07', '578.44', NULL, '40.00', '40.00', 2, '57.00', 61, 14, 1, '', '', '', 0),
+(53, '2016-03-07', '671.04', NULL, '0.00', '0.00', 2, '71.04', 62, 15, 1, '', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -379,7 +383,7 @@ CREATE TABLE IF NOT EXISTS `papel` (
   `largura` int(5) NOT NULL,
   `descricao` text NOT NULL,
   `valor` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=342 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `papel`
@@ -388,8 +392,340 @@ CREATE TABLE IF NOT EXISTS `papel` (
 INSERT INTO `papel` (`id`, `nome`, `gramatura`, `altura`, `largura`, `descricao`, `valor`) VALUES
 (1, 'aspen', 250, 660, 960, 'Color Plus Metalico', '2.00'),
 (2, 'majorca', 250, 660, 960, 'Color Plus Metalico', '7.00'),
-(3, 'couche', 240, 660, 960, '', '3.00'),
-(4, 'Los angeles', 240, 660, 960, 'asdfa', '7.00');
+(4, 'Los angeles', 240, 660, 960, 'asdfa', '7.00'),
+(5, 'citrus yellow ', 240, 660, 960, 'descrição', '0.00'),
+(6, 'infra violet', 240, 660, 960, 'descrição', '0.00'),
+(7, 'lime tonic', 240, 660, 960, 'descrição', '0.00'),
+(8, 'cosmo pink', 240, 660, 960, 'descrição', '0.00'),
+(9, 'riviera blue', 240, 660, 960, 'descrição', '0.00'),
+(10, 'black', 240, 660, 960, 'descrição', '0.00'),
+(11, 'hot brown', 240, 660, 960, 'descrição', '0.00'),
+(12, 'ultra red', 240, 660, 960, 'descrição', '0.00'),
+(13, 'dot bright white', 240, 700, 1000, 'descrição', '0.00'),
+(14, 'dot natural white', 240, 700, 1000, 'descrição', '0.00'),
+(15, 'linear pale cream', 240, 700, 1000, 'descrição', '0.00'),
+(16, 'linear natural white', 240, 700, 1000, 'descrição', '0.00'),
+(17, 'linear bright white', 240, 700, 1000, 'descrição', '0.00'),
+(18, 'design pale cream', 240, 700, 1000, 'descrição', '0.00'),
+(19, 'design bright white', 240, 700, 1000, 'descrição', '0.00'),
+(20, 'design ice white', 240, 700, 1000, 'descrição', '0.00'),
+(21, 'basame natural white', 240, 700, 1000, 'descrição', '0.00'),
+(22, 'basame bright white', 240, 700, 1000, 'descrição', '0.00'),
+(23, 'tweed natural white', 240, 700, 1000, 'descrição', '0.00'),
+(24, 'tweed bright white', 240, 700, 1000, 'descrição', '0.00'),
+(25, 'shetland natural white', 240, 700, 1000, 'descrição', '0.00'),
+(26, 'shetland bright white', 240, 700, 1000, 'descrição', '0.00'),
+(27, 'tradition bright white', 240, 700, 1000, 'descrição', '0.00'),
+(28, 'tradition ice white', 240, 700, 1000, 'descrição', '0.00'),
+(29, 'tradition pale cream', 240, 700, 1000, 'descrição', '0.00'),
+(30, 'tradition le rouge', 240, 700, 1000, 'descrição', '0.00'),
+(31, 'tradition le bleu', 240, 700, 1000, 'descrição', '0.00'),
+(32, 'tradition le noir', 240, 700, 1000, 'descrição', '0.00'),
+(33, 'tradition natural white', 240, 700, 1000, 'descrição', '0.00'),
+(34, 'sensat tactile matt bright', 240, 660, 960, 'descrição', '0.00'),
+(35, 'originale crema', 240, 660, 960, 'descrição', '0.00'),
+(36, 'originale bianco', 240, 660, 960, 'descrição', '0.00'),
+(37, 'concetto bianco', 240, 660, 960, 'descrição', '0.00'),
+(38, 'concetto naturale', 240, 660, 960, 'descrição', '0.00'),
+(39, 'concetto avorio', 240, 660, 960, 'descrição', '0.00'),
+(40, 'concetto metallo bianco', 240, 660, 960, 'descrição', '0.00'),
+(41, 'stile bianco', 240, 660, 960, 'descrição', '0.00'),
+(42, 'stile naturale', 240, 660, 960, 'descrição', '0.00'),
+(43, 'stile avorio', 240, 660, 960, 'descrição', '0.00'),
+(44, 'finezza bianco', 240, 660, 960, 'descrição', '0.00'),
+(45, 'finezza naturale', 240, 660, 960, 'descrição', '0.00'),
+(46, 'finezza avorio', 240, 660, 960, 'descrição', '0.00'),
+(47, 'particles moonlight', 240, 700, 1000, 'descrição', '0.00'),
+(48, 'particles snow', 240, 700, 1000, 'descrição', '0.00'),
+(49, 'particles sunshine', 240, 700, 1000, 'descrição', '0.00'),
+(50, 'vegetal', 240, 660, 960, 'descrição', '0.00'),
+(51, 'giz', 240, 660, 960, 'descrição', '0.00'),
+(52, 'trigo', 240, 660, 960, 'descrição', '0.00'),
+(53, 'paprica', 240, 660, 960, 'descrição', '0.00'),
+(54, 'mostarda', 240, 660, 960, 'descrição', '0.00'),
+(55, 'oregano', 240, 660, 960, 'descrição', '0.00'),
+(56, 'pedra sabao', 240, 660, 960, 'descrição', '0.00'),
+(57, 'giz microcotele', 240, 660, 960, 'descrição', '0.00'),
+(58, 'giz telado', 240, 660, 960, 'descrição', '0.00'),
+(59, 'trigo microcotele', 240, 660, 960, 'descrição', '0.00'),
+(60, 'trigo telado', 240, 660, 960, 'descrição', '0.00'),
+(61, 'oregano microcotele', 240, 660, 960, 'descrição', '0.00'),
+(62, 'oregano telado', 240, 660, 960, 'descrição', '0.00'),
+(63, 'pedra sabao microcotele', 240, 660, 960, 'descrição', '0.00'),
+(64, 'pedra sabao telado', 240, 660, 960, 'descrição', '0.00'),
+(65, 'diamond', 240, 660, 960, 'descrição', '0.00'),
+(66, 'diamond microcotele', 240, 660, 960, 'descrição', '0.00'),
+(67, 'diamond dapple', 240, 660, 960, 'descrição', '0.00'),
+(68, 'diamond telado', 240, 660, 960, 'descrição', '0.00'),
+(69, 'madreperola', 240, 660, 960, 'descrição', '0.00'),
+(70, 'ambar', 240, 660, 960, 'descrição', '0.00'),
+(71, 'berilo', 240, 660, 960, 'descrição', '0.00'),
+(72, 'coral', 240, 660, 960, 'descrição', '0.00'),
+(73, 'turmalina', 240, 660, 960, 'descrição', '0.00'),
+(74, 'opala', 240, 660, 960, 'descrição', '0.00'),
+(75, 'agua marinha', 240, 660, 960, 'descrição', '0.00'),
+(76, 'onix', 240, 660, 960, 'descrição', '0.00'),
+(77, 'rubi', 240, 660, 960, 'descrição', '0.00'),
+(78, 'diamante', 240, 660, 960, 'descrição', '0.00'),
+(79, 'alaska', 240, 660, 960, 'descrição', '0.00'),
+(80, 'marfim', 240, 660, 960, 'descrição', '0.00'),
+(81, 'marfim', 240, 660, 960, 'descrição', '0.00'),
+(82, 'sahara', 240, 660, 960, 'descrição', '0.00'),
+(83, 'havana', 240, 660, 960, 'descrição', '0.00'),
+(84, 'marrocos', 240, 660, 960, 'descrição', '0.00'),
+(85, 'rio de janeiro', 240, 660, 960, 'descrição', '0.00'),
+(86, 'jamaica', 240, 660, 960, 'descrição', '0.00'),
+(87, 'cartagena', 240, 660, 960, 'descrição', '0.00'),
+(88, 'madrid', 240, 660, 960, 'descrição', '0.00'),
+(89, 'fidji', 240, 660, 960, 'descrição', '0.00'),
+(90, 'cancun', 240, 660, 960, 'descrição', '0.00'),
+(91, 'pequim', 240, 660, 960, 'descrição', '0.00'),
+(92, 'toquio', 240, 660, 960, 'descrição', '0.00'),
+(93, 'amsterdam', 240, 660, 960, 'descrição', '0.00'),
+(94, 'sao francisco', 240, 660, 960, 'descrição', '0.00'),
+(95, 'roma', 240, 660, 960, 'descrição', '0.00'),
+(96, 'milano', 240, 660, 960, 'descrição', '0.00'),
+(97, 'paris', 240, 660, 960, 'descrição', '0.00'),
+(98, 'nice', 240, 660, 960, 'descrição', '0.00'),
+(99, 'bahamas', 240, 660, 960, 'descrição', '0.00'),
+(100, 'grecia', 240, 660, 960, 'descrição', '0.00'),
+(101, 'toronto', 240, 660, 960, 'descrição', '0.00'),
+(102, 'porto seguro', 240, 660, 960, 'descrição', '0.00'),
+(103, 'tahiti', 240, 660, 960, 'descrição', '0.00'),
+(104, 'buenos aires', 240, 660, 960, 'descrição', '0.00'),
+(105, 'brasil', 240, 660, 960, 'descrição', '0.00'),
+(106, 'santiago', 240, 660, 960, 'descrição', '0.00'),
+(108, 'marfim telado', 240, 660, 960, 'descrição', '0.00'),
+(109, 'marfim microcotele', 240, 660, 960, 'descrição', '0.00'),
+(110, 'toquio telado', 240, 660, 960, 'descrição', '0.00'),
+(111, 'toquio microcotele', 240, 660, 960, 'descrição', '0.00'),
+(112, 'pequim telado', 240, 660, 960, 'descrição', '0.00'),
+(113, 'pequim microcotele', 240, 660, 960, 'descrição', '0.00'),
+(114, 'porto seguro telado', 240, 660, 960, 'descrição', '0.00'),
+(115, 'porto seguro microcotele', 240, 660, 960, 'descrição', '0.00'),
+(116, 'marrocos telado', 240, 660, 960, 'descrição', '0.00'),
+(117, 'marrocos microcotele', 240, 660, 960, 'descrição', '0.00'),
+(118, 'los angeles telado', 240, 660, 960, 'descrição', '0.00'),
+(119, 'los angeles microcotele', 240, 660, 960, 'descrição', '0.00'),
+(120, 'mar del plata', 240, 660, 960, 'descrição', '0.00'),
+(121, 'mar del plata linear', 240, 660, 960, 'descrição', '0.00'),
+(123, 'aspen linear', 240, 660, 960, 'descrição', '0.00'),
+(124, 'majorca', 240, 660, 960, 'descrição', '0.00'),
+(125, 'majorca linear', 240, 660, 960, 'descrição', '0.00'),
+(126, 'ibiza', 240, 660, 960, 'descrição', '0.00'),
+(127, 'fine face branco', 240, 660, 960, 'descrição', '0.00'),
+(128, 'perola branca', 240, 660, 960, 'descrição', '0.00'),
+(129, 'virtual', 240, 660, 960, 'descrição', '0.00'),
+(130, 'agua - marinha', 240, 660, 960, 'descrição', '0.00'),
+(131, 'quartzo rosa', 240, 660, 960, 'descrição', '0.00'),
+(132, 'lilac', 240, 660, 960, 'descrição', '0.00'),
+(133, 'moscatel', 240, 660, 960, 'descrição', '0.00'),
+(134, 'turquesa', 240, 660, 960, 'descrição', '0.00'),
+(135, 'amazonita', 240, 660, 960, 'descrição', '0.00'),
+(136, 'wasabi', 240, 660, 960, 'descrição', '0.00'),
+(137, 'esmeralda', 240, 660, 960, 'descrição', '0.00'),
+(138, 'antique', 240, 660, 960, 'descrição', '0.00'),
+(139, 'ouro branco', 240, 660, 960, 'descrição', '0.00'),
+(140, 'champagne', 240, 660, 960, 'descrição', '0.00'),
+(141, 'ouro platino', 240, 660, 960, 'descrição', '0.00'),
+(142, 'ouro nobre', 240, 660, 960, 'descrição', '0.00'),
+(143, 'maxi gold', 240, 660, 960, 'descrição', '0.00'),
+(144, 'ouro amarelo', 240, 660, 960, 'descrição', '0.00'),
+(145, 'hermes', 240, 660, 960, 'descrição', '0.00'),
+(146, 'passion', 240, 660, 960, 'descrição', '0.00'),
+(147, 'copper', 240, 660, 960, 'descrição', '0.00'),
+(148, 'rust', 240, 660, 960, 'descrição', '0.00'),
+(149, 'nobuck', 240, 660, 960, 'descrição', '0.00'),
+(150, 'cafe', 240, 660, 960, 'descrição', '0.00'),
+(151, 'rubi', 240, 660, 960, 'descrição', '0.00'),
+(152, 'pimenta rosa', 240, 660, 960, 'descrição', '0.00'),
+(153, 'begonia', 240, 660, 960, 'descrição', '0.00'),
+(154, 'ametista', 240, 660, 960, 'descrição', '0.00'),
+(155, 'shiraz', 240, 660, 960, 'descrição', '0.00'),
+(156, 'fantasy', 240, 660, 960, 'descrição', '0.00'),
+(157, 'galaxia', 240, 660, 960, 'descrição', '0.00'),
+(158, 'jeans', 240, 660, 960, 'descrição', '0.00'),
+(159, 'aluminium', 240, 660, 960, 'descrição', '0.00'),
+(160, 'platino', 240, 660, 960, 'descrição', '0.00'),
+(161, 'grafite', 240, 660, 960, 'descrição', '0.00'),
+(162, 'onix', 240, 660, 960, 'descrição', '0.00'),
+(163, 'perola negra', 240, 660, 960, 'descrição', '0.00'),
+(164, 'champagne telado', 240, 660, 960, 'descrição', '0.00'),
+(165, 'nobuck telado', 240, 660, 960, 'descrição', '0.00'),
+(166, 'cafe telado', 240, 660, 960, 'descrição', '0.00'),
+(167, 'antique telado', 240, 660, 960, 'descrição', '0.00'),
+(168, 'rubi telado', 240, 660, 960, 'descrição', '0.00'),
+(169, 'galaxia telado', 240, 660, 960, 'descrição', '0.00'),
+(170, 'lilac telado', 240, 660, 960, 'descrição', '0.00'),
+(171, 'perola branca telado', 240, 660, 960, 'descrição', '0.00'),
+(172, 'aluminium telado', 240, 660, 960, 'descrição', '0.00'),
+(173, 'onix telado', 240, 660, 960, 'descrição', '0.00'),
+(174, 'maxi gold', 240, 660, 960, 'descrição', '0.00'),
+(175, 'esmeralda', 240, 660, 960, 'descrição', '0.00'),
+(176, 'rosa luxcent', 240, 660, 960, 'descrição', '0.00'),
+(177, 'fantasy', 240, 660, 960, 'descrição', '0.00'),
+(178, 'galaxia', 240, 660, 960, 'descrição', '0.00'),
+(179, 'grafite', 240, 660, 960, 'descrição', '0.00'),
+(180, 'onix', 240, 660, 960, 'descrição', '0.00'),
+(181, 'perola - fora de linha', 240, 660, 960, 'descrição', '0.00'),
+(182, 'palha - fora de linha', 240, 660, 960, 'descrição', '0.00'),
+(183, 'amarelo - fora de linha', 240, 660, 960, 'descrição', '0.00'),
+(184, 'limao - fora de linha', 240, 660, 960, 'descrição', '0.00'),
+(185, 'turquesa - fora de linha', 240, 660, 960, 'descrição', '0.00'),
+(186, 'rosa - fora de linha', 240, 660, 960, 'descrição', '0.00'),
+(187, 'vermelho - fora de linha', 240, 660, 960, 'descrição', '0.00'),
+(188, 'preto - fora de linha', 240, 660, 960, 'descrição', '0.00'),
+(189, 'verde', 240, 660, 960, 'descrição', '0.00'),
+(190, 'amarelo', 240, 660, 960, 'descrição', '0.00'),
+(191, 'laranja', 240, 660, 960, 'descrição', '0.00'),
+(192, 'vermelho', 240, 660, 960, 'descrição', '0.00'),
+(193, 'rosa', 240, 660, 960, 'descrição', '0.00'),
+(194, 'roxo', 240, 660, 960, 'descrição', '0.00'),
+(195, 'tabaco', 240, 660, 960, 'descrição', '0.00'),
+(196, 'imbuia', 240, 660, 960, 'descrição', '0.00'),
+(197, 'natural', 240, 660, 960, 'descrição', '0.00'),
+(198, 'preto', 240, 660, 960, 'descrição', '0.00'),
+(199, 'perola branca', 240, 660, 960, 'descrição', '0.00'),
+(200, 'marfim', 240, 660, 960, 'descrição', '0.00'),
+(201, 'preto', 240, 660, 960, 'descrição', '0.00'),
+(202, 'agua marinha', 240, 660, 960, 'descrição', '0.00'),
+(203, 'quartzo rosa', 240, 660, 960, 'descrição', '0.00'),
+(204, 'perola branca', 240, 660, 960, 'descrição', '0.00'),
+(205, 'preto', 240, 660, 960, 'descrição', '0.00'),
+(206, 'ouro', 240, 660, 960, 'descrição', '0.00'),
+(207, 'prata', 240, 660, 960, 'descrição', '0.00'),
+(208, 'branco brilho', 240, 660, 960, 'descrição', '0.00'),
+(209, 'preto', 240, 660, 960, 'descrição', '0.00'),
+(210, 'marfim', 240, 660, 960, 'descrição', '0.00'),
+(211, 'pequim', 240, 660, 960, 'descrição', '0.00'),
+(212, 'porto seguro', 240, 660, 960, 'descrição', '0.00'),
+(214, 'branco', 240, 660, 960, 'descrição', '0.00'),
+(215, 'marfim', 240, 660, 960, 'descrição', '0.00'),
+(216, 'pequim', 240, 660, 960, 'descrição', '0.00'),
+(217, 'porto seguro', 240, 660, 960, 'descrição', '0.00'),
+(219, 'natural', 240, 660, 960, 'descrição', '0.00'),
+(220, 'marrom', 240, 660, 960, 'descrição', '0.00'),
+(221, 'preto', 240, 660, 960, 'descrição', '0.00'),
+(222, 'ibira/natural', 240, 660, 960, 'descrição', '0.00'),
+(223, 'pavao', 240, 660, 960, 'descrição', '0.00'),
+(224, 'royal', 240, 660, 960, 'descrição', '0.00'),
+(225, 'pink', 240, 660, 960, 'descrição', '0.00'),
+(226, 'limao', 240, 660, 960, 'descrição', '0.00'),
+(227, 'branco', 240, 660, 960, 'descrição', '0.00'),
+(228, 'creme', 240, 660, 960, 'descrição', '0.00'),
+(229, 'marrom', 240, 660, 960, 'descrição', '0.00'),
+(230, 'preto', 240, 660, 960, 'descrição', '0.00'),
+(231, 'creme', 240, 660, 960, 'descrição', '0.00'),
+(232, 'passione', 240, 660, 960, 'descrição', '0.00'),
+(233, 'yoga', 240, 660, 960, 'descrição', '0.00'),
+(234, 'fascino', 240, 660, 960, 'descrição', '0.00'),
+(235, 'giallo', 240, 660, 960, 'descrição', '0.00'),
+(236, 'saggezza', 240, 660, 960, 'descrição', '0.00'),
+(237, 'mistero', 240, 660, 960, 'descrição', '0.00'),
+(238, 'purezza', 240, 660, 960, 'descrição', '0.00'),
+(239, 'color armadillo premium white', 240, 660, 960, 'descrição', '0.00'),
+(240, 'color armadillo nero', 240, 660, 960, 'descrição', '0.00'),
+(241, 'color laser premium white', 240, 660, 960, 'descrição', '0.00'),
+(242, 'color laser nero', 240, 660, 960, 'descrição', '0.00'),
+(243, 'pearl ice', 240, 660, 960, 'descrição', '0.00'),
+(244, 'pearl radiant', 240, 660, 960, 'descrição', '0.00'),
+(245, 'pearl silver', 240, 660, 960, 'descrição', '0.00'),
+(246, 'pearl lime', 240, 660, 960, 'descrição', '0.00'),
+(247, 'pearl orange', 240, 660, 960, 'descrição', '0.00'),
+(248, 'pearl bordeaux', 240, 660, 960, 'descrição', '0.00'),
+(249, 'pearl purple', 240, 660, 960, 'descrição', '0.00'),
+(250, 'pearl dark grey', 240, 660, 960, 'descrição', '0.00'),
+(251, 'cottage premium white', 240, 660, 960, 'descrição', '0.00'),
+(252, 'cottage ivory', 240, 660, 960, 'descrição', '0.00'),
+(253, 'nettuno bianco artico', 240, 660, 960, 'descrição', '0.00'),
+(254, 'nettuno polvere', 240, 660, 960, 'descrição', '0.00'),
+(255, 'nettuno grigio fendi', 240, 660, 960, 'descrição', '0.00'),
+(256, 'nettuno pompelmo', 240, 660, 960, 'descrição', '0.00'),
+(257, 'nettuno rosso fuoco', 240, 660, 960, 'descrição', '0.00'),
+(258, 'nettuno blu navy', 240, 660, 960, 'descrição', '0.00'),
+(259, 'nettuno carruba', 240, 660, 960, 'descrição', '0.00'),
+(260, 'nettuno nero', 240, 660, 960, 'descrição', '0.00'),
+(261, 'tweed extra white', 240, 660, 960, 'descrição', '0.00'),
+(262, 'tweed white', 240, 660, 960, 'descrição', '0.00'),
+(263, 'tweed camel', 240, 660, 960, 'descrição', '0.00'),
+(264, 'tweed blue', 240, 660, 960, 'descrição', '0.00'),
+(265, 'tweed dark grey', 240, 660, 960, 'descrição', '0.00'),
+(266, 'pinstripe white', 240, 660, 960, 'descrição', '0.00'),
+(267, 'pinstrioe dark grey', 240, 660, 960, 'descrição', '0.00'),
+(268, 'matt premium white', 240, 660, 960, 'descrição', '0.00'),
+(269, 'gloss premium white', 240, 660, 960, 'descrição', '0.00'),
+(270, 'raster premium white', 240, 660, 960, 'descrição', '0.00'),
+(271, 'bianco', 240, 660, 960, 'descrição', '0.00'),
+(272, 'naturale', 240, 660, 960, 'descrição', '0.00'),
+(273, 'gsk premium white', 240, 660, 960, 'descrição', '0.00'),
+(274, 'snow fluid', 240, 660, 960, 'descrição', '0.00'),
+(275, 'snow fiandra', 240, 660, 960, 'descrição', '0.00'),
+(276, 'snow laser', 240, 660, 960, 'descrição', '0.00'),
+(277, 'snow metal', 240, 660, 960, 'descrição', '0.00'),
+(278, 'jade riccio', 240, 660, 960, 'descrição', '0.00'),
+(279, 'jade laser', 240, 660, 960, 'descrição', '0.00'),
+(280, 'jade onde', 240, 660, 960, 'descrição', '0.00'),
+(281, 'jade metal', 240, 660, 960, 'descrição', '0.00'),
+(282, 'jade lizard', 240, 660, 960, 'descrição', '0.00'),
+(283, 'jade raster', 240, 660, 960, 'descrição', '0.00'),
+(284, 'goya white', 240, 660, 960, 'descrição', '0.00'),
+(285, 'desiree red', 240, 660, 960, 'descrição', '0.00'),
+(286, 'andira grey', 240, 660, 960, 'descrição', '0.00'),
+(287, 'black truffle', 240, 660, 960, 'descrição', '0.00'),
+(288, 'mocha', 240, 660, 960, 'descrição', '0.00'),
+(289, 'violet', 240, 660, 960, 'descrição', '0.00'),
+(290, 'black', 240, 660, 960, 'descrição', '0.00'),
+(291, 'pink', 240, 660, 960, 'descrição', '0.00'),
+(292, 'lavender', 240, 660, 960, 'descrição', '0.00'),
+(293, 'absynthe', 240, 660, 960, 'descrição', '0.00'),
+(294, 'red', 240, 660, 960, 'descrição', '0.00'),
+(295, 'grey', 240, 660, 960, 'descrição', '0.00'),
+(296, 'indigo', 240, 660, 960, 'descrição', '0.00'),
+(297, 'emerald', 240, 660, 960, 'descrição', '0.00'),
+(298, 'milk', 240, 660, 960, 'descrição', '0.00'),
+(299, 'botanic', 240, 660, 960, 'descrição', '0.00'),
+(300, 'chocolate', 240, 660, 960, 'descrição', '0.00'),
+(301, 'cognac', 240, 660, 960, 'descrição', '0.00'),
+(302, 'galvanised', 240, 660, 960, 'descrição', '0.00'),
+(303, 'gold leat', 240, 660, 960, 'descrição', '0.00'),
+(304, 'ice silver', 240, 660, 960, 'descrição', '0.00'),
+(305, 'ink', 240, 660, 960, 'descrição', '0.00'),
+(306, 'ionised', 240, 660, 960, 'descrição', '0.00'),
+(307, 'lime', 240, 660, 960, 'descrição', '0.00'),
+(308, 'lustre', 240, 660, 960, 'descrição', '0.00'),
+(309, 'nude', 240, 660, 960, 'descrição', '0.00'),
+(310, 'red lacquer', 240, 660, 960, 'descrição', '0.00'),
+(311, 'super gold', 240, 660, 960, 'descrição', '0.00'),
+(312, 'violette', 240, 660, 960, 'descrição', '0.00'),
+(313, 'white gold', 240, 660, 960, 'descrição', '0.00'),
+(314, 'ice gold (fusilier)', 240, 660, 960, 'descrição', '0.00'),
+(315, 'white gold (fusilier)', 240, 660, 960, 'descrição', '0.00'),
+(316, 'cryogen white', 240, 660, 960, 'descrição', '0.00'),
+(317, 'virtual pearl', 240, 660, 960, 'descrição', '0.00'),
+(318, 'bright white', 240, 660, 960, 'descrição', '0.00'),
+(319, 'pearl', 240, 660, 960, 'descrição', '0.00'),
+(320, 'silver', 240, 660, 960, 'descrição', '0.00'),
+(321, 'prata brilho', 240, 660, 960, 'descrição', '0.00'),
+(322, 'prata fosco', 240, 660, 960, 'descrição', '0.00'),
+(323, 'ouro fosco', 240, 660, 960, 'descrição', '0.00'),
+(324, 'prata fosco escovado', 240, 660, 960, 'descrição', '0.00'),
+(325, 'ouro fosco escovado', 240, 660, 960, 'descrição', '0.00'),
+(326, 'prata brilho', 240, 660, 960, 'descrição', '0.00'),
+(327, 'ouro brilho', 240, 660, 960, 'descrição', '0.00'),
+(328, 'prata fosco', 240, 660, 960, 'descrição', '0.00'),
+(329, 'ouro fosco', 240, 660, 960, 'descrição', '0.00'),
+(330, 'prata ', 240, 660, 960, 'descrição', '0.00'),
+(331, 'ouro', 240, 660, 960, 'descrição', '0.00'),
+(332, 'basame bright white', 240, 660, 960, 'descrição', '0.00'),
+(333, 'design bright white', 240, 660, 960, 'descrição', '0.00'),
+(334, 'design natural white', 240, 660, 960, 'descrição', '0.00'),
+(335, 'linear bright white', 240, 660, 960, 'descrição', '0.00'),
+(336, 'tweed bright white', 240, 660, 960, 'descrição', '0.00'),
+(337, 'concetto bianco', 240, 660, 960, 'descrição', '0.00'),
+(338, 'finezza bianco', 240, 660, 960, 'descrição', '0.00'),
+(339, 'couche fosco', 240, 660, 960, 'descrição', '0.00'),
+(340, 'acetato 62x120', 240, 660, 960, 'descrição', '0.00'),
+(341, 'kraft', 240, 660, 960, 'descrição', '0.00');
 
 -- --------------------------------------------------------
 
@@ -405,7 +741,7 @@ CREATE TABLE IF NOT EXISTS `servico` (
   `valor_unitario` decimal(10,2) NOT NULL,
   `sub_total` decimal(10,2) NOT NULL,
   `total` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico`
@@ -460,7 +796,9 @@ INSERT INTO `servico` (`id`, `tipo`, `quantidade`, `desconto`, `valor_unitario`,
 (54, 'cartao', 100, '0.00', '0.80', '0.00', '80.00'),
 (55, 'cartao', 100, '0.00', '1.80', '0.00', '180.00'),
 (56, 'cartao', 100, '0.00', '0.50', '0.00', '50.00'),
-(57, 'cartao', 100, '0.00', '1.10', '0.00', '110.00');
+(57, 'cartao', 100, '0.00', '1.10', '0.00', '110.00'),
+(61, 'cartao', 100, '0.00', '4.81', '0.00', '481.44'),
+(62, 'cartao', 100, '0.00', '6.00', '0.00', '600.00');
 
 -- --------------------------------------------------------
 
@@ -474,7 +812,7 @@ CREATE TABLE IF NOT EXISTS `servico_acabamento` (
   `acabamento_id` int(11) NOT NULL,
   `quantidade` int(11) NOT NULL,
   `acabamento_valor` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_acabamento`
@@ -504,7 +842,8 @@ INSERT INTO `servico_acabamento` (`id`, `servico_id`, `acabamento_id`, `quantida
 (24, 31, 1, 1, '0.00'),
 (25, 32, 1, 1, '0.00'),
 (26, 40, 1, 2, '0.00'),
-(27, 41, 1, 2, '0.00');
+(27, 41, 1, 2, '0.00'),
+(31, 61, 1, 1, '0.00');
 
 -- --------------------------------------------------------
 
@@ -516,7 +855,7 @@ CREATE TABLE IF NOT EXISTS `servico_colagem` (
 `id` int(11) NOT NULL,
   `servico_id` int(11) NOT NULL,
   `colagem_valor` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_colagem`
@@ -534,7 +873,8 @@ INSERT INTO `servico_colagem` (`id`, `servico_id`, `colagem_valor`) VALUES
 (13, 13, '200.00'),
 (14, 14, '200.00'),
 (15, 28, '100.00'),
-(16, 33, '100.00');
+(16, 33, '100.00'),
+(20, 61, '19.59');
 
 -- --------------------------------------------------------
 
@@ -581,7 +921,7 @@ CREATE TABLE IF NOT EXISTS `servico_faca_cartao` (
   `servico_id` int(11) NOT NULL,
   `faca_cartao_id` int(11) NOT NULL,
   `faca_cartao_valor` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_faca_cartao`
@@ -606,7 +946,8 @@ INSERT INTO `servico_faca_cartao` (`id`, `servico_id`, `faca_cartao_id`, `faca_c
 (17, 53, 1, '50.00'),
 (18, 56, 1, '50.00'),
 (19, 57, 1, '50.00'),
-(20, 57, 1, '60.00');
+(20, 57, 1, '60.00'),
+(24, 61, 1, '60.00');
 
 -- --------------------------------------------------------
 
@@ -669,7 +1010,7 @@ CREATE TABLE IF NOT EXISTS `servico_impressao_cartao` (
   `qtd_cor_verso` int(11) NOT NULL,
   `impressao_cartao_valor_500` decimal(10,2) NOT NULL,
   `impressao_cartao_valor_1000` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_impressao_cartao`
@@ -694,7 +1035,9 @@ INSERT INTO `servico_impressao_cartao` (`id`, `servico_id`, `impressao_cartao_id
 (17, 53, 2, 5, '28.00', '0.00', 4, 1, 1, '20.00', '18.00'),
 (18, 54, 2, 5, '28.00', '12.00', 4, 1, 1, '20.00', '18.00'),
 (19, 55, 2, 5, '28.00', '12.00', 4, 1, 1, '20.00', '18.00'),
-(20, 55, 2, 5, '38.00', '12.00', 4, 1, 1, '30.00', '28.00');
+(20, 55, 2, 5, '38.00', '12.00', 4, 1, 1, '30.00', '28.00'),
+(24, 61, 2, 5, '38.00', '12.00', 4, 1, 0, '30.00', '28.00'),
+(25, 62, 2, 5, '38.00', '12.00', 4, 10, 2, '30.00', '28.00');
 
 -- --------------------------------------------------------
 
@@ -707,7 +1050,7 @@ CREATE TABLE IF NOT EXISTS `servico_laminacao` (
   `servico_id` int(11) NOT NULL,
   `laminacao_id` int(11) NOT NULL,
   `valor` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_laminacao`
@@ -730,7 +1073,8 @@ INSERT INTO `servico_laminacao` (`id`, `servico_id`, `laminacao_id`, `valor`) VA
 (18, 22, 1, '100.00'),
 (19, 23, 1, '100.00'),
 (20, 24, 1, '100.00'),
-(21, 28, 1, '100.00');
+(21, 28, 1, '100.00'),
+(25, 61, 1, '100.30');
 
 -- --------------------------------------------------------
 
@@ -746,7 +1090,7 @@ CREATE TABLE IF NOT EXISTS `servico_papel` (
   `quantidade` int(11) NOT NULL,
   `empastamento_status` tinyint(1) NOT NULL,
   `papel_valor` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servico_papel`
@@ -781,7 +1125,9 @@ INSERT INTO `servico_papel` (`id`, `servico_id`, `papel_id`, `empastamento_valor
 (27, 41, 1, '0.00', 9, 0, '5.00'),
 (28, 42, 1, '100.00', 10, 1, '5.00'),
 (29, 43, 1, '100.00', 10, 1, '5.00'),
-(30, 43, 1, '0.00', 10, 0, '2.00');
+(30, 43, 1, '0.00', 10, 0, '2.00'),
+(37, 61, 1, '100.55', 21, 1, '2.00'),
+(38, 61, 2, '0.00', 7, 0, '7.00');
 
 -- --------------------------------------------------------
 
@@ -961,7 +1307,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `cliente`
 --
 ALTER TABLE `cliente`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `faca`
 --
@@ -976,7 +1322,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `fotolito`
 --
 ALTER TABLE `fotolito`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `frete`
 --
@@ -1011,27 +1357,27 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `orcamento`
 --
 ALTER TABLE `orcamento`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=52;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT for table `papel`
 --
 ALTER TABLE `papel`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=342;
 --
 -- AUTO_INCREMENT for table `servico`
 --
 ALTER TABLE `servico`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=63;
 --
 -- AUTO_INCREMENT for table `servico_acabamento`
 --
 ALTER TABLE `servico_acabamento`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `servico_colagem`
 --
 ALTER TABLE `servico_colagem`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `servico_faca`
 --
@@ -1041,7 +1387,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 -- AUTO_INCREMENT for table `servico_faca_cartao`
 --
 ALTER TABLE `servico_faca_cartao`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `servico_impressao`
 --
@@ -1051,17 +1397,17 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 -- AUTO_INCREMENT for table `servico_impressao_cartao`
 --
 ALTER TABLE `servico_impressao_cartao`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `servico_laminacao`
 --
 ALTER TABLE `servico_laminacao`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `servico_papel`
 --
 ALTER TABLE `servico_papel`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT for table `usuario`
 --
