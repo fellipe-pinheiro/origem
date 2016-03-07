@@ -20,6 +20,22 @@
                 $(this).addClass('active');
             }
         });
+        
+        $('#deletar').click(function () {
+            if ($('table tbody tr.active td').eq(0).text() != '') {
+                var id = $('table tbody tr.active td').eq(0).text();
+                var nome = $('table tbody tr.active td').eq(1).text();
+                if (confirm("O papel " + nome + " sera apagado!")) {
+                    window.location.replace("<?= base_url("papel/deletar") ?>/" + id);
+                }
+            }
+        });
+        $('#editar').click(function () {
+            if ($('table tbody tr.active td').eq(0).text() != '') {
+                var id = $('table tbody tr.active td').eq(0).text();
+                window.location.replace("<?= base_url("papel/form") ?>/" + id);
+            }
+        });
     });
 </script>
 <style type="text/css">

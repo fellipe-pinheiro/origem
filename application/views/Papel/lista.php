@@ -3,26 +3,6 @@
     <?php $this->load->view('_include/head', ['titulo' => 'Home']); ?>
     <?php $this->load->view('_include/dataTable'); ?>
     <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.11/type-detection/date-uk.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#deletar').click(function () {
-                if ($('table tbody tr.active td').eq(0).text() != '') {
-                    var id = $('table tbody tr.active td').eq(0).text();
-                    var nome = $('table tbody tr.active td').eq(1).text();
-                    if (confirm("O papel " + nome + " sera apagado!")) {
-                        window.location.replace("<?= base_url("papel/deletar") ?>/" + id);
-                    }
-                }
-            });
-            $('#editar').click(function () {
-                if ($('table tbody tr.active td').eq(0).text() != '') {
-                    var id = $('table tbody tr.active td').eq(0).text();
-                    window.location.replace("<?= base_url("papel/form") ?>/" + id);
-                }
-            });
-        });
-    </script>
-
     <body>
         <?php $this->load->view('_include/menu'); ?>
         <div class="container">
