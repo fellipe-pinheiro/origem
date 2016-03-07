@@ -46,7 +46,7 @@
                                             <td><?= $value->altura ?></td>
                                             <td><?= $value->largura ?></td>
                                             <td><?= $value->descricao ?></td>
-                                            <td><?= str_replace('.', ',', $value->valor) ?></td>
+                                            <td>R$ <?= number_format($value->valor,2,',', '.' ) ?></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
