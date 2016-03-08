@@ -43,7 +43,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor', $acabamento->valor, 'required step="0.01" min="0" id="valor" class="form-control" placeholder="Valor"') ?>
+                            <input required step="0.01" min="0" value="<?= $acabamento->valor ?>" name="valor" type="number" class="form-control" placeholder="Valor" />
                         </div>
                     </div>
 

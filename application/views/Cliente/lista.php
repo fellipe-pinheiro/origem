@@ -1,58 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <?php $this->load->view('_include/head', ['titulo' => 'Clientes']); ?>
-    <?php $this->load->view('_include/js-lista', ['crud' => 'Cliente']); ?>
+    <?php $this->load->view('_include/dataTable', ['controler' => 'cliente']); ?>
     <body>
         <?php $this->load->view('_include/menu'); ?>
         <div class="container">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Lista cliente</h3>
+                    <h3 class="panel-title">Lista Cliente</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <?= form_input('', '', ' id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
+                            <a class="btn btn-primary" href="<?= base_url('cliente/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>
                         </div>
-                        <div class="col-md-3">
-                            <a class="btn btn-primary inserir" href="<?= base_url('cliente/form') ?>">Novo Cliente</a>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-3 btn-group">
+                            <a id="editar" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+                            <a id="deletar" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Deletar</a>
                         </div>
                     </div>
-
+                    <hr>
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nome</th>
-                                        <th>Bairro</th>
-                                        <th>cnpj_cpf</th>
-                                        <th colspan="2">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="fbody">
-                                    <?php foreach ($cliente as $key => $value) { ?>
+                            <div class="table-responsive">
+                                <table class="table display compact table-bordered" cellspacing="0" width="100%">
+                                    <thead>
                                         <tr>
-                                            <td><?= $value->id ?></td>
-                                            <td><?= $value->nome ?></td>
-                                            <td><?= $value->bairro ?></td>
-                                            <td><?= $value->cnpj_cpf ?></td>
-                                            <td style="width: 46px;"><a class="btn btn-primary editar" href="<?= base_url("cliente/form/{$value->id}") ?>">Editar</a></td>
-                                            <td style="width: 46px;"><a class="btn btn-danger deletar" href="<?= base_url("cliente/deletar/{$value->id}") ?>">Deletar</a></td>
+                                            <th>ID</th>
+                                            <th>Nome</th>
+                                            <th>CNPJ / CPF</th>
+                                            <th>Contato</th>
+                                            <th>Telefone</th>
+                                            <th>Email</th>
                                         </tr>
-                                    <?php } ?>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="6">
-                                            <ul class="pager" id="">
-                                                <?php (!empty($paginacao)) ? print $paginacao : ''; ?>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                    </thead>
+                                    <tbody id="fbody">
+                                        <?php foreach ($cliente as $key => $value) { ?>
+                                            <tr>
+                                                <td><?= $value->id ?></td>
+                                                <td><?= $value->nome ?></td>
+                                                <td><?= $value->cnpj_cpf ?></td>
+                                                <td><?= $value->contato_nome ?></td>
+                                                <td><?= $value->telefone ?></td>
+                                                <td><?= $value->email ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="6">
+                                                <ul class="pager" id="">
+                                                    <?php (!empty($paginacao)) ? print $paginacao : ''; ?>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

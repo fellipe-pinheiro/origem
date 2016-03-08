@@ -1,3 +1,4 @@
+<?php empty($controler) ? $controler = '' : $controler; ?>
 <link rel="stylesheet" href="<?= base_url("assets/css/dataTables.bootstrap.min.css"); ?>" />
 <script type="text/javascript" src="<?= base_url("assets/js/jquery.dataTables.js"); ?>"></script>
 <script type="text/javascript" src="<?= base_url("assets/js/dataTables.bootstrap.min.js"); ?>"></script>
@@ -23,15 +24,15 @@
             if ($('table tbody tr.active td').eq(0).text() != '') {
                 var id = $('table tbody tr.active td').eq(0).text();
                 var nome = $('table tbody tr.active td').eq(1).text();
-                if (confirm("O papel " + nome + " sera apagado!")) {
-                    window.location.replace("<?= base_url("papel/deletar") ?>/" + id);
+                if (confirm("O item: " + nome + " sera apagado!")) {
+                    window.location.replace("<?= base_url("$controler/deletar") ?>/" + id);
                 }
             }
         });
         $('#editar').click(function () {
             if ($('table tbody tr.active td').eq(0).text() != '') {
                 var id = $('table tbody tr.active td').eq(0).text();
-                window.location.replace("<?= base_url("papel/form") ?>/" + id);
+                window.location.replace("<?= base_url("$controler/form") ?>/" + id);
             }
         });
     });

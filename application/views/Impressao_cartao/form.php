@@ -37,7 +37,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor 100: ', 'valor_100', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor_100', $impressao_cartao->valor_100, 'required id="valor_100" class="form-control" placeholder="valor para 100 impressões"') ?>
+                            <input name="valor_100" type="number" value="<?=$impressao_cartao->valor_100?>" required step="0.01" min="0" id="valor_100" class="form-control" placeholder="valor para 100 impressões">
                         </div>
                     </div>
 
@@ -45,7 +45,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor 500: ', 'valor_500', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor_500', $impressao_cartao->valor_500, 'required id="valor_500" class="form-control" placeholder="valor para 500 impressões"') ?>
+                            <input name="valor_500" type="number" value="<?=$impressao_cartao->valor_500?>" required step="0.01" min="0" id="valor_500" class="form-control" placeholder="valor para 500 impressões">
                         </div>
                     </div>
 
@@ -53,7 +53,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor 1000: ', 'valor_1000', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor_1000', $impressao_cartao->valor_1000, 'required id="valor_1000" class="form-control" placeholder="valor para 1000 impressões"') ?>
+                            <input name="valor_1000" type="number" value="<?=$impressao_cartao->valor_1000?>" required step="0.01" min="0" id="valor_1000" class="form-control" placeholder="valor para 1000 impressões">
                         </div>
                     </div>
 
@@ -78,12 +78,11 @@ if ($acao == 'inserir') {
                             <?= form_textarea('descricao', $impressao_cartao->descricao, ' id="descricao" class="form-control" placeholder="Descrição"') ?>
                         </div>
                     </div>
-
-
+                    
                     <!--Botoes-->
                     <div class="form-group">        
                         <div class="col-sm-offset-2 col-sm-5">
-                            <?= form_button('cancelar', 'Cancelar', 'class="btn btn-default" onClick="javascript:history.back(1)"') ?>
+                            <?= anchor(base_url('impressao_cartao'), 'Cancelar', 'class="btn btn-default"') ?>
                             <?= form_submit('salvar', 'Salvar', 'class="btn btn-default"') ?>
                         </div>
                     </div>

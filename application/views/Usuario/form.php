@@ -49,7 +49,7 @@ if ($acao == 'inserir') {
                     <!--Botoes-->
                     <div class="form-group">        
                         <div class="col-sm-offset-2 col-sm-5">
-                            <?= form_button('cancelar', 'Cancelar', 'class="btn btn-default" onClick="javascript:history.back(1)"') ?>
+                            <?= anchor(base_url('usuario'), 'Cancelar', 'class="btn btn-default"') ?>
                             <?= form_submit('salvar', 'Salvar', 'class="btn btn-default"') ?>
                         </div>
                     </div>

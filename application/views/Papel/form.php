@@ -36,7 +36,17 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Gramatura: ', 'gramatura', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('gramatura', $papel->gramatura, ' id="gramatura" class="form-control" placeholder="Gramatura"') ?>
+                            <?php
+                            $options = array(
+                                '120' => '120g',
+                                '180' => '180g',
+                                '240' => '240g',
+                                '250' => '250g',
+                                '300' => '300g',
+                                '400' => '400g',
+                            );
+                            ?>
+                            <?= form_dropdown('gramatura', $options, $papel->gramatura, 'class="form-control"') ?>
                         </div>
                     </div>
 
@@ -44,14 +54,14 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Altura: ', 'altura', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('altura', $papel->altura, ' id="altura" class="form-control" placeholder="Altura"') ?>
+                            <input name="altura" type="number" maxlength="4" step="1" min="1" value="<?= $papel->altura ?>" id="altura" class="form-control" placeholder="Altura">
                         </div>
                     </div>
                     <!--Altura-->
                     <div class="form-group">
                         <?= form_label('Largura: ', 'largura', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('largura', $papel->largura, ' id="largura" class="form-control" placeholder="Largura"') ?>
+                            <input name="largura" type="number" maxlength="4" step="1" min="1" value="<?= $papel->largura ?>" id="largura" class="form-control" placeholder="Largura">
                         </div>
                     </div>
 
@@ -67,7 +77,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('', str_replace('.', ',', $papel->valor), 'required type="number" id="valor" class="form-control" placeholder="Valor"') ?>
+                            <?= form_input('valor', str_replace('.', ',', $papel->valor), 'required type="number" id="valor" class="form-control" placeholder="Valor"') ?>
                         </div>
                     </div>
 

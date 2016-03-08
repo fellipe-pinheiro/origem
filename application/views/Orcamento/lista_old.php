@@ -2,16 +2,17 @@
 <html lang="pt-br">
     <?php
     $this->load->view('_include/head', ['titulo' => 'Orçamentos']);
-    $this->load->view('_include/dataTable');
+    $this->load->view('_include/js-lista', ['crud' => 'Orçamento']);
     ?>
-    <script type="text/javascript">
+    <script>
         function open_status_modal(id) {
             $("#md_status").modal();
-            $("#form_status").prop('action', '<?= base_url('orcamento/status') ?>/' + id);
+            $("#form_status").prop('action', 'Orcamento/status/' + id);
         }
+
     </script>
-    <?php $this->load->view('_include/menu'); ?>
     <body>
+        <?php $this->load->view('_include/menu'); ?>
         <div class="container">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -19,8 +20,13 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
+                        <div class="col-md-3">
+                            <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-12">
-                            <table id="tabela" class="display table table-hover"width="100%" cellspacing="0">
+                            <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -31,23 +37,10 @@
                                         <th>Data</th>
                                         <th>Valor</th>
                                         <th>Status</th>
-                                        <th>Açoes</th>
+                                        <th colspan="2">Ações</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Cliente</th>
-                                        <th>Contato</th>
-                                        <th>CNPJ/CPF</th>
-                                        <th>Email</th>
-                                        <th>Data</th>
-                                        <th>Valor</th>
-                                        <th>Status</th>
-                                        <th>Açoes</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
+                                <tbody id="fbody">
                                     <?php foreach ($lista_orcamento as $key => $value) { ?>
                                         <?php
                                         if ($value['status'] == '0') {
@@ -77,10 +70,8 @@
                                                     <span class="<?= $span_class ?>"></span> <?= $status ?>
                                                 </a>
                                             </td>
-                                            <td data-class-name="priority" >
-                                                <a class="btn btn-primary editar" href="<?= base_url("Orcamento/editar/{$value['id']}") ?>">Editar</a>
-                                                <a class="btn btn-danger" target="_blank" href="<?= base_url("Orcamento/pdf/{$value['id']}") ?>">PDF</a>
-                                            </td>
+                                            <td style="width: 46px;"><a class="btn btn-primary editar" href="<?= base_url("Orcamento/editar/{$value['id']}") ?>">Editar</a></td>
+                                            <td style="width: 46px;"><a class="btn btn-danger" target="_blank" href="<?= base_url("Orcamento/pdf/{$value['id']}") ?>">PDF</a></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
@@ -89,9 +80,9 @@
                     </div>
                 </div>
             </div>
+            <?php $this->load->view('_include/footer'); ?>
         </div>
     </body>
-    <?php $this->load->view('_include/footer'); ?>
     <!-- Modal Status -->
     <div class="modal fade" id="md_status" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-sm" role="document">

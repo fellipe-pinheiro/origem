@@ -46,7 +46,8 @@ class Fotolito extends CI_Controller {
         $fotolito->impressao_formato = $this->input->post('impressao_formato');
         $fotolito->descricao = $this->input->post('descricao');
         $fotolito->valor = $this->input->post('valor');
-
+        
+        $this->form_validation->set_message('is_unique', 'Esta área já está cadastrada no sistema');
         $this->form_validation->set_rules('impressao_formato', 'Impressão formato', 'trim|required|is_unique[fotolito.impressao_formato]');
         $this->form_validation->set_rules('descricao', 'Descrição', 'trim');
         $this->form_validation->set_rules('valor', 'Valor', 'trim|required');

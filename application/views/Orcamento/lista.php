@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <?php
-    $this->load->view('_include/head', ['titulo' => 'Orçamentos']);
-    $this->load->view('_include/js-lista', ['crud' => 'Orçamento']);
-    ?>
-    <script>
+    <?php $this->load->view('_include/head', ['titulo' => 'Orçamentos']); ?>
+    <?php $this->load->view('_include/dataTable', ['controler' => 'orcamento']); ?>
+    <script type="text/javascript">
         function open_status_modal(id) {
             $("#md_status").modal();
-            $("#form_status").prop('action', 'Orcamento/status/' + id);
+            $("#form_status").prop('action', '<?= base_url('orcamento/status') ?>/' + id);
         }
-
     </script>
+    <?php $this->load->view('_include/menu'); ?>
     <body>
-        <?php $this->load->view('_include/menu'); ?>
         <div class="container">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -20,13 +17,8 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-3">
-                            <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-hover">
+                            <table class="table display compact table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -37,10 +29,10 @@
                                         <th>Data</th>
                                         <th>Valor</th>
                                         <th>Status</th>
-                                        <th colspan="2">Ações</th>
+                                        <th>Açoes</th>
                                     </tr>
                                 </thead>
-                                <tbody id="fbody">
+                                <tbody>
                                     <?php foreach ($lista_orcamento as $key => $value) { ?>
                                         <?php
                                         if ($value['status'] == '0') {
@@ -70,19 +62,43 @@
                                                     <span class="<?= $span_class ?>"></span> <?= $status ?>
                                                 </a>
                                             </td>
-                                            <td style="width: 46px;"><a class="btn btn-primary editar" href="<?= base_url("Orcamento/editar/{$value['id']}") ?>">Editar</a></td>
-                                            <td style="width: 46px;"><a class="btn btn-danger" target="_blank" href="<?= base_url("Orcamento/pdf/{$value['id']}") ?>">PDF</a></td>
+                                            <td data-class-name="priority" >
+                                                <!-- Single button -->
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Ação <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="editar" href="<?= base_url("Orcamento/editar/{$value['id']}") ?>"><span class="glyphicon glyphicon-pencil"></span> Editar</a></li>
+                                                        <li role="separator" class="divider"></li>
+                                                        <li><a class="" target="_blank" href="<?= base_url("Orcamento/pdf/{$value['id']}") ?>"><span class="glyphicon glyphicon-file"></span>PDF</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Cliente</th>
+                                        <th>Contato</th>
+                                        <th>CNPJ/CPF</th>
+                                        <th>Email</th>
+                                        <th>Data</th>
+                                        <th>Valor</th>
+                                        <th>Status</th>
+                                        <th>Açoes</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <?php $this->load->view('_include/footer'); ?>
         </div>
     </body>
+    <?php $this->load->view('_include/footer'); ?>
     <!-- Modal Status -->
     <div class="modal fade" id="md_status" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-sm" role="document">

@@ -147,7 +147,19 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                 $("#form_papel_empastamento_valor").val('');
             });
 
-
+            $("#form_papel_filtrar").keyup(function(){
+                $("#form_papel_select option").each(function(index){
+                    var str = this.text;
+                    var str_filtro = $("#form_papel_filtrar").val();
+                    if(str.match(str_filtro) == null ){
+                        if ( this.value != "") {
+                            $("#form_papel_select option[value='"+this.value.toString()+"']").hide();
+                        }
+                    }else{
+                        $("#form_papel_select option[value='"+this.value.toString()+"']").show();
+                    }
+                });
+            });
 //VALIDAÇÔES DE FORMULARIO
             // verifca se cliente esta preenchido ao finalizar o servico
             $("#btn_finalizar").click(function () {
@@ -469,7 +481,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                 if ($_SESSION['orcamento']->servico->desconto == NULL) {
                                                     print '0,00';
                                                 } else {
-                                                    print '<b>'.number_format($_SESSION['orcamento']->servico->desconto, 2, ",", ".").'</b>';
+                                                    print '<b>' . number_format($_SESSION['orcamento']->servico->desconto, 2, ",", ".") . '</b>';
                                                 }
                                                 ?>
                                             </td>
@@ -1031,9 +1043,10 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                                             <h4 class="modal-title">Papel</h4>
                                                                         </div>
                                                                         <div class="modal-body">
+                                                                            <input type="search" id="form_papel_filtrar" class="form-control text-uppercase" placeholder="Filtrar papel" />
                                                                             <label class="control-label" for="papel"> Papel:</label>
                                                                             <div class="form-group">
-                                                                                <select id="form_papel_select" autofocus class="form-control" name="papel" required>
+                                                                                <select id="form_papel_select" autofocus class="form-control text-uppercase" name="papel" required>
                                                                                     <option value="">Selecione</option>
                                                                                     <?php
                                                                                     foreach ($papel_md as $key => $value) {
@@ -1297,11 +1310,11 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                                             <h4 class="modal-title"></h4>
                                                                         </div>
                                                                         <div class="modal-body text-center">
-                                                                            <h2>Deseja excluir este orçamento?</h2>
+                                                                            <h2>Deseja limpar este orçamento?</h2>
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
-                                                                            <button id="form_colagem_acao" type="submit" class="btn btn-danger" ><span class="glyphicon glyphicon-trash"></span> Excluir</button>
+                                                                            <button id="form_colagem_acao" type="submit" class="btn btn-danger" ><span class="glyphicon glyphicon-trash"></span> Limpar</button>
                                                                         </div>
                                                                     </div>
                                                                 </form>

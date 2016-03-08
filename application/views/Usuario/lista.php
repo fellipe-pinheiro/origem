@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <?php $this->load->view('_include/head', ['titulo' => 'Home']); ?>
-    <?php $this->load->view('_include/js-lista', ['crud' => 'Login']); ?>
+    <?php $this->load->view('_include/dataTable', ['controler' => 'usuario']); ?>
     <body>
         <?php $this->load->view('_include/menu'); ?>
         <div class="container">
@@ -12,13 +12,16 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
+                            <a class="btn btn-success" href="<?= base_url('usuario/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>
                         </div>
-                        <div class="col-md-3">
-                            <a class="btn btn-primary inserir" href="<?= base_url('usuario/form') ?>">Novo Usuario</a>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-3 btn-group">
+                            <button id="editar" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Editar</button>
+                            <button id="deletar" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Deletar</button>
                         </div>
                     </div>
-
+                    <hr>
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table table-hover">
@@ -28,7 +31,6 @@
                                         <th>Nome</th>
                                         <th>login</th>
                                         <th>Senha</th>
-                                        <th colspan="2">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody id="fbody">
@@ -38,8 +40,6 @@
                                             <td><?= $value->nome ?></td>
                                             <td><?= $value->login ?></td>
                                             <td><?= empty($value->senha)? '<span class="glyphicon glyphicon-remove"></span>' : '<span class="glyphicon glyphicon-ok"></span>' ; ?></td>
-                                            <td style="width: 46px;"><a class="btn btn-primary editar" href="<?= base_url("usuario/form/{$value->id}") ?>">Editar</a></td>
-                                            <td style="width: 46px;"><a class="btn btn-danger deletar" href="<?= base_url("usuario/deletar/{$value->id}") ?>">Deletar</a></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

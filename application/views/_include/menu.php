@@ -16,8 +16,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="<?= base_url('servico') ?>">Serviço</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="<?= base_url('orcamento') ?>">Lista de Orçamento</a></li>
-                        <li><a href="<?= base_url('orcamento/teste') ?>">Lista de Orçamento 2</a></li>
+                        <li><a href="<?= base_url('orcamento') ?>">Lista de Orçamentos</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

@@ -158,7 +158,7 @@ if ($acao == 'inserir') {
                         <div class="col-md-10"></div>
                         <div class="col-md-2">
                             <br>
-                            <?= form_button('cancelar', 'Cancelar', 'class="btn btn-default" onClick="javascript:history.back(1)"') ?>
+                            <?= anchor(base_url('cliente'), 'Cancelar', 'class="btn btn-default"') ?>
                             <?= form_submit('salvar', 'Salvar', 'class="btn btn-default"') ?>
                         </div>
                     </div>

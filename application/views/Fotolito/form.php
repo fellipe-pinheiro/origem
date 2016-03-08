@@ -29,7 +29,7 @@ if ($acao == 'inserir') {
                 <div class="panel-body">
                     <?= form_open($action, 'class="form-horizontal" role="form"') ?>
                     <!--ID-->
-                    <?= form_hidden('id', $fotolito->id.set_value('id')) ?>
+                    <?= form_hidden('id', $fotolito->id . set_value('id')) ?>
 
                     <!--Impressao Formato-->
                     <div class="form-group">
@@ -62,7 +62,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor', $fotolito->valor . set_value('valor'), 'required min="0" step="0.01" id="valor" class="form-control" placeholder="Valor"') ?>
+                            <input name="valor" value="<?= $fotolito->valor ?>" type="number" required min="0" step="0.01" id="valor" class="form-control" placeholder="Valor">            
                         </div>
                         <?= form_error('valor') ?>
                     </div>
@@ -70,7 +70,7 @@ if ($acao == 'inserir') {
                     <!--Botoes-->
                     <div class="form-group">        
                         <div class="col-sm-offset-2 col-sm-5">
-                            <?= form_button('cancelar', 'Cancelar', 'class="btn btn-default" onClick="javascript:history.back(1)"') ?>
+                            <?= anchor(base_url('fotolito'), 'Cancelar', 'class="btn btn-default"') ?>
                             <?= form_submit('salvar', 'Salvar', 'class="btn btn-default"') ?>
                         </div>
                     </div>

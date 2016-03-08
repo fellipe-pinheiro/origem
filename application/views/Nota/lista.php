@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <?php $this->load->view('_include/head', ['titulo' => 'Home']); ?>
-    <?php $this->load->view('_include/js-lista', ['crud' => 'Nota']); ?>
+    <?php $this->load->view('_include/dataTable', ['controler' => 'nota']); ?>
     <body>
         <?php $this->load->view('_include/menu'); ?>
         <div class="container">
@@ -12,34 +12,34 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control" placeholder="Pesquisar"') ?>
+                            <a class="btn btn-primary inserir" href="<?= base_url('nota/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>
                         </div>
-                        <div class="col-md-3">
-                            <a class="btn btn-primary inserir" href="<?= base_url('nota/form') ?>">Nova Nota</a>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-3 btn-group">
+                            <a id="editar" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+                            <a id="deletar" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Deletar</a>
                         </div>
                     </div>
-
+                    <hr>
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-hover">
+                            <table class="table display compact table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th class="hidden">ID</th>
                                         <th>Nome</th>
                                         <th>Descrição</th>
                                         <th>Valor</th>
-                                        <th colspan="2">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody id="fbody">
                                     <?php foreach ($nota as $key => $value) { ?>
                                         <tr>
-                                            <td><?= $value->id ?></td>
+                                            <td class="hidden"><?= $value->id ?></td>
                                             <td><?= $value->nome ?></td>
                                             <td><?= $value->descricao ?></td>
-                                            <td><?= $value->valor ?></td>
-                                            <td style="width: 46px;"><a class="btn btn-primary editar" href="<?= base_url("nota/form/{$value->id}") ?>">Editar</a></td>
-                                            <td style="width: 46px;"><a class="btn btn-danger deletar" href="<?= base_url("nota/deletar/{$value->id}") ?>">Deletar</a></td>
+                                            <td>R$ <?= number_format($value->valor, 2, ',', '.') ?></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

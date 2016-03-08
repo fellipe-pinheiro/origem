@@ -44,14 +44,14 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('valor', $frete->valor, 'required min="0" step="0.01" type="number" id="valor" class="form-control" placeholder="Valor"') ?>
+                            <input name="valor" value="<?= $frete->valor ?>" required min="0" step="0.01" type="number" id="valor" class="form-control" placeholder="Valor">
                         </div>
                     </div>
 
                     <!--Botoes-->
                     <div class="form-group">        
                         <div class="col-sm-offset-2 col-sm-5">
-                            <?= form_button('cancelar', 'Cancelar', 'class="btn btn-default" onClick="javascript:history.back(1)"') ?>
+                            <?= anchor(base_url('frete'), 'Cancelar', 'class="btn btn-default"') ?>
                             <?= form_submit('salvar', 'Salvar', 'class="btn btn-default"') ?>
                         </div>
                     </div>

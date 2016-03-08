@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <?php $this->load->view('_include/head', ['titulo' => 'Home']); ?>
-    <?php $this->load->view('_include/dataTable'); ?>
-    <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.11/type-detection/date-uk.js"></script>
+    <?php $this->load->view('_include/dataTable', ['controler' => 'papel']); ?>
     <body>
         <?php $this->load->view('_include/menu'); ?>
         <div class="container">

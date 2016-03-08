@@ -23,7 +23,7 @@ if ($acao == 'inserir') {
                     <?= form_open($action, 'class="form-horizontal" role="form"') ?>
                     <!--ID-->
                     <?= form_hidden('id', $impressao_formato->id) ?>
-                    
+
                     <!--Nome-->
                     <div class="form-group">
                         <?= form_label('Nome: ', 'nome', array('class' => 'control-label col-sm-2')) ?>
@@ -36,18 +36,18 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Altura (mm): ', 'altura', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('altura', $impressao_formato->altura, 'required min="0" step="1" id="altura" class="form-control" placeholder="Digite a altura em milimetros"') ?>
+                            <input name="altura" value="<?= $impressao_formato->altura ?>" required type="number" min="0" step="1" id="altura" class="form-control" placeholder="Digite a altura em milimetros">
                         </div>
                     </div>
-                    
+
                     <!--Largura-->
                     <div class="form-group">
                         <?= form_label('Largura (mm): ', 'largura', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('largura', $impressao_formato->largura, 'required min="0" step="1" id="largura" class="form-control" placeholder="Digite a largura em milimetros"') ?>
+                            <input name="largura" value="<?= $impressao_formato->largura ?>" required type="number" min="0" step="1" id="largura" class="form-control" placeholder="Digite a largura em milimetros">            
                         </div>
                     </div>
-                    
+
                     <!--Descricao-->
                     <div class="form-group">
                         <?= form_label('Descricao: ', 'descricao', array('class' => 'control-label col-sm-2')) ?>
@@ -55,11 +55,11 @@ if ($acao == 'inserir') {
                             <?= form_textarea('descricao', $impressao_formato->descricao, ' id="descricao" class="form-control" placeholder="Nome"') ?>
                         </div>
                     </div>
-                    
+
                     <!--Botoes-->
                     <div class="form-group">        
                         <div class="col-sm-offset-2 col-sm-5">
-                            <?= form_button('cancelar', 'Cancelar', 'class="btn btn-default" onClick="javascript:history.back(1)"') ?>
+                            <?= anchor(base_url('impressao_formato'), 'Cancelar', 'class="btn btn-default"') ?>
                             <?= form_submit('salvar', 'Salvar', 'class="btn btn-default"') ?>
                         </div>
                     </div>
