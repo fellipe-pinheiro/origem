@@ -11,89 +11,257 @@
     <?php $this->load->view('_include/menu'); ?>
     <body>
         <div class="container">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Lista de Orçamentos</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <table class="table display compact table-bordered" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Cliente</th>
-                                        <th>Contato</th>
-                                        <th>CNPJ/CPF</th>
-                                        <th>Email</th>
-                                        <th>Data</th>
-                                        <th>Valor</th>
-                                        <th>Status</th>
-                                        <th>Açoes</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($lista_orcamento as $key => $value) { ?>
-                                        <?php
-                                        if ($value['status'] == '0') {
-                                            $status = 'Aguardando';
-                                            $anchor_class = 'btn btn-warning btn-block';
-                                            $span_class = 'glyphicon glyphicon-time';
-                                        } elseif ($value['status'] == '1') {
-                                            $status = 'Aprovado';
-                                            $anchor_class = 'btn btn-success btn-block';
-                                            $span_class = 'glyphicon glyphicon-ok';
-                                        } else {
-                                            $status = 'Cancelado';
-                                            $anchor_class = 'btn btn-default btn-block';
-                                            $span_class = 'glyphicon glyphicon-remove';
-                                        }
-                                        ?>
-                                        <tr>
-                                            <td><?= $value['id'] ?></td>
-                                            <td><?= $value['cliente_nome'] ?></td>
-                                            <td><?= $value['contato_nome'] ?></td>
-                                            <td><?= $value['cnpj_cpf'] ?></td>
-                                            <td><?= $value['email'] ?></td>
-                                            <td><?= $value['data'] ?></td>
-                                            <td>R$ <?= $value['valor'] ?></td>
-                                            <td style="width: 46px;">
-                                                <a id="btn_status" href="#" class="<?= $anchor_class ?>" onclick="open_status_modal(<?= $value['id'] ?>)">
-                                                    <span class="<?= $span_class ?>"></span> <?= $status ?>
-                                                </a>
-                                            </td>
-                                            <td data-class-name="priority" >
-                                                <!-- Single button -->
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Ação <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="editar" href="<?= base_url("Orcamento/editar/{$value['id']}") ?>"><span class="glyphicon glyphicon-pencil"></span> Editar</a></li>
-                                                        <li role="separator" class="divider"></li>
-                                                        <li><a class="" target="_blank" href="<?= base_url("Orcamento/pdf/{$value['id']}") ?>"><span class="glyphicon glyphicon-file"></span>PDF</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Cliente</th>
-                                        <th>Contato</th>
-                                        <th>CNPJ/CPF</th>
-                                        <th>Email</th>
-                                        <th>Data</th>
-                                        <th>Valor</th>
-                                        <th>Status</th>
-                                        <th>Açoes</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#aprovado">Aprovado</a></li>
+                <li><a data-toggle="tab" href="#aguardando">Aguardando</a></li>
+                <li><a data-toggle="tab" href="#cancelado">Cancelado</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="aprovado" class="tab-pane fade in active">
+                    <br>
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Lista de Orçamentos</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table display compact table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Cliente</th>
+                                                <th>Contato</th>
+                                                <th>CNPJ/CPF</th>
+                                                <th>Email</th>
+                                                <th>Data</th>
+                                                <th>Valor</th>
+                                                <th>Status</th>
+                                                <th>Açoes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($lista_orcamento as $key => $value) { ?>
+                                                <?php
+                                                if ($value['status'] == '1') {
+                                                    $status = 'Aprovado';
+                                                    $anchor_class = 'btn btn-success btn-block';
+                                                    $span_class = 'glyphicon glyphicon-ok';
+                                                    ?>
+                                                    <tr>
+                                                        <td><?= $value['id'] ?></td>
+                                                        <td><?= $value['cliente_nome'] ?></td>
+                                                        <td><?= $value['contato_nome'] ?></td>
+                                                        <td><?= $value['cnpj_cpf'] ?></td>
+                                                        <td><?= $value['email'] ?></td>
+                                                        <td><?= $value['data'] ?></td>
+                                                        <td>R$ <?= $value['valor'] ?></td>
+                                                        <td><span class="<?= $span_class ?>"></span><?= $status ?></td>
+                                                        <td data-class-name="priority" >
+                                                            <!-- Single button -->
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Ação <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li>
+                                                                        <a id="btn_status" href="#" onclick="open_status_modal(<?= $value['id'] ?>)">
+                                                                            <span class="glyphicon glyphicon-refresh"></span> Status
+                                                                        </a>
+                                                                    </li>
+                                                                    <li><a href="<?= base_url("Orcamento/editar/{$value['id']}") ?>"><span class="glyphicon glyphicon-pencil"></span> Editar</a></li>
+                                                                    <li role="separator" class="divider"></li>
+                                                                    <li><a class="" target="_blank" href="<?= base_url("Orcamento/pdf/{$value['id']}") ?>"><span class="glyphicon glyphicon-file"></span>PDF</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Cliente</th>
+                                                <th>Contato</th>
+                                                <th>CNPJ/CPF</th>
+                                                <th>Email</th>
+                                                <th>Data</th>
+                                                <th>Valor</th>
+                                                <th>Status</th>
+                                                <th>Açoes</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                </div>
+                <div id="aguardando" class="tab-pane fade">
+                    <br>   
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Lista de Orçamentos</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table display compact table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Cliente</th>
+                                                <th>Contato</th>
+                                                <th>CNPJ/CPF</th>
+                                                <th>Email</th>
+                                                <th>Data</th>
+                                                <th>Valor</th>
+                                                <th>Status</th>
+                                                <th>Açoes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($lista_orcamento as $key => $value) { ?>
+                                                <?php
+                                                if ($value['status'] == '0') {
+                                                    $status = 'Aguardando';
+                                                    $anchor_class = 'btn btn-warning btn-block';
+                                                    $span_class = 'glyphicon glyphicon-time';
+                                                    ?>
+                                                    <tr>
+                                                        <td><?= $value['id'] ?></td>
+                                                        <td><?= $value['cliente_nome'] ?></td>
+                                                        <td><?= $value['contato_nome'] ?></td>
+                                                        <td><?= $value['cnpj_cpf'] ?></td>
+                                                        <td><?= $value['email'] ?></td>
+                                                        <td><?= $value['data'] ?></td>
+                                                        <td>R$ <?= $value['valor'] ?></td>
+                                                        <td><span class="<?= $span_class ?>"></span><?= $status ?></td>
+                                                        <td data-class-name="priority" >
+                                                            <!-- Single button -->
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Ação <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li>
+                                                                        <a id="btn_status" href="#" onclick="open_status_modal(<?= $value['id'] ?>)">
+                                                                            <span class="glyphicon glyphicon-refresh"></span> Status
+                                                                        </a>
+                                                                    </li>
+                                                                    <li><a class="editar" href="<?= base_url("Orcamento/editar/{$value['id']}") ?>"><span class="glyphicon glyphicon-pencil"></span> Editar</a></li>
+                                                                    <li role="separator" class="divider"></li>
+                                                                    <li><a class="" target="_blank" href="<?= base_url("Orcamento/pdf/{$value['id']}") ?>"><span class="glyphicon glyphicon-file"></span>PDF</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Cliente</th>
+                                                <th>Contato</th>
+                                                <th>CNPJ/CPF</th>
+                                                <th>Email</th>
+                                                <th>Data</th>
+                                                <th>Valor</th>
+                                                <th>Status</th>
+                                                <th>Açoes</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="cancelado" class="tab-pane fade">
+                    <br>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Lista de Orçamentos</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table display compact table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Cliente</th>
+                                                <th>Contato</th>
+                                                <th>CNPJ/CPF</th>
+                                                <th>Email</th>
+                                                <th>Data</th>
+                                                <th>Valor</th>
+                                                <th>Status</th>
+                                                <th>Açoes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($lista_orcamento as $key => $value) { ?>
+                                                <?php
+                                                if ($value['status'] == '2') {
+                                                    $status = 'Cancelado';
+                                                    $anchor_class = 'btn btn-default btn-block';
+                                                    $span_class = 'glyphicon glyphicon-remove';
+                                                    ?>
+                                                    <tr>
+                                                        <td><?= $value['id'] ?></td>
+                                                        <td><?= $value['cliente_nome'] ?></td>
+                                                        <td><?= $value['contato_nome'] ?></td>
+                                                        <td><?= $value['cnpj_cpf'] ?></td>
+                                                        <td><?= $value['email'] ?></td>
+                                                        <td><?= $value['data'] ?></td>
+                                                        <td>R$ <?= $value['valor'] ?></td>
+                                                        <td><span class="<?= $span_class ?>"></span><?=$status?></td>
+                                                        <td data-class-name="priority" >
+                                                            <!-- Single button -->
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Ação <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li>
+                                                                        <a id="btn_status" href="#" onclick="open_status_modal(<?= $value['id'] ?>)">
+                                                                            <span class="glyphicon glyphicon-refresh"></span> Status
+                                                                        </a>
+                                                                    </li>
+                                                                    <li><a class="editar" href="<?= base_url("Orcamento/editar/{$value['id']}") ?>"><span class="glyphicon glyphicon-pencil"></span> Editar</a></li>
+                                                                    <li role="separator" class="divider"></li>
+                                                                    <li><a class="" target="_blank" href="<?= base_url("Orcamento/pdf/{$value['id']}") ?>"><span class="glyphicon glyphicon-file"></span>PDF</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Cliente</th>
+                                                <th>Contato</th>
+                                                <th>CNPJ/CPF</th>
+                                                <th>Email</th>
+                                                <th>Data</th>
+                                                <th>Valor</th>
+                                                <th>Status</th>
+                                                <th>Açoes</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

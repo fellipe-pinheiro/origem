@@ -21,9 +21,9 @@
                     <br><br><br><br><br><br>
                     <div class="panel panel-default">
 
-                        <div class="panel-body">
+                        <div class="panel-body text-center">
                             <?= form_open(base_url('login/logar'), 'class="form-signin"') ?>
-                            <h1 class="form-signin-heading">Origem</h1>
+                            <?php  echo img(base_url('/assets/img/origem_logo_200x200.png')); ?>
                             <?= form_error('senha') ?>
                             <?= form_label('Login: ', 'login', array('class' => 'sr-only')) ?>
                             <?= form_input('login', set_value('login'), ' id="login" class="form-control" placeholder="Login" autofocus required') ?>

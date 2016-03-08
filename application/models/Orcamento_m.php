@@ -139,16 +139,21 @@ class Orcamento_m extends CI_Model {
             }
 
             if ($this->db->insert('orcamento', $dados)) {
-                if (!empty($_SESSION['orcamento']->edicao)) {
-                    $this->db->set('ativo', 0);
-                    $this->db->where('id', $_SESSION['orcamento']->edicao);
-                    $this->db->update('orcamento');
-                }
-                print $this->db->last_query();
                 return $this->db->insert_id();
             } else {
                 return false;
             }
+//            if ($this->db->insert('orcamento', $dados)) {
+//                if (!empty($_SESSION['orcamento']->edicao)) {
+//                    $this->db->set('ativo', 0);
+//                    $this->db->where('id', $_SESSION['orcamento']->edicao);
+//                    $this->db->update('orcamento');
+//                }
+//                print $this->db->last_query();
+//                return $this->db->insert_id();
+//            } else {
+//                return false;
+//            }
         } else {
             return false;
         }

@@ -99,7 +99,7 @@ class Servico extends CI_Controller {
     public function finalizar() {
         $manter_cliente = $this->uri->segment(3);
         $this->db->trans_start();
-        //Servico
+        //Servico inserir
         $servico_id = $_SESSION['orcamento']->servico->inserir_servico($_SESSION['orcamento']->servico);
         if ($servico_id != FALSE) {
             $_SESSION['orcamento']->servico->id = $servico_id;
@@ -170,18 +170,18 @@ class Servico extends CI_Controller {
                 }
             }
 
-            //Orcamento
+            //Orcamento inserir
             if (!empty($_SESSION['orcamento'])) {
                 date_default_timezone_set('America/Sao_Paulo');
                 $_SESSION['orcamento']->data_orcamento = date('Y-m-d H:i:s');
-                $orcamento_id = $_SESSION['orcamento']->inserir_orcamento($_SESSION['orcamento']);
-                $erro['orcamento'] = $orcamento_id;
+                $orcamento_id = $_SESSION['orcamento']->id = $_SESSION['orcamento']->inserir_orcamento($_SESSION['orcamento']);
+                $erro['orcamento'] = $_SESSION['orcamento']->id;
             }
         }
 
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
-            redirect(base_url('servico?msg_tipo=erro&msg_texto=Erro ao inserir Orcamento no banco'), 'location');
+            redirect(base_url('servico?msg_tipo=erro&msg_texto=Erro ao inserir o Orcamento no banco'), 'location');
         }
         $cliente_sessao = null;
         if ($manter_cliente) {
@@ -191,8 +191,7 @@ class Servico extends CI_Controller {
         unset($_SESSION['orcamento']);
         $_SESSION['orcamento'] = new Orcamento_m();
         $_SESSION['orcamento']->cliente = $cliente_sessao;
-
-        redirect(base_url('servico'), 'location');
+        redirect(base_url('orcamento/pdf/'.$orcamento_id), 'location');
     }
 
     public function condicoes_sessao() {

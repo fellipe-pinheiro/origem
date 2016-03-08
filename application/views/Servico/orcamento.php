@@ -147,16 +147,16 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                 $("#form_papel_empastamento_valor").val('');
             });
 
-            $("#form_papel_filtrar").keyup(function(){
-                $("#form_papel_select option").each(function(index){
+            $("#form_papel_filtrar").keyup(function () {
+                $("#form_papel_select option").each(function (index) {
                     var str = this.text;
                     var str_filtro = $("#form_papel_filtrar").val();
-                    if(str.match(str_filtro) == null ){
-                        if ( this.value != "") {
-                            $("#form_papel_select option[value='"+this.value.toString()+"']").hide();
+                    if (str.match(str_filtro) == null) {
+                        if (this.value != "") {
+                            $("#form_papel_select option[value='" + this.value.toString() + "']").hide();
                         }
-                    }else{
-                        $("#form_papel_select option[value='"+this.value.toString()+"']").show();
+                    } else {
+                        $("#form_papel_select option[value='" + this.value.toString() + "']").show();
                     }
                 });
             });
@@ -813,7 +813,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                                                     <?php
                                                                                     foreach ($impressao_md as $key => $value) {
                                                                                         ?>
-                                                                                        <option value="<?= $value->id ?>"><?= $value->nome ?> (<?= $value->impressao_formato->altura ?> x <?= $value->impressao_formato->largura ?>) : R$ <?= $value->valor ?></option>
+                                                                                        <option value="<?= $value->id ?>"><?= $value->nome ?> (<?= $value->impressao_formato->altura ?> x <?= $value->impressao_formato->largura ?>) ....................... R$ <?= $value->valor ?></option>
                                                                                         <?php
                                                                                     }
                                                                                     ?>
@@ -989,38 +989,36 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                                         <h4 class="modal-title" id="myModalLabel">Cliente</h4>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <div class="row">
-                                                                            <!--filtro-->
-                                                                            <div class="col-md-4">
-                                                                                <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control input-sm" placeholder="Pesquisar"') ?>
-                                                                            </div>
-                                                                            <div class="col-md-2">
-                                                                                <button id="md_btn_criar_cliente" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Novo</button>
-                                                                            </div>
-                                                                            <!--lista clientes-->
-                                                                            <table class="table table-hover">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>ID</th>
-                                                                                        <th>Nome</th>
-                                                                                        <th>Bairro</th>
-                                                                                        <th>cnpj_cpf</th>
-                                                                                        <th colspan="2">Ações</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody id="fbody">
-                                                                                    <?php foreach ($cliente_md as $key => $value) { ?>
-                                                                                        <tr>
-                                                                                            <td><?= $value->id ?></td>
-                                                                                            <td><?= $value->nome ?></td>
-                                                                                            <td><?= $value->bairro ?></td>
-                                                                                            <td><?= $value->cnpj_cpf ?></td>
-                                                                                            <td style="width: 46px;"><a class="btn btn-primary editar" href="<?= base_url("Servico/cliente_session_inserir/{$value->id}") ?>">Selecionar</a></td>
-                                                                                        </tr>
-                                                                                    <?php } ?>
-                                                                                </tbody>
-                                                                            </table>
+                                                                        <!--filtro-->
+                                                                        <div class="col-md-4">
+                                                                            <?= form_input('', '', 'autofocus id="txtPesquisar" class="form-control input-sm" placeholder="Pesquisar"') ?>
                                                                         </div>
+                                                                        <div class="col-md-2">
+                                                                            <button id="md_btn_criar_cliente" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Novo</button>
+                                                                        </div>
+                                                                        <!--lista clientes-->
+                                                                        <table class="table table-hover">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>ID</th>
+                                                                                    <th>Nome</th>
+                                                                                    <th>CNPJ/CPF</th>
+                                                                                    <th>Email</th>
+                                                                                    <th colspan="2">Ações</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="fbody">
+                                                                                <?php foreach ($cliente_md as $key => $value) { ?>
+                                                                                    <tr>
+                                                                                        <td><?= $value->id ?></td>
+                                                                                        <td><?= $value->nome ?></td>
+                                                                                        <td><?= $value->cnpj_cpf ?></td>
+                                                                                        <td><?= $value->email ?></td>
+                                                                                        <td style="width: 46px;"><a class="btn btn-primary editar" href="<?= base_url("Servico/cliente_session_inserir/{$value->id}") ?>">Selecionar</a></td>
+                                                                                    </tr>
+                                                                                <?php } ?>
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -1043,7 +1041,8 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                                             <h4 class="modal-title">Papel</h4>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <input type="search" id="form_papel_filtrar" class="form-control text-uppercase" placeholder="Filtrar papel" />
+                                                                            <label class="control-label" for="form_papel_filtrar"><span class="glyphicon glyphicon-filter"></span> Filtro de papel:</label>
+                                                                            <input type="search" id="form_papel_filtrar" class="form-control text-uppercase" placeholder="Digite o nome do papel para aplicar o filtro ex: aspen" />
                                                                             <label class="control-label" for="papel"> Papel:</label>
                                                                             <div class="form-group">
                                                                                 <select id="form_papel_select" autofocus class="form-control text-uppercase" name="papel" required>
