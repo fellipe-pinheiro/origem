@@ -267,6 +267,7 @@ class Servico extends CI_Controller {
         $cliente->id = null;
         $cliente->nome = $this->input->post('nome');
         $cliente->numero = $this->input->post('numero');
+        $cliente->rua = $this->input->post('rua');
         $cliente->complemento = $this->input->post('complemento');
         $cliente->bairro = $this->input->post('bairro');
         $cliente->cidade = $this->input->post('cidade');

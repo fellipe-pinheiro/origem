@@ -643,7 +643,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                 <tr class="active">
                                                     <td><?= $count = $count + 1 ?></td>
                                                     <td><span class="glyphicon glyphicon-picture"></span> <b>Fotolito</b></td>
-                                                    <td><?= $impressao->impressao_formato->nome ?> (<?= $impressao->impressao_formato->altura ?>x<?= $impressao->impressao_formato->largura ?>)</td>
+                                                    <td><?= $impressao->impressao_formato->altura ?>x<?= $impressao->impressao_formato->largura ?></td>
                                                     <td><?= $impressao->fotolito->quantidade ?></td>
                                                     <td>R$ <?= number_format($impressao->fotolito->valor_unitario, 2, ",", ".") ?></td>
                                                     <td>R$ <?= number_format($impressao->fotolito->sub_total, 2, ",", ".") ?></td>

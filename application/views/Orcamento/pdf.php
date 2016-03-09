@@ -49,7 +49,7 @@
                             </div>
                             <div class="table-responsive">
                                 <h4>DADOS DO CLIENTE</h4>
-                                <table class="table table-condensed table-bordered text-uppercase">
+                                <table class="table table-condensed text-uppercase">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -71,7 +71,7 @@
                             <hr>
                             <div class="table-responsive">
                                 <h4>DESCRIÇÃO</h4>
-                                <table class="table table-hover table-condensed table-bordered text-uppercase">
+                                <table class="table table-hover table-condensed text-uppercase">
                                     <thead>
                                         <tr>
                                             <th>Serviço / Material</th>    
