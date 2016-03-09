@@ -64,7 +64,7 @@ if ($acao == 'inserir') {
                             <?php
                             $lista = array();
                             foreach ($impressao_formato as $key => $value) {
-                                $lista[$value->id] = $value->altura . 'x' . $value->largura.' ............('.$value->nome.')';
+                                $lista[$value->id] = $value->altura . 'x' . $value->largura;
                             }
                             print form_dropdown('impressao_formato', $lista, $impressao_cartao->impressao_formato->id, 'required id="valor" class="form-control" placeholder="Valor"');
                             ?>

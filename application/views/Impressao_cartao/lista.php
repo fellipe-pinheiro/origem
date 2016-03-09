@@ -42,7 +42,7 @@
                                         <tr>
                                             <td class="hidden"><?= $value->id ?></td>
                                             <td><?= $value->nome ?></td>
-                                            <td><?= $value->impressao_formato->nome . ": " . $value->impressao_formato->altura . 'x' . $value->impressao_formato->largura ?></td>
+                                            <td><?= $value->impressao_formato->altura . 'x' . $value->impressao_formato->largura ?></td>
                                             <td><?= $value->descricao ?></td>
                                             <td>R$ <?= number_format($value->valor_100, 2, ',', '.') ?></td>
                                             <td>R$ <?= number_format($value->valor_500, 2, ',', '.') ?></td>
