@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <?php
-    $this->load->view('_include/head', ['titulo' => "Orçamento nº {$orcamento->id}"]);
+    $this->load->view('_include/head', ['titulo' => "Origem - Orçamento nº {$orcamento->id}"]);
     ?>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -137,12 +137,13 @@
                                                 <tr>
                                                     <td>Faca</td>
                                                     <?php if ($orcamento->servico->tipo == 'servico') { ?>
+                                                        <td><?= $faca->quantidade ?></td>
                                                         <td><?= $faca->nome ?> : <?= $faca->altura ?> x <?= $faca->largura ?></td>
 
                                                     <?php } else { ?>
                                                         <td><?= $faca->quantidade ?></td>
                                                     <?php } ?>
-                                                    <td></td>
+                                                    <td>Faca para cartão de visita</td>
                                                 </tr>
                                                 <?php
                                             }
