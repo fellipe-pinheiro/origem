@@ -181,7 +181,7 @@
                             <hr>
                             <div class="table-responsive">
                                 <h4>PRODUTO</h4>
-                                <table class="table table-condensed table-bordered text-uppercase">
+                                <table class="table table-condensed table-bordered text-uppercase" style="size: A4">
                                     <thead>
                                         <tr>
                                             <th>ID</th>

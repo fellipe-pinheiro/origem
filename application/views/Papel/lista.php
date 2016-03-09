@@ -28,7 +28,7 @@
                             <table class="table display compact table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <th class="hidden">ID</th>
+                                        <th>ID</th>
                                         <th>Nome</th>
                                         <th>Gramatura</th>
                                         <th>Altura (mm)</th>
@@ -40,7 +40,7 @@
                                 <tbody id="fbody">
                                     <?php foreach ($papel as $key => $value) { ?>
                                     <tr class="text-uppercase">
-                                            <td class="hidden"><?= $value->id ?></td>
+                                            <td><?= $value->id ?></td>
                                             <td><?= $value->nome ?></td>
                                             <td><?= $value->gramatura ?></td>
                                             <td><?= $value->altura ?></td>

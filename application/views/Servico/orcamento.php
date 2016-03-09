@@ -1010,7 +1010,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <table id="md_cliente_tabela" class="table display compact table-bordered" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th class="hidden">ID</th>
+                                    <th>ID</th>
                                     <th>Nome</th>
                                     <th>CNPJ/CPF</th>
                                     <th>Email</th>
@@ -1019,7 +1019,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                             <tbody>
                                 <?php foreach ($cliente_md as $key => $value) { ?>
                                     <tr>
-                                        <td class="hidden"><?= $value->id ?></td>
+                                        <td><?= $value->id ?></td>
                                         <td><?= $value->nome ?></td>
                                         <td><?= $value->cnpj_cpf ?></td>
                                         <td><?= $value->email ?></td>
