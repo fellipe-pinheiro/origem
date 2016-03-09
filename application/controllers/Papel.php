@@ -46,16 +46,15 @@ class Papel extends CI_Controller {
 
         $id = $this->Papel_m->inserir($papel);
         if (!empty($id)) {
-            redirect(base_url('papel/?msgTipe=sucesso&msg=Papel inserido com sucesso'), 'location');
+            redirect(base_url('papel/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('papel/?msgTipe=erro&msg=Erro ao inserir o papel'), 'location');
+            redirect(base_url('papel/?type=erro'), 'location');
         }
     }
 
     public function editar() {
         $papel = new Papel_m();
         $papel->id = $this->input->post('id');
-        ;
         $papel->nome = $this->input->post('nome');
         $papel->gramatura = $this->input->post('gramatura');
         $papel->altura = $this->input->post('altura');
@@ -64,19 +63,18 @@ class Papel extends CI_Controller {
         $papel->valor = $this->input->post('valor');
 
         if ($this->Papel_m->editar($papel)) {
-            redirect(base_url('papel/?msgTipe=sucesso&msg=Papel alterado com sucesso'), 'location');
+            redirect(base_url('papel/?type=sucesso'), 'location');
         } else {
-            sredirect(base_url('papel/?msgTipe=erro&msg=Erro ao alterar o papel'), 'location');
+            redirect(base_url('papel/?type=erro'), 'location');
         }
     }
 
     public function deletar() {
-        print $id = $this->uri->segment(3);
-
+        $id = $this->uri->segment(3);
         if (!empty($this->Papel_m->deletar($id))) {
-            redirect(base_url('papel/?msgTipe=sucesso&msg=Papel apagado com sucesso'), 'location');
+            redirect(base_url('papel/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('papel/?msgTipe=erro&msg=Erro ao apagar o papel'), 'location');
+            redirect(base_url('papel/?type=erro'), 'location');
         }
     }
 

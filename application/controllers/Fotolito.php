@@ -46,7 +46,7 @@ class Fotolito extends CI_Controller {
         $fotolito->impressao_formato = $this->input->post('impressao_formato');
         $fotolito->descricao = $this->input->post('descricao');
         $fotolito->valor = $this->input->post('valor');
-        
+
         $this->form_validation->set_message('is_unique', 'Esta área já está cadastrada no sistema');
         $this->form_validation->set_rules('impressao_formato', 'Impressão formato', 'trim|required|is_unique[fotolito.impressao_formato]');
         $this->form_validation->set_rules('descricao', 'Descrição', 'trim');
@@ -55,9 +55,9 @@ class Fotolito extends CI_Controller {
         if ($this->form_validation->run() == TRUE) {
             $id = $this->Fotolito_m->inserir($fotolito);
             if (!empty($id)) {
-                redirect(base_url('fotolito/?msgTipe=sucesso&msg=fotolito inserido com sucesso'), 'location');
+                redirect(base_url('fotolito/?type=sucesso'), 'location');
             } else {
-                redirect(base_url('fotolito/?msgTipe=erro&msg=Erro ao inserir a fotolito'), 'location');
+                redirect(base_url('fotolito/?type=erro'), 'location');
             }
         } else {
             $impressao_formato_lista = $this->Impressao_formato_m->listar();
@@ -81,9 +81,9 @@ class Fotolito extends CI_Controller {
 
         if ($this->form_validation->run() == TRUE) {
             if ($this->Fotolito_m->editar($fotolito)) {
-                redirect(base_url('fotolito/?msgTipe=sucesso&msg=fotolito alterado com sucesso'), 'location');
+                redirect(base_url('fotolito/?type=sucesso'), 'location');
             } else {
-                redirect(base_url('fotolito/?msgTipe=erro&msg=Erro ao alterar a fotolito'), 'location');
+                redirect(base_url('fotolito/?type=erro'), 'location');
             }
         } else {
             $impressao_formato_lista = $this->Impressao_formato_m->listar();
@@ -96,10 +96,10 @@ class Fotolito extends CI_Controller {
     public function deletar() {
         print $id = $this->uri->segment(3);
 
-        if (!empty($this->Fotolito_m->deletar($id))) {
-            redirect(base_url('fotolito/?msgTipe=sucesso&msg=fotolito apagado com sucesso'), 'location');
+        if ($this->Fotolito_m->deletar($id)) {
+            redirect(base_url('fotolito/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('fotolito/?msgTipe=erro&msg=Erro ao apagar a fotolito'), 'location');
+            redirect(base_url('fotolito/?type=erro'), 'location');
         }
     }
 

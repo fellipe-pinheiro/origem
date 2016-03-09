@@ -24,14 +24,6 @@ if ($acao == 'inserir') {
                     <!--ID-->
                     <?= form_hidden('id', $impressao_formato->id) ?>
 
-                    <!--Nome-->
-                    <div class="form-group">
-                        <?= form_label('Nome: ', 'nome', array('class' => 'control-label col-sm-2')) ?>
-                        <div class="col-sm-5">
-                            <?= form_input('nome', $impressao_formato->nome, 'autofocus required id="nome" class="form-control" placeholder="Nome"') ?>
-                        </div>
-                    </div>
-
                     <!--Altura-->
                     <div class="form-group">
                         <?= form_label('Altura (mm): ', 'altura', array('class' => 'control-label col-sm-2')) ?>

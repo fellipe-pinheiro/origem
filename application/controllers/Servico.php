@@ -273,6 +273,7 @@ class Servico extends CI_Controller {
         $cliente->estado = $this->input->post('estado');
         $cliente->cep = $this->input->post('cep');
         $cliente->cnpj_cpf = $this->input->post('cnpj_cpf');
+        $cliente->contato_nome = $this->input->post('contato_nome');
         $cliente->ie = $this->input->post('ie');
         $cliente->im = $this->input->post('im');
         $cliente->pessoa_tipo = $this->input->post('pessoa_tipo');

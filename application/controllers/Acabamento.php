@@ -43,9 +43,9 @@ class Acabamento extends CI_Controller {
 
         $id = $this->Acabamento_m->inserir($acabamento);
         if (!empty($id)) {
-            redirect(base_url('acabamento/?msgTipe=sucesso&msg=Acabamento inserido com sucesso'), 'location');
+            redirect(base_url('acabamento/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('acabamento/?msgTipe=erro&msg=Erro ao inserir o acabamento'), 'location');
+            redirect(base_url('acabamento/?type=erro'), 'location');
         }
     }
 
@@ -58,19 +58,19 @@ class Acabamento extends CI_Controller {
         $acabamento->valor = $this->input->post('valor');
 
         if ($this->Acabamento_m->editar($acabamento)) {
-            redirect(base_url('acabamento/?msgTipe=sucesso&msg=Acabamento alterado com sucesso'), 'location');
+            redirect(base_url('acabamento/?type=sucesso'), 'location');
         } else {
-            sredirect(base_url('acabamento/?msgTipe=erro&msg=Erro ao alterar o acabamento'), 'location');
+            redirect(base_url('acabamento/?type=erro'), 'location');
         }
     }
 
     public function deletar() {
-        print $id = $this->uri->segment(3);
+        $id = $this->uri->segment(3);
 
-        if (!empty($this->Acabamento_m->deletar($id))) {
-            redirect(base_url('acabamento/?msgTipe=sucesso&msg=Acabamento apagado com sucesso'), 'location');
+        if ($this->Acabamento_m->deletar($id)) {
+            redirect(base_url('acabamento/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('acabamento/?msgTipe=erro&msg=Erro ao apagar o acabamento'), 'location');
+            redirect(base_url('acabamento/?type=erro'), 'location');
         }
     }
 

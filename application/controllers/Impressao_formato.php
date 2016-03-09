@@ -38,30 +38,28 @@ class Impressao_formato extends CI_Controller {
         
         $impressao_formato = new Impressao_formato_m();
         $impressao_formato->id = null;
-        $impressao_formato->nome = $this->input->post('nome');
         $impressao_formato->altura = $this->input->post('altura');
         $impressao_formato->largura = $this->input->post('largura');
         $impressao_formato->descricao = $this->input->post('descricao');
         $id = $this->Impressao_formato_m->inserir($impressao_formato);
         if (!empty($id)) {
-            redirect(base_url('impressao_formato/?msgTipe=sucesso&msg=Impressao Formato inserido com sucesso'), 'location');
+            redirect(base_url('impressao_formato/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('impressao_formato/?msgTipe=erro&msg=Erro ao inserir a Impressao Formato'), 'location');
+            redirect(base_url('impressao_formato/?type=erro'), 'location');
         }
     }
     
     public function editar() {
         $impressao_formato = new Impressao_formato_m();
         $impressao_formato->id = $this->input->post('id');;
-        $impressao_formato->nome = $this->input->post('nome');
         $impressao_formato->altura = $this->input->post('altura');
         $impressao_formato->largura = $this->input->post('largura');
         $impressao_formato->descricao = $this->input->post('descricao');
 
         if ($this->Impressao_formato_m->editar($impressao_formato)) {
-            redirect(base_url('impressao_formato/?msgTipe=sucesso&msg=Impressao Formato alterado com sucesso'), 'location');
+            redirect(base_url('impressao_formato/?type=sucesso'), 'location');
         } else {
-            sredirect(base_url('impressao_formato/?msgTipe=erro&msg=Erro ao alterar a Impressao Formato'), 'location');
+            redirect(base_url('impressao_formato/?type=erro'), 'location');
         }
     }
     
@@ -69,9 +67,9 @@ class Impressao_formato extends CI_Controller {
         print $id = $this->uri->segment(3);
 
         if (!empty($this->Impressao_formato_m->deletar($id))) {
-            redirect(base_url('impressao_formato/?msgTipe=sucesso&msg=Impressao Formato apagado com sucesso'), 'location');
+            redirect(base_url('impressao_formato/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('impressao_formato/?msgTipe=erro&msg=Erro ao apagar a Impressao Formato'), 'location');
+            redirect(base_url('impressao_formato/?type=erro'), 'location');
         }
     }
 }

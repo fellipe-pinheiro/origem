@@ -1,13 +1,55 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <?php $this->load->view('_include/head', ['titulo' => 'Orçamentos']); ?>
-    <?php $this->load->view('_include/dataTable', ['controler' => 'orcamento']); ?>
+    <?php empty($controler) ? $controler = '' : $controler; ?>
+    <link rel="stylesheet" href="<?= base_url("assets/css/dataTables.bootstrap.min.css"); ?>" />
+    <script type="text/javascript" src="<?= base_url("assets/js/jquery.dataTables.js"); ?>"></script>
+    <script type="text/javascript" src="<?= base_url("assets/js/dataTables.bootstrap.min.js"); ?>"></script>
     <script type="text/javascript">
         function open_status_modal(id) {
             $("#md_status").modal();
             $("#form_status").prop('action', '<?= base_url('orcamento/status') ?>/' + id);
         }
+        $(document).ready(function () {
+            var table = $('table').dataTable({
+                "order": [[ 0, "desc" ]],
+                "language": {
+                    "url": "<?= base_url("assets/idioma/dataTable-pt.json") ?>"
+                }
+            });
+
+            $('table tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                }
+                else {
+                    table.$('tr.active').removeClass('active');
+                    $(this).addClass('active');
+                }
+            });
+            $('#deletar').click(function () {
+                if ($('table tbody tr.active td').eq(0).text() != '') {
+                    var id = $('table tbody tr.active td').eq(0).text();
+                    var nome = $('table tbody tr.active td').eq(1).text();
+                    if (confirm("O item: " + nome + " sera apagado!")) {
+                        window.location.replace("<?= base_url("$controler/deletar") ?>/" + id);
+                    }
+                }
+            });
+            $('#editar').click(function () {
+                if ($('table tbody tr.active td').eq(0).text() != '') {
+                    var id = $('table tbody tr.active td').eq(0).text();
+                    window.location.replace("<?= base_url("$controler/form") ?>/" + id);
+                }
+            });
+        });
     </script>
+
+    <style type="text/css">
+        tr.active{
+            font-weight: bolder;
+        }
+    </style>
     <?php $this->load->view('_include/menu'); ?>
     <body>
         <div class="container">
@@ -42,41 +84,43 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($lista_orcamento as $key => $value) { ?>
-                                                <?php
-                                                if ($value['status'] == '1') {
-                                                    $status = 'Aprovado';
-                                                    $anchor_class = 'btn btn-success btn-block';
-                                                    $span_class = 'glyphicon glyphicon-ok';
-                                                    ?>
-                                                    <tr>
-                                                        <td><?= $value['id'] ?></td>
-                                                        <td><?= $value['cliente_nome'] ?></td>
-                                                        <td><?= $value['contato_nome'] ?></td>
-                                                        <td><?= $value['cnpj_cpf'] ?></td>
-                                                        <td><?= $value['email'] ?></td>
-                                                        <td><?= $value['data'] ?></td>
-                                                        <td>R$ <?= $value['valor'] ?></td>
-                                                        <td><span class="<?= $span_class ?>"></span><?= $status ?></td>
-                                                        <td data-class-name="priority" >
-                                                            <!-- Single button -->
-                                                            <div class="btn-group">
-                                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    Ação <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu">
-                                                                    <li>
-                                                                        <a id="btn_status" href="#" onclick="open_status_modal(<?= $value['id'] ?>)">
-                                                                            <span class="glyphicon glyphicon-refresh"></span> Status
-                                                                        </a>
-                                                                    </li>
-                                                                    <li><a href="<?= base_url("Orcamento/editar/{$value['id']}") ?>"><span class="glyphicon glyphicon-pencil"></span> Editar</a></li>
-                                                                    <li role="separator" class="divider"></li>
-                                                                    <li><a class="" target="_blank" href="<?= base_url("Orcamento/pdf/{$value['id']}") ?>"><span class="glyphicon glyphicon-file"></span>PDF</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                            <?php
+                                            if (empty(!$lista_orcamento)) {
+                                                foreach ($lista_orcamento as $key => $value) {
+                                                    if ($value['status'] == '1') {
+                                                        $status = 'Aprovado';
+                                                        $anchor_class = 'btn btn-success btn-block';
+                                                        $span_class = 'glyphicon glyphicon-ok';
+                                                        ?>
+                                                        <tr>
+                                                            <td><?= $value['id'] ?></td>
+                                                            <td><?= $value['cliente_nome'] ?></td>
+                                                            <td><?= $value['contato_nome'] ?></td>
+                                                            <td><?= $value['cnpj_cpf'] ?></td>
+                                                            <td><?= $value['email'] ?></td>
+                                                            <td><?= $value['data'] ?></td>
+                                                            <td>R$ <?= $value['valor'] ?></td>
+                                                            <td><span class="<?= $span_class ?>"></span><?= $status ?></td>
+                                                            <td data-class-name="priority" >
+                                                                <!-- Single button -->
+                                                                <div class="btn-group">
+                                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        Ação <span class="caret"></span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li>
+                                                                            <a id="btn_status" href="#" onclick="open_status_modal(<?= $value['id'] ?>)">
+                                                                                <span class="glyphicon glyphicon-refresh"></span> Status
+                                                                            </a>
+                                                                        </li>
+                                                                        <li><a href="<?= base_url("Orcamento/editar/{$value['id']}") ?>"><span class="glyphicon glyphicon-pencil"></span> Editar</a></li>
+                                                                        <li role="separator" class="divider"></li>
+                                                                        <li><a class="" target="_blank" href="<?= base_url("Orcamento/pdf/{$value['id']}") ?>"><span class="glyphicon glyphicon-file"></span>PDF</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             <?php } ?>
                                         </tbody>
@@ -220,7 +264,7 @@
                                                         <td><?= $value['email'] ?></td>
                                                         <td><?= $value['data'] ?></td>
                                                         <td>R$ <?= $value['valor'] ?></td>
-                                                        <td><span class="<?= $span_class ?>"></span><?=$status?></td>
+                                                        <td><span class="<?= $span_class ?>"></span><?= $status ?></td>
                                                         <td data-class-name="priority" >
                                                             <!-- Single button -->
                                                             <div class="btn-group">

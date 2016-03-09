@@ -26,14 +26,14 @@ class Laminacao extends CI_Controller {
         } else {
             $laminacao = $this->Laminacao_m->listar($id);
 
-            $data['laminacao'] = $laminacao[0]; 
+            $data['laminacao'] = $laminacao[0];
             $data['acao'] = 'editar';
             $data['id'] = $id;
 
             $this->load->view('laminacao/form', $data);
         }
     }
-    
+
     public function inserir() {
         $laminacao = new Laminacao_m();
         $laminacao->id = null;
@@ -43,33 +43,35 @@ class Laminacao extends CI_Controller {
 
         $id = $this->Laminacao_m->inserir($laminacao);
         if (!empty($id)) {
-            redirect(base_url('laminacao/?msgTipe=sucesso&msg=laminação inserido com sucesso'), 'location');
+            redirect(base_url('laminacao/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('laminacao/?msgTipe=erro&msg=Erro ao inserir a laminação'), 'location');
+            redirect(base_url('laminacao/?type=erro'), 'location');
         }
     }
-    
+
     public function editar() {
         $laminacao = new Laminacao_m();
-        $laminacao->id = $this->input->post('id');;
+        $laminacao->id = $this->input->post('id');
+        ;
         $laminacao->nome = $this->input->post('nome');
         $laminacao->descricao = $this->input->post('descricao');
         $laminacao->valor = $this->input->post('valor');
 
         if ($this->Laminacao_m->editar($laminacao)) {
-            redirect(base_url('laminacao/?msgTipe=sucesso&msg=laminação alterado com sucesso'), 'location');
+            redirect(base_url('laminacao/?type=sucesso'), 'location');
         } else {
-            sredirect(base_url('laminacao/?msgTipe=erro&msg=Erro ao alterar a laminação'), 'location');
+            redirect(base_url('laminacao/?type=erro'), 'location');
         }
     }
-    
-    public function deletar() {
-        print $id = $this->uri->segment(3);
 
-        if (!empty($this->Laminacao_m->deletar($id))) {
-            redirect(base_url('laminacao/?msgTipe=sucesso&msg=laminação apagado com sucesso'), 'location');
+    public function deletar() {
+        $id = $this->uri->segment(3);
+
+        if ($this->Laminacao_m->deletar($id)) {
+            redirect(base_url('laminacao/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('laminacao/?msgTipe=erro&msg=Erro ao apagar a laminação'), 'location');
+            redirect(base_url('laminacao/?type=erro'), 'location');
         }
     }
+
 }

@@ -53,7 +53,7 @@ class Frete_m extends CI_Model {
                 'id' => $frete->id,
                 'nome' => $frete->nome,
                 'descricao' => $frete->descricao,
-                'valor' => str_replace(',', '.', $frete['valor'])
+                'valor' => str_replace(',', '.', $frete->valor)
             );
             $this->db->where('id', $frete->id);
             if ($this->db->update('frete', $dados)) {

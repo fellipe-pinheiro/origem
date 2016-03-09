@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Impressao_formato_m extends CI_Model {
 
     var $id;
-    var $nome;
     var $altura;
     var $largura;
     var $descricao;
@@ -46,7 +45,6 @@ class Impressao_formato_m extends CI_Model {
         if (!empty($impressao_formato)) {
             $dados = array(
                 'id' => $impressao_formato->id,
-                'nome' => $impressao_formato->nome,
                 'altura' => $impressao_formato->altura,
                 'largura' => $impressao_formato->largura,
                 'descricao' => $impressao_formato->descricao
@@ -65,7 +63,6 @@ class Impressao_formato_m extends CI_Model {
         if (!empty($impressao_formato->id)) {
             $dados = array(
                 'id' => $impressao_formato->id,
-                'nome' => $impressao_formato->nome,
                 'altura' => $impressao_formato->altura,
                 'largura' => $impressao_formato->largura,
                 'descricao' => $impressao_formato->descricao
@@ -98,7 +95,6 @@ class Impressao_formato_m extends CI_Model {
         foreach ($result_db as $key => $value) {
             $impressao_formato = new Impressao_formato_m();
             $impressao_formato->id = $value['id'];
-            $impressao_formato->nome = $value['nome'];
             $impressao_formato->altura = $value['altura'];
             $impressao_formato->largura = $value['largura'];
             $impressao_formato->descricao = $value['descricao'];

@@ -23,6 +23,7 @@ class Orcamento extends CI_Controller {
     }
 
     public function index() {
+        $data['lista_orcamento'] = array();
         $data['lista_orcamento'] = $this->Orcamento_m->listar_view();
         $this->load->view('Orcamento/lista', $data);
     }
@@ -52,12 +53,13 @@ class Orcamento extends CI_Controller {
         );
         redirect(base_url('orcamento'), 'location');
     }
-    
+
     //intativo
     public function sucesso() {
         $id = $this->uri->segment(3);
-        $data['orcamento_id'] = $this->uri->segment(3); 
+        $data['orcamento_id'] = $this->uri->segment(3);
         $data['lista_orcamento'] = $this->Orcamento_m->listar_view();
         $this->load->view('Orcamento/lista', $data);
     }
+
 }

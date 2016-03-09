@@ -26,14 +26,14 @@ class Nota extends CI_Controller {
         } else {
             $nota = $this->Nota_m->listar($id);
 
-            $data['nota'] = $nota[0]; 
+            $data['nota'] = $nota[0];
             $data['acao'] = 'editar';
             $data['id'] = $id;
 
             $this->load->view('nota/form', $data);
         }
     }
-    
+
     public function inserir() {
         $nota = new Nota_m();
         $nota->id = null;
@@ -43,33 +43,35 @@ class Nota extends CI_Controller {
 
         $id = $this->Nota_m->inserir($nota);
         if (!empty($id)) {
-            redirect(base_url('nota/?msgTipe=sucesso&msg=Nota inserido com sucesso'), 'location');
+            redirect(base_url('nota/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('nota/?msgTipe=erro&msg=Erro ao inserir a Nota'), 'location');
+            redirect(base_url('nota/?type=erro'), 'location');
         }
     }
-    
+
     public function editar() {
         $nota = new Nota_m();
-        $nota->id = $this->input->post('id');;
+        $nota->id = $this->input->post('id');
+        ;
         $nota->nome = $this->input->post('nome');
         $nota->descricao = $this->input->post('descricao');
         $nota->valor = $this->input->post('valor');
 
         if ($this->Nota_m->editar($nota)) {
-            redirect(base_url('nota/?msgTipe=sucesso&msg=Nota alterado com sucesso'), 'location');
+            redirect(base_url('nota/?type=sucesso'), 'location');
         } else {
-            sredirect(base_url('nota/?msgTipe=erro&msg=Erro ao alterar a nota'), 'location');
+            redirect(base_url('nota/?type=erro'), 'location');
         }
     }
-    
+
     public function deletar() {
         print $id = $this->uri->segment(3);
 
-        if (!empty($this->Nota_m->deletar($id))) {
-            redirect(base_url('nota/?msgTipe=sucesso&msg=Nota apagado com sucesso'), 'location');
+        if ($this->Nota_m->deletar($id)) {
+            redirect(base_url('nota/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('nota/?msgTipe=erro&msg=Erro ao apagar a nota'), 'location');
+            redirect(base_url('nota/?type=erro'), 'location');
         }
     }
+
 }

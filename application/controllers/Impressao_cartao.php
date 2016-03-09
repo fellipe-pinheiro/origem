@@ -51,9 +51,9 @@ class Impressao_cartao extends CI_Controller {
 
         $id = $this->Impressao_cartao_m->inserir($impressao_cartao);
         if (!empty($id)) {
-            redirect(base_url('impressao_cartao/?msgTipe=sucesso&msg=impressao inserido com sucesso'), 'location');
+            redirect(base_url('impressao_cartao/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('impressao_cartao/?msgTipe=erro&msg=Erro ao inserir a impressao'), 'location');
+            redirect(base_url('impressao_cartao/?type=erro'), 'location');
         }
     }
 
@@ -68,19 +68,19 @@ class Impressao_cartao extends CI_Controller {
         $impressao_cartao->impressao_formato = $this->input->post('impressao_formato');
 
         if ($this->Impressao_cartao_m->editar($impressao_cartao)) {
-            redirect(base_url('impressao_cartao/?msgTipe=sucesso&msg=impressao alterado com sucesso'), 'location');
+            redirect(base_url('impressao_cartao/?type=sucesso'), 'location');
         } else {
-            sredirect(base_url('impressao_cartao/?msgTipe=erro&msg=Erro ao alterar a impressao'), 'location');
+            redirect(base_url('impressao_cartao/?type=erro'), 'location');
         }
     }
 
     public function deletar() {
         print $id = $this->uri->segment(3);
 
-        if (!empty($this->Impressao_cartao_m->deletar($id))) {
-            redirect(base_url('impressao_cartao/?msgTipe=sucesso&msg=impressao apagado com sucesso'), 'location');
+        if ($this->Impressao_cartao_m->deletar($id)) {
+            redirect(base_url('impressao_cartao/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('impressao_cartao/?msgTipe=erro&msg=Erro ao apagar a impressao'), 'location');
+            redirect(base_url('impressao_cartao/?type=erro'), 'location');
         }
     }
 

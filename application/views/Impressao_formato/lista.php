@@ -10,6 +10,7 @@
                     <h3 class="panel-title">Lista de Área de Impressões</h3>
                 </div>
                 <div class="panel-body">
+                    <?php $this->load->view('_include/mensagem_crud'); ?>
                     <div class="row">
                         <div class="col-md-3">
                             <a class="btn btn-primary inserir" href="<?= base_url('impressao_formato/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>
@@ -28,7 +29,6 @@
                                 <thead>
                                     <tr>
                                         <th class="hidden">ID</th>
-                                        <th>Nome</th>
                                         <th>Área</th>
                                         <th>Descrição</th>
                                     </tr>
@@ -37,7 +37,6 @@
                                     <?php foreach ($impressao_formato as $key => $value) { ?>
                                         <tr>
                                             <td class="hidden"><?= $value->id ?></td>
-                                            <td><?= $value->nome ?></td>
                                             <td><?= $value->altura ?> x <?= $value->largura ?></td>
                                             <td><?= $value->descricao ?></td>
                                         </tr>

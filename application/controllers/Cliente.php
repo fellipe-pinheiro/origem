@@ -22,7 +22,7 @@ class Cliente extends CI_Controller {
     public function form() {
         $id = $this->uri->segment(3);
         //Estados
-            $data['estados'] = array(
+        $data['estados'] = array(
             'AC' => 'AC',
             'AL' => 'AL',
             'AM' => 'AM',
@@ -62,7 +62,7 @@ class Cliente extends CI_Controller {
             $data['cliente'] = $cliente[0];
             $data['acao'] = 'editar';
             $data['id'] = $id;
-            
+
             $this->load->view('cliente/form', $data);
         }
     }
@@ -90,9 +90,9 @@ class Cliente extends CI_Controller {
 
         $id = $this->Cliente_m->inserir($cliente);
         if (!empty($id)) {
-            redirect(base_url('cliente/?msgTipe=sucesso&msg=cliente inserido com sucesso'), 'location');
+            redirect(base_url('cliente/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('cliente/?msgTipe=erro&msg=Erro ao inserir a cliente'), 'location');
+            redirect(base_url('cliente/?type=erro'), 'location');
         }
     }
 
@@ -118,19 +118,19 @@ class Cliente extends CI_Controller {
         $cliente->observacao = $this->input->post('observacao');
 
         if ($this->Cliente_m->editar($cliente)) {
-            redirect(base_url('cliente/?msgTipe=sucesso&msg=cliente alterado com sucesso'), 'location');
+            redirect(base_url('cliente/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('cliente/?msgTipe=erro&msg=Erro ao alterar o cliente'), 'location');
+            redirect(base_url('cliente/?type=erro'), 'location');
         }
     }
 
     public function deletar() {
         print $id = $this->uri->segment(3);
 
-        if (!empty($this->Cliente_m->deletar($id))) {
-            redirect(base_url('cliente/?msgTipe=sucesso&msg=cliente apagado com sucesso'), 'location');
+        if ($this->Cliente_m->deletar($id)) {
+            redirect(base_url('cliente/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('cliente/?msgTipe=erro&msg=Erro ao apagar o cliente'), 'location');
+            redirect(base_url('cliente/?type=erro'), 'location');
         }
     }
 

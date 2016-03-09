@@ -10,6 +10,7 @@
                     <h3 class="panel-title">Lista de Fotolito</h3>
                 </div>
                 <div class="panel-body">
+                    <?php $this->load->view('_include/mensagem_crud'); ?>
                     <div class="row">
                         <div class="col-md-3">
                             <a class="btn btn-primary inserir" href="<?= base_url('fotolito/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>

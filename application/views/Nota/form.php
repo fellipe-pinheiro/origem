@@ -40,9 +40,9 @@ if ($acao == 'inserir') {
                     </div>
                     <!--Valor-->
                     <div class="form-group">
-                        <?= form_label('Valor: ', 'valor', array('class' => 'control-label col-sm-2')) ?>
+                        <?= form_label('Porcentagem (%): ', 'valor', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <input name="valor" value="<?=$nota->valor?>" required type="number" step="0.01" min="0" id="valor" class="form-control" placeholder="Valor">
+                            <input name="valor" value="<?=$nota->valor?>" required type="number" step="0.01" min="0" id="valor" class="form-control" placeholder="Ex: 11,85">
                         </div>
                     </div>
 

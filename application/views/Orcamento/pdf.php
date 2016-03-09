@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <?php
-    $this->load->view('_include/head', ['titulo' => 'Orçamentos']);
+    $this->load->view('_include/head', ['titulo' => "Orçamento nº {$orcamento->id}"]);
     ?>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            window.print();
+        });
+    </script>
     <body>
         <?php $this->load->view('_include/menu'); ?>
         <div class="container">

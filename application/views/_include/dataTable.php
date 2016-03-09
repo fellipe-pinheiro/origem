@@ -19,7 +19,15 @@
                 $(this).addClass('active');
             }
         });
-        
+        $('#reset_password').click(function () {
+            if ($('table tbody tr.active td').eq(0).text() != '') {
+                var id = $('table tbody tr.active td').eq(0).text();
+                var nome = $('table tbody tr.active td').eq(1).text();
+                if (confirm("A senha de: " + nome + " renovada!")) {
+                    window.location.replace("<?= base_url("$controler/reset_password") ?>/" + id);
+                }
+            }
+        });
         $('#deletar').click(function () {
             if ($('table tbody tr.active td').eq(0).text() != '') {
                 var id = $('table tbody tr.active td').eq(0).text();

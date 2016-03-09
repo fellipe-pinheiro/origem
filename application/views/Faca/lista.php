@@ -7,9 +7,10 @@
         <div class="container">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Lista de faca</h3>
+                    <h3 class="panel-title">Lista de Faca</h3>
                 </div>
                 <div class="panel-body">
+                    <?php $this->load->view('_include/mensagem_crud'); ?>
                     <div class="row">
                         <div class="col-md-3">
                             <a class="btn btn-primary inserir" href="<?= base_url('faca/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>
@@ -39,7 +40,7 @@
                                             <td class="hidden"><?= $value->id ?></td>
                                             <td><?= $value->nome ?></td>
                                             <td><?= $value->descricao ?></td>
-                                            <td>R$ <?= number_format($value->valor, 2, ',','.')?></td>
+                                            <td>R$ <?= number_format($value->valor, 2, ',', '.') ?></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

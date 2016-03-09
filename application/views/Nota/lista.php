@@ -10,6 +10,7 @@
                     <h3 class="panel-title">Lista de Nota</h3>
                 </div>
                 <div class="panel-body">
+                    <?php $this->load->view('_include/mensagem_crud'); ?>
                     <div class="row">
                         <div class="col-md-3">
                             <a class="btn btn-primary inserir" href="<?= base_url('nota/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>
@@ -30,7 +31,7 @@
                                         <th class="hidden">ID</th>
                                         <th>Nome</th>
                                         <th>Descrição</th>
-                                        <th>Valor</th>
+                                        <th>Porcentagem</th>
                                     </tr>
                                 </thead>
                                 <tbody id="fbody">
@@ -39,7 +40,7 @@
                                             <td class="hidden"><?= $value->id ?></td>
                                             <td><?= $value->nome ?></td>
                                             <td><?= $value->descricao ?></td>
-                                            <td>R$ <?= number_format($value->valor, 2, ',', '.') ?></td>
+                                            <td>% <?= number_format($value->valor, 2, ',', '.') ?></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

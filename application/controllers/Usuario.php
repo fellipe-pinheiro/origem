@@ -52,9 +52,9 @@ class Usuario extends CI_Controller {
 
         if ($this->form_validation->run() == TRUE) {
             if ($this->Usuario_m->inserir($dados)) {
-                redirect(base_url('usuario/?msgTipe=sucesso&msg=Usuario inserido com sucesso'), 'location');
+                redirect(base_url('usuario/?type=sucesso'), 'location');
             } else {
-                redirect(base_url('usuario/?msgTipe=erro&msg=Erro ao inserir o Usuario'), 'location');
+                redirect(base_url('usuario/?type=erro'), 'location');
             }
         } else {
             $data['acao'] = 'inserir';
@@ -73,20 +73,28 @@ class Usuario extends CI_Controller {
 
         if ($this->form_validation->run() == TRUE) {
             $this->Usuario_m->editar($usuario);
-            redirect(base_url('usuario/?msgTipe=sucesso&msg=Usuario alterado com sucesso'), 'location');
+            redirect(base_url('usuario/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('usuario/?msgTipe=erro&msg=Erro ao alterar Usuario'), 'location');
+            redirect(base_url('usuario/?type=erro'), 'location');
         }
     }
 
     public function deletar() {
-        print $id = $this->uri->segment(3);
+        $id = $this->uri->segment(3);
 
-        if (!empty($this->Usuario_m->deletar($id))) {
-            redirect(base_url('usuario/?msgTipe=sucesso&msg=Usuario apagado com sucesso'), 'location');
+        if ($this->Usuario_m->deletar($id)) {
+            redirect(base_url('usuario/?type=sucesso'), 'location');
         } else {
-            redirect(base_url('usuario/?msgTipe=erro&msg=Erro ao apagar o Usuario'), 'location');
+            redirect(base_url('usuario/?type=erro'), 'location');
         }
     }
 
+    public function reset_password() {
+        $id = $this->uri->segment(3);
+        if ($this->Usuario_m->reset_password($id)) {
+            redirect(base_url('usuario/?type=sucesso'), 'location');
+        } else {
+            redirect(base_url('usuario/?type=erro'), 'location');
+        }
+    }
 }

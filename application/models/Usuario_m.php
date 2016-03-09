@@ -129,5 +129,16 @@ class Usuario_m extends CI_Model {
             return FALSE;
         }
     }
-
+    
+    public function reset_password($id = '') {
+        if (!empty($id)) {
+            $this->db->where('id', $id);
+            $this->db->set('senha', '');
+            if ($this->db->update('Usuario')) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
 }
