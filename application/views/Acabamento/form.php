@@ -51,7 +51,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">        
                         <div class="col-sm-offset-2 col-sm-5">
                             <?= anchor(base_url('acabamento'), 'Cancelar', 'class="btn btn-default"') ?>
-                            <?= form_submit('salvar', 'Salvar', 'class="btn btn-default"') ?>
+                            <?= form_submit('salvar', 'Salvar', 'class="btn btn-success"') ?>
                         </div>
                     </div>
                     <?= form_close() ?>

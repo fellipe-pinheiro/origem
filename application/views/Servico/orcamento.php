@@ -53,7 +53,7 @@ $titulo = 'Serviço';
         });
         $(document).ready(function () {
             var table = $("#md_cliente_tabela").dataTable({
-                "order": [[ 1, "asc" ]]
+                "order": [[1, "asc"]]
             });
             $("#md_cliente_tabela tbody").on('click', 'tr', function () {
                 if ($(this).hasClass('active')) {
@@ -64,7 +64,7 @@ $titulo = 'Serviço';
                     $(this).addClass('active');
                 }
             });
-            
+
             $('#md_cliente_selecionar').click(function () {
                 if ($('#md_cliente_tabela tbody tr.active td').eq(0).text() != '') {
                     var id = $('#md_cliente_tabela tbody tr.active td').eq(0).text();
@@ -998,14 +998,12 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Cliente</h4>
+                        <div style="padding-bottom: 10px">
+                            <button id="md_btn_criar_cliente" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>
+                            <button id="md_cliente_selecionar" style="float: right" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-right"></span> Selecionar</button>
+                        </div>
                     </div>
                     <div class="modal-body">
-                        <div style="padding-bottom: 10px">
-                            <button id="md_btn_criar_cliente" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Novo</button>
-                            <button id="md_cliente_selecionar" style="float: right" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Adicionar</button>
-                        </div>
                         <!--lista clientes-->
                         <table id="md_cliente_tabela" class="table display compact table-bordered" cellspacing="0" width="100%">
                             <thead>

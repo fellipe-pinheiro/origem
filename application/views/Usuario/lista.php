@@ -35,7 +35,7 @@
                 ?>
                 <div class="row">
                     <div class="col-md-3">
-                        <a class="btn btn-success" href="<?= base_url('usuario/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>
+                        <a class="btn btn-default" href="<?= base_url('usuario/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>
                     </div>
                     <div class="col-md-7">
                     </div>

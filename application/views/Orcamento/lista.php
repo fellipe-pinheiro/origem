@@ -12,7 +12,7 @@
         }
         $(document).ready(function () {
             var table = $('table').dataTable({
-                "order": [[ 0, "desc" ]],
+                "order": [[0, "desc"]],
                 "language": {
                     "url": "<?= base_url("assets/idioma/dataTable-pt.json") ?>"
                 }
@@ -54,13 +54,14 @@
     <body>
         <div class="container">
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#aprovado">Aprovado</a></li>
-                <li><a data-toggle="tab" href="#aguardando">Aguardando</a></li>
+                <li><a data-toggle="tab" href="#aprovado">Aprovado</a></li>
+                <li class="active"><a data-toggle="tab" href="#aguardando">Aguardando</a></li>
                 <li><a data-toggle="tab" href="#cancelado">Cancelado</a></li>
             </ul>
 
             <div class="tab-content">
-                <div id="aprovado" class="tab-pane fade in active">
+                <!--Aprovado-->
+                <div id="aprovado" class="tab-pane fade">
                     <br>
                     <div class="panel panel-success">
                         <div class="panel-heading">
@@ -144,7 +145,8 @@
                     </div>
 
                 </div>
-                <div id="aguardando" class="tab-pane fade">
+                <!--Aguardando-->
+                <div id="aguardando" class="tab-pane  fade in active">
                     <br>   
                     <div class="panel panel-warning">
                         <div class="panel-heading">
@@ -225,6 +227,7 @@
                         </div>
                     </div>
                 </div>
+                <!--Cancelado-->
                 <div id="cancelado" class="tab-pane fade">
                     <br>
                     <div class="panel panel-default">
@@ -308,31 +311,31 @@
 
                 </div>
             </div>
-        </div>
     </body>
     <?php $this->load->view('_include/footer'); ?>
-    <!-- Modal Status -->
-    <div class="modal fade" id="md_status" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Status</h4>
-                </div>
-                <form id="form_status" action="#" method="POST">
-                    <div class="modal-body">
-                        <select required name="status" class="form-control">
-                            <option value="0">Aguardando</option>
-                            <option value="1">Aprovado</option>
-                            <option value="2">Cancelado</option>
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-success">Salvar</button>
-                    </div>
-                </form>
+</div>
+<!-- Modal Status -->
+<div class="modal fade" id="md_status" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Status</h4>
             </div>
+            <form id="form_status" action="#" method="POST">
+                <div class="modal-body">
+                    <select required name="status" class="form-control">
+                        <option value="0">Aguardando</option>
+                        <option value="1">Aprovado</option>
+                        <option value="2">Cancelado</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 </html>

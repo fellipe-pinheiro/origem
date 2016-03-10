@@ -13,12 +13,12 @@
                     <?php $this->load->view('_include/mensagem_crud'); ?>
                     <div class="row">
                         <div class="col-md-3">
-                            <a class="btn btn-primary inserir" href="<?= base_url('impressao_formato/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>
+                            <a class="btn btn-default inserir" href="<?= base_url('impressao_formato/form') ?>"><span class="glyphicon glyphicon-plus"></span></a>
                         </div>
                         <div class="col-md-6">
                         </div>
                         <div class="col-md-3 btn-group">
-                            <a id="editar" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+                            <a id="editar" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
                             <a id="deletar" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Deletar</a>
                         </div>
                     </div>
