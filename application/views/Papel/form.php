@@ -28,7 +28,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Nome: ', 'nome', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_input('nome', $papel->nome, 'autofocus id="nome" class="form-control" placeholder="Nome"') ?>
+                            <?= form_input('nome', $papel->nome, 'required autofocus id="nome" class="form-control" placeholder="Nome"') ?>
                         </div>
                     </div>
 

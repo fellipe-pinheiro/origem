@@ -36,7 +36,7 @@ if ($acao == 'inserir') {
                     <div class="form-group">
                         <?= form_label('Descrição: ', 'descricao', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
-                            <?= form_textarea('descricao', $laminacao->descricao, 'required id="descricao" class="form-control" placeholder="Descrição"') ?>
+                            <?= form_textarea('descricao', $laminacao->descricao, 'id="descricao" class="form-control" placeholder="Descrição"') ?>
                         </div>
                     </div>
 

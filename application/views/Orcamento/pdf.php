@@ -135,8 +135,8 @@
 
                                             <?php } else { ?>
                                                 <td><?= $faca->quantidade ?></td>
+                                                <td>Faca para cartão de visita</td>
                                             <?php } ?>
-                                            <td>Faca para cartão de visita</td>
                                         </tr>
                                         <?php
                                     }
@@ -195,7 +195,8 @@
                             </tbody>
                             <tfoot>
                                 <?php
-                                if (!empty($orcamento->nota_fiscal)) {
+                                //Se o ID da nota fiscal for igual a 0 (ZERO), não aparece na view
+                                if (!empty($orcamento->nota_fiscal) && $orcamento->nota_fiscal->id != '1') {
                                     ?>
                                     <tr>
                                         <td></td>
@@ -260,9 +261,9 @@
                         <h4>Observações</h4>
                         <textarea rows="3" class="form-control" readonly=""><?= $orcamento->observacao ?></textarea>
                     </div>
+                    <br><br>
                 </div>
             </div>
-            <?php $this->load->view('_include/footer'); ?>
         </div>
     </body>
 </html>
