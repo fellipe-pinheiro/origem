@@ -21,4 +21,8 @@ class Documentacao extends CI_Controller {
         $this->load->view('documentacao/orcamento');
     }
 
+    public function impressao() {
+        $this->load->view('documentacao/impressao');
+    }
+
 }

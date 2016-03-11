@@ -59,7 +59,7 @@ if ($acao == 'inserir') {
 
                     <!--Impressao Formato-->
                     <div class="form-group">
-                        <?= form_label('Impressao Formato: ', 'impressao_formato', array('class' => 'control-label col-sm-2')) ?>
+                        <?= form_label('Área Impressão: ', 'impressao_formato', array('class' => 'control-label col-sm-2')) ?>
                         <div class="col-sm-5">
                             <?php
                             $lista = array();

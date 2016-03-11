@@ -348,7 +348,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
             <div  class="alert alert-warning fade in">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>Olá! Você esta na documentação!</strong><br> Coloque o mouse sobre os botões para ver as funcionalidades<br>
-                No Painel de detalhes, clique nos botões para ver as explicaçoes.
+                No Painel de detalhes, clique nos botões para ver as explicaçoes.<br>
             </div>
             <div class="row">
                 <!--PAINEL OPÇÕES-->
@@ -358,6 +358,10 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                             <h3 class="panel-title">OPÇÕES</h3>
                         </div>
                         <div class="panel-body">
+                            <div  class="alert alert-warning fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Menu</strong><br> Aqui você cria um novo produto, coloca as condições finais como: prazo, pagamento, frete, nota, etc. Pode limpar o orçamento, onde esta ação não interfere no orçamento se ele estiver em modo de edição, apenas limpa a área de trabalho.   
+                            </div>
                             <div class="col-md-12">
                                 <div class="dropdown">
                                     <button class="btn btn-default dropdown-toggle btn-block" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -365,13 +369,12 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <?php if (empty($_SESSION['orcamento']->servico->quantidade)) { ?>
                                             <li>
                                                 <a href="#" data-toggle="modal" data-target="#myModal_produto">
                                                     <span class="glyphicon glyphicon-plus"></span> Novo produto
                                                 </a>
                                             </li>
-                                        <?php } else { ?>
+                                        
                                             <li>
                                                 <a href="#" data-toggle="modal" data-target="#myModal_condicoes">
                                                     <span class="glyphicon glyphicon-usd"></span> Condições <span class="glyphicon glyphicon-time"></span>
@@ -388,7 +391,6 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                     <span class="glyphicon glyphicon-ok"></span> Finalizar
                                                 </a>
                                             </li>
-                                        <?php } ?>
                                     </ul>
                                 </div>
                             </div>
@@ -412,6 +414,11 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                             <h3 class="panel-title">ORÇAMENTO 
                         </div>
                         <div class="panel-body">
+                            <div  class="alert alert-warning fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Cliente</strong><br> Todo orçamento precisa ter um cliente associado. Então, se este cliente não existir ainda no banco de dados, aqui você pode criar dinamicamente este cliente.
+                                Preencher pelo menos o nome e email, pois assim você consegue fazer a busca pelo email que é único para cada cliente.
+                            </div>
                             <div class="row">
                                 <input type="hidden" name="cliente_id" id="cliente_id_panel">
                                 <!-- Button trigger modal -->
@@ -506,6 +513,23 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                             <h3 class="panel-title">DETALHES</h3>
                         </div>
                         <div class="panel-body">
+                            <div  class="alert alert-warning fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Detalhes</strong><br> Os detalhes são inseridos um a um clicando nos botões abaixo.<br>
+                                Os item inseridos vão aparecendo em suas respectivas áreas separadas por cores.<br>
+                                <button class="btn btn-info btn-sm">Papel</button>
+                                <button class="btn btn-default btn-sm">Impressão</button>
+                                <button class="btn btn-success btn-sm">Faca</button>
+                                <button class="btn btn-warning btn-sm">Acabamento</button>
+                                <button class="btn btn-danger btn-sm">Acabamento 2</button>
+                                <button class="btn btn-sm" style="background: #ffffff">Colagem</button>
+                                <br>
+                                Para saber os resultados da quantidade, valor unitário e sub-total, basta clicar nos botões.<br>
+                                <strong>Importante!</strong>Se caso estiver fazendo um orçamento e queira alterar o valor de algum item, faça isso antes de utiliza-lo. 
+                                Uma vez utilizado, este não refletirá a alteração feita, sendo necessário excluir o item e inserir novamente. Voce pode também abrir o item pelo botão editar 
+                                <button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                                e salvar, pois este já terá o valor atualizado.
+                            </div>
                             <div class="col-md-12">
                                 <div class="col-md-2">
                                     <button id="md_btn_papel" class="btn btn-default btn-block btn_m" data-toggle="modal" data-target="#myModal_papel">
@@ -679,6 +703,11 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <h4 class="modal-title">Impressão Cartão</h4>
                     </div>
                     <div class="modal-body">
+                        <div  class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Impressão</strong><br> Selecione a impressão e coloque apenas números inteiros positivos nos campos 
+                            <strong>Frente</strong> e <strong>Verso</strong>
+                        </div>
                         <label for="impressao_cartao">Impressão:</label>
                         <select required autofocus id="impressao_cartao_select" class="form-control" name="impressao_cartao">
                             <option value="">Selecione</option>
@@ -892,6 +921,11 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         </div>
                     </div>
                     <div class="modal-body">
+                        <div  class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Cliente</strong><br> Selecione um cliente da lista clicando sobre a linha e clique no botão selecionar <button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-circle-arrow-right"></span> Selecionar</button><br>
+                            Se ele não existir, clique no botão <button class="btn- btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span></button> localizado ao lado superior esquerdo.
+                        </div>
                         <!--lista clientes-->
                         <table id="md_cliente_tabela" class="table display compact table-bordered" cellspacing="0" width="100%">
                             <thead>
@@ -931,6 +965,16 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <h4 class="modal-title">Papel</h4>
                     </div>
                     <div class="modal-body">
+                        <div  class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Filtro</strong><br> Quando houver uma gama de papeis, este filtro é interessante pois só aparecerão os itens que contem esta palavra.<br>
+                        </div>
+                        <div  class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Empastamento</strong><br> Se o trabalho necessitar de empastamento, o valor terá que ser preenchido manualmente.<br>
+                            Caso não haja empastamento, é <strong>importante</strong> deixar selecionado o NÂO no empastamento.<br>
+                            O empastamento também será associado a este papel. Caso precise empastar papeis diferentes, coloque o valor total em um papel e o outro selecione somente o papel.
+                        </div>
                         <label class="control-label" for="form_papel_filtrar"><span class="glyphicon glyphicon-filter"></span> Filtro de papel:</label>
                         <input type="search" id="form_papel_filtrar" class="form-control text-uppercase" placeholder="Digite o nome do papel para aplicar o filtro ex: aspen" />
                         <label class="control-label" for="papel"> Papel:</label>
@@ -973,6 +1017,11 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <h4 class="modal-title">Acabamento</h4>
                     </div>
                     <div class="modal-body">
+                        <div  class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Acabamento</strong><br>
+                            Selecione o acabamento desejado e sua respectiva quantidade. Coloque também na quantidade números inteiros posivivos.
+                        </div>
                         <label class="control-label" for="acabamento"> Acabamento:</label>
                         <div class="form-group">
                             <select id="md_acabamento_select" autofocus class="form-control" name="acabamento" required>
@@ -1007,6 +1056,12 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <h4 class="modal-title">Acabamento 2</h4>
                     </div>
                     <div class="modal-body">
+                        <div  class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Acabamento 2</strong><br>
+                            Selecione o acabamento desejado e seu respectivo valor. Neste caso, só pegaremos o nome da base de dados e o valor lá inserido não será utilizado.<br>
+                            N base de dados, insira somente os itens que deseja colocar o valor manualmente, não repetindo os itens da outra tabela de acabamentos.
+                        </div>
                         <div class="form-group">
                             <label class="control-label" for="acabamento_2">Acabamento 2:</label>
                             <select required autofocus id="md_acabamento_2_select_acabamento_2" class="form-control" name="acabamento_2">
@@ -1036,6 +1091,12 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <h4 class="modal-title">Condições</h4>
                     </div>
                     <div class="modal-body">
+                        <div  class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Condições</strong><br>
+                            Neste painel você coloca as condições finais do orçamento.
+                            <strong>Importante!</strong> O campo obrigatório aqui é a <strong> Nota Fiscal </strong>.
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="frete"><span class="glyphicon glyphicon-plane"></span>Tipo de frete:</label>
@@ -1100,6 +1161,12 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <h4 class="modal-title">Faca</h4>
                     </div>
                     <div class="modal-body">
+                        <div  class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Faca</strong><br> Selecione a faca que deseja utilizar para calculo e as medidas em <strong>Milímetros (mm)</strong><br>
+                            O calculo deste será feito pela <strong>soma</strong> da <strong>altura</strong> e <strong>largura</strong> e <strong> multiplicado</strong> pelo valor da faca.
+
+                        </div>
                         <label class="control-label" for="faca_select"> Faca:</label>
                         <div class="form-group">
                             <select id="md_faca_select" autofocus class="form-control" name="faca" required>
@@ -1195,6 +1262,10 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <h4 class="modal-title">Colagem</h4>
                     </div>
                     <div class="modal-body">
+                        <div  class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Colagem</strong><br> Insira o valor da colagem para a quantidade total do pedido.
+                        </div>
                         <input type="hidden" name="nome" value="Colagem">
                         <label class="control-label" for="valor"> Valor:</label>
                         <input required type="number" step="0.01" min="0.01" id="md_colagem_valor" class="form-control" name="valor" placeholder="Insira o valor total do serviço de Colagem">
@@ -1216,6 +1287,11 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <h4 class="modal-title"></h4>
                     </div>
                     <div class="modal-body text-center">
+                        <div  class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Limpar Orçamento</strong><br> Se quiser limpar tudo que fez para um novo pedido, clique no botão <button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> Limpar</button><br>
+                            <strong>OBS:</strong> Limpar o orçamento não exclui o orçamento original, caso ele esteja em modo de edição.
+                        </div>
                         <h2>Deseja limpar este orçamento?</h2>
                     </div>
                     <div class="modal-footer">
@@ -1235,6 +1311,11 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                         <h4 class="modal-title">Serviço</h4>
                     </div>
                     <div class="modal-body">
+                        <div  class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Criar ou Alterar</strong><br> Selecione o produto que deseja criar e a quantidade do pedido.<br>
+                            O desconto pode ser colocado futuramente no botão <button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <select required autofocus id="select_tipo_servico" name="tipo" class="form-control">
