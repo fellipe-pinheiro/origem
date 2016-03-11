@@ -143,17 +143,29 @@
                                 }
                                 ?>
                                 <?php
-                                if (!empty($orcamento->servico->laminacao)) {
-                                    foreach ($orcamento->servico->laminacao as $key => $laminacao) {
+                                if (!empty($orcamento->servico->acabamento_2)) {
+                                    foreach ($orcamento->servico->acabamento_2 as $key => $acabamento_2) {
                                         ?>
                                         <tr>
-                                            <td>Laminação</td>
+                                            <td>Acabamento 2</td>
                                             <td><?= $orcamento->servico->quantidade ?></td>
-                                            <td><?= $laminacao->nome ?></td>
+                                            <td><?= $acabamento_2->nome ?></td>
                                         </tr>
                                         <?php
                                     }
                                 }
+/*                                if (!empty($orcamento->servico->laminacao)) {
+                                    foreach ($orcamento->servico->laminacao as $key => $laminacao) {
+                                        ?>
+                                        <tr>
+                                            <td>Laminação</td>
+                                            <td>//<?= $orcamento->servico->quantidade ?></td>
+                                            <td>//<?= $laminacao->nome ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+*/                                
                                 ?>
                                 <?php
                                 if (!empty($orcamento->servico->colagem)) {

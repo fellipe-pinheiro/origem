@@ -14,9 +14,10 @@ class Servico_m extends CI_Model {
     var $papel;
     var $impressao;
     var $acabamento;
+    var $acabamento_2;
     var $faca;
-    var $laminacao;
     var $colagem;
+//    var $laminacao;
 
     function __construct() {
         parent::__construct();
@@ -25,12 +26,13 @@ class Servico_m extends CI_Model {
         $this->load->model('Impressao_formato_m');
         $this->load->model('Fotolito_m');
         $this->load->model('Acabamento_m');
+        $this->load->model('Acabamento_2_m');
         $this->load->model('Faca_m');
         $this->load->model('Faca_cartao_m');
         $this->load->model('Papel_m');
         $this->load->model('Empastamento_m');
         $this->load->model('Colagem_m');
-        $this->load->model('Laminacao_m');
+//        $this->load->model('Laminacao_m');
         $this->load->model('Servico_m');
         $this->load->model('Cliente_m');
         $this->load->model('Nota_m');
@@ -63,11 +65,16 @@ class Servico_m extends CI_Model {
                 $this->total += str_replace(',', '.', $value->sub_total);
             }
         }
-        if (!empty($this->laminacao)) {
-            foreach ($this->laminacao as $key => $value) {
+        if (!empty($this->acabamento_2)) {
+            foreach ($this->acabamento_2 as $key => $value) {
                 $this->total += $value->sub_total;
             }
         }
+//        if (!empty($this->laminacao)) {
+//            foreach ($this->laminacao as $key => $value) {
+//                $this->total += $value->sub_total;
+//            }
+//        }
         if (!empty($this->colagem)) {
             foreach ($this->colagem as $key => $value) {
                 $this->total += $value->sub_total;
@@ -125,19 +132,32 @@ class Servico_m extends CI_Model {
             $servico->colagem[] = $colagem;
         }
 
-        //laminacao
+        //acabamento_2
         $this->db->select('*');
-        $this->db->from('servico_laminacao');
+        $this->db->from('servico_acabamento_2');
         $this->db->where("servico_id = $id");
         $result = $this->db->get();
         $result_lam = $result->result_array();
         foreach ($result_lam as $key => $value) {
-            $laminacao = $this->Laminacao_m->listar($value['laminacao_id']);
-            $laminacao = $laminacao[0];
-            $laminacao->valor_unitario = $laminacao->calcula_valor_unitario($value['valor'], $servico->quantidade);
-            $laminacao->sub_total = $value['valor'];
-            $servico->laminacao[] = $laminacao;
+            $acabamento_2 = $this->Acabamento_2_m->listar($value['acabamento_2_id']);
+            $acabamento_2 = $acabamento_2[0];
+            $acabamento_2->valor_unitario = $acabamento_2->calcula_valor_unitario($value['valor'], $servico->quantidade);
+            $acabamento_2->sub_total = $value['valor'];
+            $servico->acabamento_2[] = $acabamento_2;
         }
+//        //laminacao
+//        $this->db->select('*');
+//        $this->db->from('servico_laminacao');
+//        $this->db->where("servico_id = $id");
+//        $result = $this->db->get();
+//        $result_lam = $result->result_array();
+//        foreach ($result_lam as $key => $value) {
+//            $laminacao = $this->Laminacao_m->listar($value['laminacao_id']);
+//            $laminacao = $laminacao[0];
+//            $laminacao->valor_unitario = $laminacao->calcula_valor_unitario($value['valor'], $servico->quantidade);
+//            $laminacao->sub_total = $value['valor'];
+//            $servico->laminacao[] = $laminacao;
+//        }
 
         //papel
         $this->db->select('*');
@@ -400,14 +420,14 @@ class Servico_m extends CI_Model {
         }
     }
 
-    public function inserir_servico_laminacao($servico_id, Laminacao_m $laminacao) {
-        if (!empty($laminacao)) {
+    public function inserir_servico_acabamento_2($servico_id, Acabamento_2_m $acabamento_2) {
+        if (!empty($acabamento_2)) {
             $dados = array(
                 'servico_id' => $servico_id,
-                'laminacao_id' => $laminacao->id,
-                'valor' => $laminacao->sub_total
+                'acabamento_2_id' => $acabamento_2->id,
+                'valor' => $acabamento_2->sub_total
             );
-            if ($this->db->insert('servico_laminacao', $dados)) {
+            if ($this->db->insert('servico_acabamento_2', $dados)) {
                 return true;
             } else {
                 return false;
@@ -416,6 +436,22 @@ class Servico_m extends CI_Model {
             return false;
         }
     }
+//    public function inserir_servico_laminacao($servico_id, Laminacao_m $laminacao) {
+//        if (!empty($laminacao)) {
+//            $dados = array(
+//                'servico_id' => $servico_id,
+//                'laminacao_id' => $laminacao->id,
+//                'valor' => $laminacao->sub_total
+//            );
+//            if ($this->db->insert('servico_laminacao', $dados)) {
+//                return true;
+//            } else {
+//                return false;
+//            }
+//        } else {
+//            return false;
+//        }
+//    }
 
     public function inserir_servico_colagem($servico_id, Colagem_m $colagem) {
         if (!empty($colagem)) {

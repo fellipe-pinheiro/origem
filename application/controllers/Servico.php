@@ -11,12 +11,13 @@ class Servico extends CI_Controller {
         $this->load->model('Impressao_formato_m');
         $this->load->model('Fotolito_m');
         $this->load->model('Acabamento_m');
+        $this->load->model('Acabamento_2_m');
         $this->load->model('Faca_m');
         $this->load->model('Faca_cartao_m');
         $this->load->model('Papel_m');
         $this->load->model('Empastamento_m');
         $this->load->model('Colagem_m');
-        $this->load->model('Laminacao_m');
+//        $this->load->model('Laminacao_m');
         $this->load->model('Servico_m');
         $this->load->model('Cliente_m');
         $this->load->model('Nota_m');
@@ -39,7 +40,8 @@ class Servico extends CI_Controller {
         $data['valor_unitario'] = NULL;
         $data['total'] = NULL;
 
-        $data['laminacao_md'] = $this->Laminacao_m->listar();
+//        $data['laminacao_md'] = $this->Laminacao_m->listar();
+        $data['acabamento_2_md'] = $this->Acabamento_2_m->listar();
         $data['acabamento_md'] = $this->Acabamento_m->listar();
         $data['papel_md'] = $this->Papel_m->listar();
         $data['cliente_md'] = $this->Cliente_m->listar();
@@ -153,14 +155,22 @@ class Servico extends CI_Controller {
                     }
                 }
             }
-            if (!empty($_SESSION['orcamento']->servico->laminacao)) {
-                foreach ($_SESSION['orcamento']->servico->laminacao as $key => $laminacao) {
-                    $verificador = $_SESSION['orcamento']->servico->inserir_servico_laminacao($servico_id, $laminacao);
+            if (!empty($_SESSION['orcamento']->servico->acabamento_2)) {
+                foreach ($_SESSION['orcamento']->servico->acabamento_2 as $key => $acabamento_2) {
+                    $verificador = $_SESSION['orcamento']->servico->inserir_servico_acabamento_2($servico_id, $acabamento_2);
                     if ($verificador == FALSE) {
-                        $erro['laminacao'] = $verificador;
+                        $erro['acabamento_2'] = $verificador;
                     }
                 }
             }
+//            if (!empty($_SESSION['orcamento']->servico->laminacao)) {
+//                foreach ($_SESSION['orcamento']->servico->laminacao as $key => $laminacao) {
+//                    $verificador = $_SESSION['orcamento']->servico->inserir_servico_laminacao($servico_id, $laminacao);
+//                    if ($verificador == FALSE) {
+//                        $erro['laminacao'] = $verificador;
+//                    }
+//                }
+//            }
             if (!empty($_SESSION['orcamento']->servico->colagem)) {
                 foreach ($_SESSION['orcamento']->servico->colagem as $key => $colagem) {
                     $verificador = $_SESSION['orcamento']->servico->inserir_servico_colagem($servico_id, $colagem);
@@ -318,11 +328,16 @@ class Servico extends CI_Controller {
         $servico_desconto = $_SESSION['orcamento']->servico->desconto;
 
         //recalcula valores para os itens que dependem da quantidade
-        if (!empty($_SESSION['orcamento']->servico->laminacao)) {
-            foreach ($_SESSION['orcamento']->servico->laminacao as $key => $value) {
+        if (!empty($_SESSION['orcamento']->servico->acabamento_2)) {
+            foreach ($_SESSION['orcamento']->servico->acabamento_2 as $key => $value) {
                 $value->valor_unitario = $value->calcula_valor_unitario($value->sub_total, $servico_quantidade);
             }
         }
+//        if (!empty($_SESSION['orcamento']->servico->laminacao)) {
+//            foreach ($_SESSION['orcamento']->servico->laminacao as $key => $value) {
+//                $value->valor_unitario = $value->calcula_valor_unitario($value->sub_total, $servico_quantidade);
+//            }
+//        }
         if (!empty($_SESSION['orcamento']->servico->colagem)) {
             foreach ($_SESSION['orcamento']->servico->colagem as $key => $value) {
                 $value->valor_unitario = $value->calcula_valor_unitario($value->sub_total, $servico_quantidade);
@@ -495,42 +510,78 @@ class Servico extends CI_Controller {
         redirect(base_url('servico'), 'location');
     }
 
-    public function laminacao_sessao_inserir() {
-        if (empty($_POST['laminacao'])) {
+    public function acabamento_2_sessao_inserir() {
+        if (empty($_POST['acabamento_2'])) {
             redirect(base_url('servico'), 'location');
         }
-        $id = $_POST['laminacao'];
+        $id = $_POST['acabamento_2'];
         $valor = str_replace(',', '.', $_POST['valor']);
         $quantidade_pedido = $_SESSION['orcamento']->servico->quantidade;
-        $laminacao = $this->Laminacao_m->listar($id);
-        $laminacao = $laminacao[0];
-        $laminacao->valor_unitario = $laminacao->calcula_valor_unitario($valor, $quantidade_pedido);
-        $laminacao->sub_total = $valor;
-        $_SESSION['orcamento']->servico->laminacao[] = $laminacao;
+        $acabamento_2 = $this->Acabamento_2_m->listar($id);
+        $acabamento_2 = $acabamento_2[0];
+        $acabamento_2->valor_unitario = $acabamento_2->calcula_valor_unitario($valor, $quantidade_pedido);
+        $acabamento_2->sub_total = $valor;
+        $_SESSION['orcamento']->servico->acabamento_2[] = $acabamento_2;
         redirect(base_url('servico'), 'location');
     }
 
-    public function laminacao_sessao_editar() {
-        if (empty($_POST['laminacao'])) {
+    public function acabamento_2_sessao_editar() {
+        if (empty($_POST['acabamento_2'])) {
             redirect(base_url('servico'), 'location');
         }
         $posicao = $this->uri->segment(3);
-        $id = $_POST['laminacao'];
+        $id = $_POST['acabamento_2'];
         $valor = str_replace(',', '.', $_POST['valor']);
         $quantidade_pedido = $_SESSION['orcamento']->servico->quantidade;
-        $laminacao = $this->Laminacao_m->listar($id);
-        $laminacao = $laminacao[0];
-        $laminacao->valor_unitario = $laminacao->calcula_valor_unitario($valor, $quantidade_pedido);
-        $laminacao->sub_total = $valor;
-        $_SESSION['orcamento']->servico->laminacao[$posicao] = $laminacao;
+        $acabamento_2 = $this->Acabamento_2_m->listar($id);
+        $acabamento_2 = $acabamento_2[0];
+        $acabamento_2->valor_unitario = $acabamento_2->calcula_valor_unitario($valor, $quantidade_pedido);
+        $acabamento_2->sub_total = $valor;
+        $_SESSION['orcamento']->servico->acabamento_2[$posicao] = $acabamento_2;
         redirect(base_url('servico'), 'location');
     }
 
-    public function laminacao_sessao_excluir() {
+    public function acabamento_2_sessao_excluir() {
         $posicao = $this->uri->segment(3);
-        unset($_SESSION['orcamento']->servico->laminacao[$posicao]);
+        unset($_SESSION['orcamento']->servico->acabamento_2[$posicao]);
         redirect(base_url('servico'), 'location');
     }
+//    public function laminacao_sessao_inserir() {
+//        if (empty($_POST['laminacao'])) {
+//            redirect(base_url('servico'), 'location');
+//        }
+//        $id = $_POST['laminacao'];
+//        $valor = str_replace(',', '.', $_POST['valor']);
+//        $quantidade_pedido = $_SESSION['orcamento']->servico->quantidade;
+//        $laminacao = $this->Laminacao_m->listar($id);
+//        $laminacao = $laminacao[0];
+//        $laminacao->valor_unitario = $laminacao->calcula_valor_unitario($valor, $quantidade_pedido);
+//        $laminacao->sub_total = $valor;
+//        $_SESSION['orcamento']->servico->laminacao[] = $laminacao;
+//        redirect(base_url('servico'), 'location');
+//    }
+//
+//    public function laminacao_sessao_editar() {
+//        if (empty($_POST['laminacao'])) {
+//            redirect(base_url('servico'), 'location');
+//        }
+//        $posicao = $this->uri->segment(3);
+//        $id = $_POST['laminacao'];
+//        $valor = str_replace(',', '.', $_POST['valor']);
+//        $quantidade_pedido = $_SESSION['orcamento']->servico->quantidade;
+//        $laminacao = $this->Laminacao_m->listar($id);
+//        $laminacao = $laminacao[0];
+//        $laminacao->valor_unitario = $laminacao->calcula_valor_unitario($valor, $quantidade_pedido);
+//        $laminacao->sub_total = $valor;
+//        $_SESSION['orcamento']->servico->laminacao[$posicao] = $laminacao;
+//        redirect(base_url('servico'), 'location');
+//    }
+//
+//    public function laminacao_sessao_excluir() {
+//        $posicao = $this->uri->segment(3);
+//        unset($_SESSION['orcamento']->servico->laminacao[$posicao]);
+//        redirect(base_url('servico'), 'location');
+//    }
 
     public function papel_sessao_inserir() {
         if (empty($_POST['papel'])) {

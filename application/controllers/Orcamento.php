@@ -10,10 +10,11 @@ class Orcamento extends CI_Controller {
         $this->load->model('Impressao_formato_m');
         $this->load->model('Fotolito_m');
         $this->load->model('Acabamento_m');
+        $this->load->model('Acabamento_2_m');
         $this->load->model('Faca_m');
         $this->load->model('Papel_m');
         $this->load->model('Empastamento_m');
-        $this->load->model('Laminacao_m');
+//        $this->load->model('Laminacao_m');
         $this->load->model('Colagem_m');
         $this->load->model('Servico_m');
         $this->load->model('Orcamento_m');
@@ -49,7 +50,7 @@ class Orcamento extends CI_Controller {
 
     public function excluir_todos_servicos() {
         unset(
-                $_SESSION['papel'], $_SESSION['empastamento'], $_SESSION['impressao'], $_SESSION['acabamento'], $_SESSION['faca'], $_SESSION['servico'], $_SESSION['fotolito'], $_SESSION['laminacao'], $_SESSION['colagem']
+                $_SESSION['papel'], $_SESSION['empastamento'], $_SESSION['impressao'], $_SESSION['acabamento'], $_SESSION['faca'], $_SESSION['servico'], $_SESSION['fotolito'], $_SESSION['acabamento_2'], $_SESSION['colagem']
         );
         redirect(base_url('orcamento'), 'location');
     }

@@ -23,6 +23,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Banco de dados <span class="caret"></span></a>
                     <ul class="dropdown-menu" id="menu_banco_dados">
                         <li><a href="<?= base_url('acabamento') ?>">Acabamento</a></li>
+                        <li><a href="<?= base_url('acabamento_2') ?>">Acabamento 2</a></li>
                         <li><a href="<?= base_url('faca') ?>">Faca</a></li>
                         <li><a href="<?= base_url('faca_cartao') ?>">Faca p/ cartão</a></li>
                         <li><a href="<?= base_url('papel') ?>">Papel</a></li>
@@ -30,7 +31,7 @@
                         <li><a href="<?= base_url('impressao_cartao') ?>">Impressão Cartão</a></li>
                         <li><a href="<?= base_url('impressao_formato') ?>">Área Impressão</a></li>
                         <li><a href="<?= base_url('fotolito') ?>">Fotolito</a></li>
-                        <li><a href="<?= base_url('laminacao') ?>">Laminação</a></li>
+                        <!--<li><a href="<?= base_url('laminacao') ?>">Laminação</a></li>-->
                         <li><a href="<?= base_url('frete') ?>">Frete</a></li>
                         <li><a href="<?= base_url('nota') ?>">Nota</a></li>
                         <li><a href="<?= base_url('cliente') ?>">Cliente</a></li>

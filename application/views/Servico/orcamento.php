@@ -130,9 +130,13 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                 $('#md_acabamento_select option[value=""]').attr('selected', 'selected');
                 $('#md_acabamento_qtd').val('');
             });
-            $("#md_btn_laminacao").click(function () {
-                $('#md_laminacao_select_laminacao option[value=""]').attr('selected', 'selected');
-                $('#md_laminacao_valor').val('');
+//            $("#md_btn_laminacao").click(function () {
+//                $('#md_laminacao_select_laminacao option[value=""]').attr('selected', 'selected');
+//                $('#md_laminacao_valor').val('');
+//            });
+            $("#md_btn_acabamento_2").click(function () {
+                $('#md_acabamento_2_select_acabamento_2 option[value=""]').attr('selected', 'selected');
+                $('#md_acabamento_2_valor').val('');
             });
             $("#md_btn_impressao").click(function () {
                 $('#md_impressao_select option[value=""]').attr('selected', 'selected');
@@ -321,12 +325,18 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
             $("#form_colagem").prop("action", "servico/colagem_sessao_editar/" + posicao);
             $("#myModal_colagem").modal();
         }
-        function open_laminacao_modal(posicao, id, valor) {
-            $("#md_laminacao_select_laminacao option[value=" + id + "]").attr("selected", "selected");
-            $("#md_laminacao_valor").val(valor);
-            $("#form_laminacao").prop("action", "servico/laminacao_sessao_editar/" + posicao);
-            $("#myModal_laminacao").modal();
+        function open_acabamento_2_modal(posicao, id, valor) {
+            $("#md_acabamento_2_select_acabamento_2 option[value=" + id + "]").attr("selected", "selected");
+            $("#md_acabamento_2_valor").val(valor);
+            $("#form_acabamento_2").prop("action", "servico/acabamento_2_sessao_editar/" + posicao);
+            $("#myModal_acabamento_2").modal();
         }
+//        function open_laminacao_modal(posicao, id, valor) {
+//            $("#md_laminacao_select_laminacao option[value=" + id + "]").attr("selected", "selected");
+//            $("#md_laminacao_valor").val(valor);
+//            $("#form_laminacao").prop("action", "servico/laminacao_sessao_editar/" + posicao);
+//            $("#myModal_laminacao").modal();
+//        }
         function open_servico_modal() {
             $("#form_servico").prop("action", "servico/editar_servico");
             $('#myModal_produto').modal('show');
@@ -560,9 +570,14 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                             <span class="glyphicon glyphicon-scissors"></span> Acabamento <span class="badge"><?= count($_SESSION['orcamento']->servico->acabamento) ?></span>
                                         </button>
                                     </div>
-                                    <div class="col-md-2">
+<!--                                    <div class="col-md-2">
                                         <button id="md_btn_laminacao" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_laminacao">
                                             <span class="glyphicon glyphicon-tags"></span> Laminação <span class="badge"><?= count($_SESSION['orcamento']->servico->laminacao) ?></span>
+                                        </button>
+                                    </div>-->
+                                    <div class="col-md-2">
+                                        <button id="md_btn_acabamento_2" class="btn btn-default btn-block col-md-2 btn_m" data-toggle="modal" data-target="#myModal_acabamento_2">
+                                            <span class="glyphicon glyphicon-tags"></span> Acabamento 2 <span class="badge"><?= count($_SESSION['orcamento']->servico->acabamento_2) ?></span>
                                         </button>
                                     </div>
                                     <div class="col-md-2">
@@ -705,7 +720,25 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                         }
                                         ?>
                                         <?php
-                                        if (!empty($_SESSION['orcamento']->servico->laminacao)) {
+                                        if (!empty($_SESSION['orcamento']->servico->acabamento_2)) {
+                                            foreach ($_SESSION['orcamento']->servico->acabamento_2 as $key => $acabamento_2) {
+                                                ?>
+                                                <tr class="danger">
+                                                    <td><?= $count = $count + 1 ?></td>
+                                                    <td><span class="glyphicon glyphicon-tags"></span> <b>Acabamento 2</b></td>
+                                                    <td><?= $acabamento_2->nome ?></td>
+                                                    <td><?= $_SESSION['orcamento']->servico->quantidade ?></td>
+                                                    <td>R$ <?= number_format($acabamento_2->valor_unitario, 3, ",", ".") ?></td>
+                                                    <td>R$ <?= number_format($acabamento_2->sub_total, 2, ",", ".") ?></td>
+                                                    <td><button onclick="open_acabamento_2_modal(<?= $key ?>, <?= $acabamento_2->id ?>,<?= $acabamento_2->sub_total ?>)" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                                                    <td><a class="btn btn-danger btn-sm" href="<?= base_url("servico/acabamento_2_sessao_excluir/{$key}") ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                        <?php
+                                        /*if (!empty($_SESSION['orcamento']->servico->laminacao)) {
                                             foreach ($_SESSION['orcamento']->servico->laminacao as $key => $laminacao) {
                                                 ?>
                                                 <tr class="danger">
@@ -720,7 +753,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                                 </tr>
                                                 <?php
                                             }
-                                        }
+                                        }*/
                                         ?>
                                         <?php
                                         if (!empty($_SESSION['orcamento']->servico->colagem)) {
@@ -1115,6 +1148,37 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                 </form>
             </div>
         </div>
+        <!-- Modal acabamento_2 -->
+        <div class="modal fade" id="myModal_acabamento_2" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <form id="form_acabamento_2" action="Servico/acabamento_2_sessao_inserir" method="POST" role="form">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Acabamento 2</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="control-label" for="acabamento_2">Acabamento 2:</label>
+                                <select required autofocus id="md_acabamento_2_select_acabamento_2" class="form-control" name="acabamento_2">
+                                    <option value="" disabled selected>Selecione</option>
+                                    <?php foreach ($acabamento_2_md as $key => $value) { ?>
+                                        <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <label class="control-label" for="valor"> Valor:</label>
+                            <input required min="0.01" step="0.01" type="number" id="md_acabamento_2_valor" class="form-control" name="valor" placeholder="Insira o valor total do serviço de Acabamento 2">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            <button id="form_acabamento_2_acao" type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <!--pagamento-->
         <div class="modal fade" id="myModal_condicoes" role="dialog">
             <div class="modal-dialog">
@@ -1251,10 +1315,41 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                 </form>
             </div>
         </div>
-        <!-- Modal laminacao -->
-        <div class="modal fade" id="myModal_laminacao" role="dialog">
+        <!-- Modal acabamento_2 -->
+        <div class="modal fade" id="myModal_acabamento_2" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
+                <form id="form_acabamento_2" action="Servico/acabamento_2_sessao_inserir" method="POST" role="form">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Acabamento 2</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="control-label" for="acabamento_2">Acabamento 2:</label>
+                                <select required autofocus id="md_acabamento_2_select_acabamento_2" class="form-control" name="acabamento_2">
+                                    <option value="" disabled selected>Selecione</option>
+                                    <?php foreach ($acabamento_2_md as $key => $value) { ?>
+                                        <option value="<?= $value->id ?>"><?= $value->nome ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <label class="control-label" for="valor"> Valor:</label>
+                            <input required min="0.01" step="0.01" type="number" id="md_acabamento_2_valor" class="form-control" name="valor" placeholder="Insira o valor total do serviço de laminação">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            <button id="form_acabamento_2_acao" type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+<!--         Modal laminacao 
+        <div class="modal fade" id="myModal_laminacao" role="dialog">
+            <div class="modal-dialog">
+                 Modal content
                 <form id="form_laminacao" action="Servico/laminacao_sessao_inserir" method="POST" role="form">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1281,7 +1376,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                     </div>
                 </form>
             </div>
-        </div>
+        </div>-->
         <!-- Modal colagem -->
         <div class="modal fade" id="myModal_colagem" role="dialog">
             <div class="modal-dialog">
