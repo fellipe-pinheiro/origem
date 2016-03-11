@@ -64,7 +64,7 @@ class Frete extends CI_Controller {
     }
 
     public function deletar() {
-        print $id = $this->uri->segment(3);
+        $id = $this->uri->segment(3);
 
         if ($this->Frete_m->deletar($id)) {
             redirect(base_url('frete/?type=sucesso'), 'location');

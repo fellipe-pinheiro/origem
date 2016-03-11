@@ -71,7 +71,7 @@ class Impressao extends CI_Controller {
     }
 
     public function deletar() {
-        print $id = $this->uri->segment(3);
+        $id = $this->uri->segment(3);
 
         if ($this->Impressao_m->deletar($id)) {
             redirect(base_url('impressao/?type=sucesso'), 'location');

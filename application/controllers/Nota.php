@@ -65,7 +65,7 @@ class Nota extends CI_Controller {
     }
 
     public function deletar() {
-        print $id = $this->uri->segment(3);
+        $id = $this->uri->segment(3);
 
         if ($this->Nota_m->deletar($id)) {
             redirect(base_url('nota/?type=sucesso'), 'location');
