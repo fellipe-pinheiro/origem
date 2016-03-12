@@ -1,5 +1,5 @@
 <?php
-$titulo = 'Serviço';
+$titulo = 'Orçamento';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -357,8 +357,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                             <div class="col-md-12">
                                 <div class="dropdown">
                                     <button class="btn btn-default dropdown-toggle btn-block" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Menu
-                                        <span class="caret"></span>
+                                        <span class="glyphicon glyphicon-align-justify"></span> Menu<span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                         <?php if (empty($_SESSION['orcamento']->servico->quantidade)) { ?>

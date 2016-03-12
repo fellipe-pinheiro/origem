@@ -14,36 +14,36 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orçamento <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?= base_url('servico') ?>">Serviço</a></li>
+                        <li><a href="<?= base_url('servico') ?>"><span class="glyphicon glyphicon-arrow-right"></span> Orçamento</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="<?= base_url('orcamento') ?>">Lista de Orçamentos</a></li>
+                        <li><a href="<?= base_url('orcamento') ?>"><span class="glyphicon glyphicon-list-alt"></span> Lista de Orçamentos</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Banco de dados <span class="caret"></span></a>
                     <ul class="dropdown-menu" id="menu_banco_dados">
-                        <li><a href="<?= base_url('acabamento') ?>">Acabamento</a></li>
-                        <li><a href="<?= base_url('acabamento_2') ?>">Acabamento 2</a></li>
-                        <li><a href="<?= base_url('faca') ?>">Faca</a></li>
-                        <li><a href="<?= base_url('faca_cartao') ?>">Faca p/ cartão</a></li>
-                        <li><a href="<?= base_url('papel') ?>">Papel</a></li>
-                        <li><a href="<?= base_url('impressao') ?>">Impressão Serviço</a></li>
-                        <li><a href="<?= base_url('impressao_cartao') ?>">Impressão Cartão</a></li>
-                        <li><a href="<?= base_url('impressao_formato') ?>">Área Impressão</a></li>
-                        <li><a href="<?= base_url('fotolito') ?>">Fotolito</a></li>
+                        <li><a href="<?= base_url('acabamento') ?>"><span class="glyphicon glyphicon-scissors"></span> Acabamento</a></li>
+                        <li><a href="<?= base_url('acabamento_2') ?>"><span class="glyphicon glyphicon-tags"></span> Acabamento (2)</a></li>
+                        <li><a href="<?= base_url('faca') ?>"><span class="glyphicon glyphicon-wrench"></span> Faca (Serviço)</a></li>
+                        <li><a href="<?= base_url('faca_cartao') ?>"><span class="glyphicon glyphicon-wrench"></span> Faca (Cartão)</a></li>
+                        <li><a href="<?= base_url('papel') ?>"><span class="glyphicon glyphicon-file"></span> Papel</a></li>
+                        <li><a href="<?= base_url('impressao') ?>"><span class="glyphicon glyphicon-print"></span> Impressão (Serviço)</a></li>
+                        <li><a href="<?= base_url('impressao_cartao') ?>"><span class="glyphicon glyphicon-print"></span> Impressão (Cartão)</a></li>
+                        <li><a href="<?= base_url('impressao_formato') ?>"><span class="glyphicon glyphicon-bookmark"></span> Área Impressão</a></li>
+                        <li><a href="<?= base_url('fotolito') ?>"><span class="glyphicon glyphicon-picture"></span> Fotolito</a></li>
                         <!--<li><a href="<?= base_url('laminacao') ?>">Laminação</a></li>-->
-                        <li><a href="<?= base_url('frete') ?>">Frete</a></li>
-                        <li><a href="<?= base_url('nota') ?>">Nota</a></li>
-                        <li><a href="<?= base_url('cliente') ?>">Cliente</a></li>
-                        <li><a href="<?= base_url('usuario') ?>">Usuário</a></li>
+                        <li><a href="<?= base_url('frete') ?>"><span class="glyphicon glyphicon-plane"></span> Frete</a></li>
+                        <li><a href="<?= base_url('nota') ?>"><span class="glyphicon glyphicon-file"></span> Nota</a></li>
+                        <li><a href="<?= base_url('cliente') ?>"><span class="glyphicon glyphicon-user"></span> Cliente</a></li>
+                        <li><a href="<?= base_url('usuario') ?>"><span class="glyphicon glyphicon-user"></span> Usuário</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentação <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?= base_url('documentacao') ?>">Banco de dados</a></li>
-                        <li><a href="<?= base_url('documentacao/orcamento') ?>">Serviço</a></li>
-                        <li><a href="<?= base_url('documentacao/impressao') ?>">Impressão</a></li>
+                        <li><a href="<?= base_url('documentacao') ?>"><span class="glyphicon glyphicon-education"></span> Banco de dados</a></li>
+                        <li><a href="<?= base_url('documentacao/orcamento') ?>"><span class="glyphicon glyphicon-education"></span> Serviço</a></li>
+                        <li><a href="<?= base_url('documentacao/impressao') ?>"><span class="glyphicon glyphicon-education"></span> Impressão</a></li>
                     </ul>
                 </li>
                 <?php if (usuario_logado()) { ?>

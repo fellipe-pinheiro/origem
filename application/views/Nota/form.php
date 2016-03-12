@@ -1,12 +1,12 @@
 <?php
 if ($acao == 'inserir') {
     $action = 'nota/inserir';
-    $titulo = 'Inserir nota';
+    $titulo = 'Inserir Nota';
     $id = '';
     $nota = new Nota_m();
 } elseif ($acao == 'editar') {
     $action = 'nota/editar';
-    $titulo = 'Editar nota';
+    $titulo = 'Editar Nota';
 }
 ?>
 <!DOCTYPE html>

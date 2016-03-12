@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <?php $this->load->view('_include/head', ['titulo' => 'Home']); ?>
+    <?php $this->load->view('_include/head', ['titulo' => 'Login']); ?>
     <style type="text/css">
         .form-signin {
             max-width: 300px;

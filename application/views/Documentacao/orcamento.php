@@ -1,5 +1,5 @@
 <?php
-$titulo = 'Serviço';
+$titulo = 'Documentação';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

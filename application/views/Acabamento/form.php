@@ -1,12 +1,12 @@
 <?php
 if ($acao == 'inserir') {
     $action = 'acabamento/inserir';
-    $titulo = 'Inserir acabamento';
+    $titulo = 'Inserir Acabamento';
     $id = '';
     $acabamento = new Acabamento_m();
 } elseif ($acao == 'editar') {
     $action = 'acabamento/editar';
-    $titulo = 'Editar acabamento';
+    $titulo = 'Editar Acabamento';
 }
 ?>
 <!DOCTYPE html>

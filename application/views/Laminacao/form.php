@@ -1,12 +1,12 @@
 <?php
 if ($acao == 'inserir') {
     $action = 'laminacao/inserir';
-    $titulo = 'Inserir laminação';
+    $titulo = 'Inserir Laminação';
     $id = '';
     $laminacao = new Laminacao_m();
 } elseif ($acao == 'editar') {
     $action = 'laminacao/editar';
-    $titulo = 'Editar laminação';
+    $titulo = 'Editar Laminação';
 }
 ?>
 <!DOCTYPE html>

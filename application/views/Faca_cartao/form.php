@@ -1,12 +1,12 @@
 <?php
 if ($acao == 'inserir') {
     $action = 'faca_cartao/inserir';
-    $titulo = 'Inserir faca p/ cartão';
+    $titulo = 'Inserir Faca Cartão';
     $id = '';
     $faca_cartao = new Faca_cartao_m();
 } elseif ($acao == 'editar') {
     $action = 'faca_cartao/editar';
-    $titulo = 'Editar faca p/ cartão';
+    $titulo = 'Editar Faca Cartão';
 }
 ?>
 <!DOCTYPE html>

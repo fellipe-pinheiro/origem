@@ -1,12 +1,12 @@
 <?php
 if ($acao == 'inserir') {
     $action = 'papel/inserir';
-    $titulo = 'Inserir papel';
+    $titulo = 'Inserir Papel';
     $id = '';
     $papel = new Papel_m();
 } elseif ($acao == 'editar') {
     $action = 'papel/editar';
-    $titulo = 'Editar papel';
+    $titulo = 'Editar Papel';
 }
 ?>
 <!DOCTYPE html>

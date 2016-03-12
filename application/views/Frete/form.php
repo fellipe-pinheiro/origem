@@ -1,12 +1,12 @@
 <?php
 if ($acao == 'inserir') {
     $action = 'frete/inserir';
-    $titulo = 'Inserir frete';
+    $titulo = 'Inserir Frete';
     $id = '';
     $frete = new Frete_m();
 } elseif ($acao == 'editar') {
     $action = 'frete/editar';
-    $titulo = 'Editar frete';
+    $titulo = 'Editar Frete';
 }
 ?>
 <!DOCTYPE html>

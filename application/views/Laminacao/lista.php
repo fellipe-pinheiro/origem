@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <?php $this->load->view('_include/head', ['titulo' => 'Home']); ?>
+    <?php $this->load->view('_include/head', ['titulo' => 'Laminação']); ?>
     <?php $this->load->view('_include/dataTable', ['controler' => 'laminacao']); ?>
     <body>
         <?php $this->load->view('_include/menu'); ?>

@@ -1,7 +1,7 @@
 <?php
 if ($acao == 'inserir') {
     $action = 'impressao/inserir';
-    $titulo = 'Inserir impressao';
+    $titulo = 'Inserir Impressao';
     $id = '';
     $impressao = new Impressao_m();
     $impressao->impressao_formato = new Impressao_formato_m();

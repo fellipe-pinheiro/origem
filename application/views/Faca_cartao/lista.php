@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <?php $this->load->view('_include/head', ['titulo' => 'faca para cartão']); ?>
+    <?php $this->load->view('_include/head', ['titulo' => 'Faca Cartão']); ?>
     <?php $this->load->view('_include/dataTable', ['controler' => 'faca_cartao']); ?>
     <body>
         <?php $this->load->view('_include/menu'); ?>

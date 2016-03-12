@@ -1,13 +1,13 @@
 <?php
 if ($acao == 'inserir') {
     $action = 'impressao_cartao/inserir';
-    $titulo = 'Inserir Impressão cartão';
+    $titulo = 'Inserir Impressão Cartão';
     $id = '';
     $impressao_cartao = new Impressao_cartao_m();
     $impressao_cartao->impressao_formato = new Impressao_formato_m();
 } elseif ($acao == 'editar') {
     $action = 'impressao_cartao/editar';
-    $titulo = 'Editar Impressão';
+    $titulo = 'Editar Impressão Cartão';
 }
 ?>
 <!DOCTYPE html>
