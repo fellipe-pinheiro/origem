@@ -52,7 +52,6 @@ class Acabamento extends CI_Controller {
     public function editar() {
         $acabamento = new Acabamento_m();
         $acabamento->id = $this->input->post('id');
-        ;
         $acabamento->nome = $this->input->post('nome');
         $acabamento->descricao = $this->input->post('descricao');
         $acabamento->valor = $this->input->post('valor');

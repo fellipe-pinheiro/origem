@@ -25,12 +25,13 @@
                                 <td>
                                     <?php echo img(base_url('/assets/img/origem_logo__pdf_140x140.png')); ?>
                                 </td>
-                                <td class="text-capitalize">
+                                <td>
                                     <br>
                                     Endereço: R. Sebastião de Castro, 58<br>
                                     Belenzinho, São Paulo - SP,<br> 
                                     CEP: 03054-030<br>
-                                    Telefone:(11) 2574-6006
+                                    Telefone:(11) 2574-6006<br>
+                                    origemart@gmail.com
                                 </td>
                                 <td><br>
                                     <?php
