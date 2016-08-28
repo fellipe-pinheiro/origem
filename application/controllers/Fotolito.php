@@ -9,7 +9,6 @@ class Fotolito extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('Fotolito_m');
         $this->load->model('Impressao_formato_m');
-        $this->load->model('Impressao_formato_m');
         empty($_SESSION) ? session_start() : '';
         login_necessario();
     }

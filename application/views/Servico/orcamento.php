@@ -455,7 +455,7 @@ if (!empty($_SESSION['orcamento']->nota_fiscal)) {
                                             <?php ?>
                                             <td><?= $_SESSION['orcamento']->servico->tipo ?></td>
                                             <td><?= $_SESSION['orcamento']->servico->quantidade ?></td>
-                                            <td>R$ <?= number_format($_SESSION['orcamento']->servico->valor_unitario, 2, ",", ".") ?> </td>
+                                            <td>R$ <?= number_format($_SESSION['orcamento']->servico->valor_unitario, 5, ",", ".") ?> </td>
                                             <td>R$ <?= number_format($_SESSION['orcamento']->servico->total, 2, ",", ".") ?></td>
                                             <td><button onclick="open_servico_modal()" type="button" class="btn btn-primary btn-sm" <?php
                                                 if (empty($_SESSION['orcamento']->servico->quantidade)) {
